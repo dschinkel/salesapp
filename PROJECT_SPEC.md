@@ -14,8 +14,8 @@ Record voice and provide a transcript
 # Brainstorming
 
 ## F.0 Walking Skeleton
-- F.0.1 Hello World is runnable
-- F.0.2 Deploys app to ECS (Elastic Container Registry)
+- F.0.1 Hello World is runnable [COMPLETED]
+- F.0.2 Deploy the app to ECS (Elastic Container Registry) via Github Actions
 
 ---
 

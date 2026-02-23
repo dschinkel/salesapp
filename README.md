@@ -1,4 +1,4 @@
-# React App Boilerplate
+# Sales Recorder
 
 ## How to use this
 1. make sure your init.sh (or `init.sh`) is marked as executable in your boilerplate repo (chmod +x init.sh). This ensures the AI agent doesn't get hung up on a "Permission Denied" error when it tries to run the bootstrap.
@@ -56,3 +56,9 @@ Type your request.
 
 ### init.sh
 The `rsync -au` flag ensures that if you’ve already started customizing the code in your new app, the script won't revert your changes back to the generic boilerplate version.
+
+## Local Development
+1. `yarn dev`
+
+## Deployment
+We're using github actions to deploy to ECS (Elastic Container Registry).
