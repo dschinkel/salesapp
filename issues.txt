@@ -1,0 +1,10 @@
+Lately the llm is overwriting things
+    - I told it to add a new feature in project_spec.md and it renamed an existing one instead and so it removed that existing spec
+    - It has done this several times, something it has never done in the past projects, so be aware of that
+
+Usually the llm reads GUIDELINES.md and follows the outside-in TDD properly meaning it starts TDD'ing at the React Hook Layer
+    - But for this project, it started with high up UI tests, not sure why, again this has never happened in 4 projects that I've used these guidelines for in the past
+
+ It usually appends each plan to the tdd.log after it's done implementing a feature.  But again weird, it did not this time for this project.  It has in past projects
+
+It won't stop auto commit / push. I told it to first stop and show me the commit message.
