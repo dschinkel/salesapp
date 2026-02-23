@@ -6,10 +6,10 @@ on:
 
 env:
   AWS_REGION: us-east-2
-  ECR_REPOSITORY: gamebin/salesapp
+  ECR_REPOSITORY: gamebin/salesapp   # IMPORTANT: must match the ECR repo name exactly (including any path)
   CONTAINER_NAME: salesapp
-  APP_PORT: "3000"         # change to your app port
-  HOST_PORT: "80"          # change if you want a different public port
+  APP_PORT: "80"          # nginx serves on 80 in your Dockerfile
+  HOST_PORT: "80"         # change if you want it exposed on a different host port
 
 jobs:
   deploy:
@@ -31,21 +31,37 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build, tag, and push image to Amazon ECR (container registry)
+      - name: Build, tag, and push image to Amazon ECR (skip push if immutable tag already exists)
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG
-          echo "image=$ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          set -euo pipefail
 
-      - name: Deploy the previously pushed Docker image to our EC2 Server Instance via SSH (pull + restart)
+          REPO="${{ env.ECR_REPOSITORY }}"     # e.g. gamebin/salesapp
+          IMAGE="$ECR_REGISTRY/$REPO"
+          TAG="$IMAGE_TAG"
+
+          # If the immutable tag already exists, don't try to push it again.
+          if aws ecr describe-images \
+            --repository-name "$REPO" \
+            --image-ids imageTag="$TAG" \
+            --region "${{ env.AWS_REGION }}" >/dev/null 2>&1; then
+            echo "ECR image already exists: $IMAGE:$TAG (skipping push)"
+          else
+            docker build -t "$IMAGE:$TAG" .
+            docker push "$IMAGE:$TAG"
+          fi
+
+          echo "image=$IMAGE:$TAG" >> $GITHUB_OUTPUT
+
+      - name: Deploy on EC2 via SSH (pull + restart)
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             set -euo pipefail
 
@@ -61,7 +77,7 @@ jobs:
             # Login to ECR using the instance role (no keys on box)
             aws ecr get-login-password --region "$REGION" | sudo docker login --username AWS --password-stdin "$(echo "$IMAGE" | cut -d/ -f1)"
 
-            # Pull new image
+            # Pull (or re-pull) the image
             sudo docker pull "$IMAGE"
 
             # Stop/remove old container if it exists
@@ -70,11 +86,11 @@ jobs:
               sudo docker rm "$CONTAINER" || true
             fi
 
-            # Run new container (adjust env/volumes as needed)
+            # Run new container
             sudo docker run -d --restart unless-stopped \
               --name "$CONTAINER" \
               -p "$HOST_PORT:$APP_PORT" \
               "$IMAGE"
 
-            # Optional: cleanup old images
+            # Optional: cleanup old dangling images
             sudo docker image prune -f || true

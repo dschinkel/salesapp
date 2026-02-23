@@ -67,3 +67,4 @@ Example running container
 `<aws-account-id>.dkr.ecr.<region>.amazonaws.com/<ECR_REPOSITORY>:<image-tag>`
 `123456789012.dkr.ecr.us-east-2.amazonaws.com/salesapp:abc123`
 `ECR_REPOSITORY` must match the same name as the repository created in ECR which is `salesapp`
+`EC2_SSH_KEY` you create a key/pair under EC2 | Network & Security | Key Pairs
