@@ -1,6 +1,6 @@
 # PROJECT SPEC
 
-Project: `project-folder-name`
+Project: `sales-record`
 
 Purpose: 
 
@@ -10,6 +10,12 @@ At the start of every task and before proceeding to the next step in the PLAN, J
 All behavior mentioned below are to be incrementally implemented will be broken down into smaller tasks defined in `tasks.md` and worked on one at a time.
 
 Record voice and provide a transcript
+
+# Brainstorming
+
+## F.0 Walking Skeleton
+- F.0.1 Hello World is runnable
+- F.0.2 Deploys app to ECS (Elastic Container Registry)
 
 ---
 
@@ -48,7 +54,7 @@ Record voice and provide a transcript
 - The new folder name must be: 
 
 ### 4.3 UI Components / Styling
-- Always use shadcn/ui components when third-party UI components are needed.
+- Always use `shadcn/ui` components when third-party UI components are needed.
 
 ### 4.4 React Architecture
 - Separate application logic from React views.
