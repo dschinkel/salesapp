@@ -15,7 +15,7 @@ Record voice and provide a transcript
 
 ## F.0 Walking Skeleton
 - F.0.0 Hello World is runnable [COMPLETED]
-- F.0.1 If the repo has not been initialized and pushed to github, push it to the remote using the github CLI
+- F.0.1 If the repo has not been initialized and pushed to github, push it to the remote using the github CLI [COMPLETED]
 - F.0.2 Deploy the app to ECS (Elastic Container Registry) via Github Actions
 
 ---
