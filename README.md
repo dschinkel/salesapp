@@ -62,3 +62,7 @@ The `rsync -au` flag ensures that if you’ve already started customizing the co
 
 ## Deployment
 We're using github actions to deploy to ECS (Elastic Container Registry).
+We're deplying our docker containers to ECS Ec2 instances. The instance requires an IAM role, we created a role and gave it `AmazonEC2ContainerRegistryReadOnly` rights. Then went back  and applied that role to our Ec2 instance.
+Example running container
+`<aws-account-id>.dkr.ecr.<region>.amazonaws.com/<ECR_REPOSITORY>:<image-tag>`
+`123456789012.dkr.ecr.us-east-2.amazonaws.com/salesapp:abc123`
