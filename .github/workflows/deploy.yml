@@ -6,7 +6,7 @@ on:
 
 env:
   AWS_REGION: us-east-2
-  ECR_REPOSITORY: salesapp
+  ECR_REPOSITORY: gamebin/salesapp
   CONTAINER_NAME: salesapp
   APP_PORT: "3000"         # change to your app port
   HOST_PORT: "80"          # change if you want a different public port
