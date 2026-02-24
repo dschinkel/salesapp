@@ -1,5 +1,8 @@
 # PROJECT SPEC
 
+At the start of any workflow output exactly:  
+ACK: PROJECT_SPEC_READ
+
 Project: `Sales Record`
 
 Purpose of `PROJECT_SPEC.md`: 

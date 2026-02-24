@@ -20,8 +20,8 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
 ## P0. Agent Protocol (non-negotiable)
 
 - P0.0 When the user says `work on task <number>`, ask these questions BEFORE producing any PLAN:  
-- 1. "Do you want the PLAN to include a full TDD workflow (RED → GREEN → REFACTOR + commit prompts), or a non-TDD execution plan?"  
-- 2. "If TDD is chosen, do you want to include UI component tests (starting TDD at the React Component layer), or start TDD at the React Hooks layer (default)?"  
+    - 1. "Do you want the PLAN to include a full TDD workflow (RED → GREEN → REFACTOR + commit prompts), or a non-TDD execution plan?"  
+    - 2. "If TDD is chosen, do you want to include UI component tests (starting TDD at the React Component layer), or start TDD at the React Hooks layer (default)?"  
 - P0.0.0 Do not present a PLAN until the user answers the questions in P0.0.  
 - P.0.1 Before writing or changing any code, produce a PLAN when the user says: `work on task <number>` and after resolving P0.0.  
 - Always present the PLAN again before proceeding to the next step in the PLAN.  
@@ -36,7 +36,7 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
 - P0.7 If the user stops you midstream with a question or change request, log the interruption and the resolution in `tdd.log` (only applies when the user chose a TDD workflow in P0.0).  
 - P0.8 If the user reverts an implemented plan, remove the corresponding plan and its workflow entries from `tdd.log` (only applies when the user chooses a TDD workflow).  
 - P0.9 For React work, when presenting a PLAN, ensure the starting point aligns with the choice made in P0.0 (UI Component layer vs. React Hooks layer (default)).  
-- P0.10 At the very end of a task (after all steps and cleanup), you MUST mark the task as [COMPLETED] in `tasks.md`, run all tests one last time, run the linter and fix any errors, start the app and verify no runtime errors, and then perform a final cleanup commit and push before calling `submit`.  
+- P0.10 At the very end of a task (after all steps and cleanup), you MUST mark the task as commpleted by checking the box [x] next to the task in `tasks.md`, run all tests one last time, run the linter and fix any errors, start the app and verify no runtime errors, and then perform a final cleanup commit and push before calling `submit`.  
 
 ## G1. Project Management Guidelines  
 
@@ -44,7 +44,7 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
 - G1.10.1 Ensure that new behaviors (adding new functionality, UI elements, or logic) are treated as **Features** (FR.x) and not as "Fixes". A "Fix" (PR.x) is strictly for correcting existing behavior that is broken or not meeting the original spec. If a "Fix" actually introduces new behavior, it must be promoted to a Feature in `PROJECT_SPEC.md` and `tasks.md`.  
 - G1.10.2 Every task created in `tasks.md` (whether by the user or the agent) MUST have as its first acceptance criterion: `- Re-read GUIDELINES.MD AND PROJECT_SPEC.MD`.  
 - G1.10.3 You must include the same feature header as seen in `PROJECT_SPEC.md` for a specific feature and its subtasks in `tasks.md`.  
-- G1.10.4 Only when a feature is implemented and has been pushed to the remote repo should `[COMPLETED]` be added to that header in both `tasks.md` and `PROJECT_SPEC.md`.  
+- G1.10.4 Only when a feature found in`PROJECT_SPEC.md`'s sub tasks have been implemented should that feature in `PROJECT_SPEC.md` be marked completed by checking the box [x] next to the feature in `PROJECT_SPEC.md`.  
 - G1.10.5 Anytime the user asks to do something new without giving you a feature number to work on, you MUST add the new feature in `PROJECT_SPEC.md` first to ensure consistent versioning and numbering of features.  
 - G1.10.6 If the user says "fix" or "bug," you MUST log it as a fix in `tasks.md` with a proper title (e.g., `## Fix: <Description>`). You do not need to add it as a feature in `PROJECT_SPEC.md`.  
 - G1.10.7 You MUST NEVER overwrite or delete existing features or tasks in `PROJECT_SPEC.md` or `tasks.md` when adding new ones. Always append or insert new items while preserving the existing history and numbering.  
@@ -61,7 +61,7 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
 - G1.12 Organization and Naming:  
 - G1.12.1 Avoid generic buckets like util, utils, helper, helpers. Use domain terms instead. This applies to directory names, file names, and code constructs (functions, variables).  
 - G1.12.2 Do NOT create "helper functions". Instead, use well-named composed functions that describe their domain intent.  
-- P0.11 When iterating on a feature, do not mark it as [FAILED] or create new "fix" tasks if it doesn't meet acceptance criteria immediately. Instead, keep the current task [IN PROGRESS] and iterate until it is [COMPLETED].  
+- P0.11 When iterating on a feature, do not mark it as [FAILED] or create new "fix" tasks if it doesn't meet acceptance criteria immediately. Instead, keep the current task [IN PROGRESS] and iterate until it is completed.  
 - P0.11.1 When starting a task, you MUST move the task from [NOT STARTED] to [IN PROGRESS] in `tasks.md`.  
 - P0.12 NEVER call `submit` if there are uncommitted or unpushed changes related to the task. Every task completion must end with a push to the remote repository. Commit messages must focus on domain features and intent. Do not include technical words like "verified", "Step X", or "Frontend/Backend".  
 - Good: `shows shot type display under image`  
@@ -73,7 +73,6 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
 - P0.13.1 Ensure that new behaviors (adding new functionality, UI elements, or logic) are treated as **Features** (FR.x) and not as "Fixes". A "Fix" (PR.x) is strictly for correcting existing behavior that is broken or not meeting the original spec. If a "Fix" actually introduces new behavior, it must be promoted to a Feature in `PROJECT_SPEC.md` and `tasks.md`.  
 - P0.13.2 Every task created in `tasks.md` (whether by the user or the agent) MUST have as its first acceptance criterion: `- Re-read GUIDELINES.MD AND PROJECT_SPEC.MD`.  
 - P0.13.3 You must include the same feature header as seen in `PROJECT_SPEC.md` for a specific feature and its subtasks in `tasks.md`.  
-- P0.13.4 Only when a feature is implemented and has been pushed to the remote repo should `[COMPLETED]` be added to that header in both `tasks.md` and `PROJECT_SPEC.md`.  
 - P0.13.5 Anytime the user asks to do something new without giving you a feature number to work on, you MUST add the new feature in `PROJECT_SPEC.md` first to ensure consistent versioning and numbering of features.  
 - P0.13.6 If the user says "fix" or "bug," you MUST log it as a fix in `tasks.md` with a proper title (e.g., `## Fix: <Description>`). You do not need to add it as a feature in `PROJECT_SPEC.md`.  
 - P0.13.7 You MUST NEVER overwrite or delete existing features or tasks in `PROJECT_SPEC.md` or `tasks.md` when adding new ones. Always append or insert new items while preserving the existing history and numbering.  
@@ -82,18 +81,17 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
 - P0.14 If asked for an out of bounds fix, relate it to the current task and append the information to `tasks.md` using the following format:  
 
 ```markdown
-## PR.<feature number> Fix [COMPLETED]
+## [x] PR.<feature number> Fix
 
 ### <Description of the fix>
 
 The Fix:
 
-- [COMPLETED] <Subtask 1>
-- [COMPLETED] <Subtask 2>
+- [x] <Subtask 1>
+- [x] <Subtask 2>
   ...
 ```
 
-- Example: `## PR.12 Fix [COMPLETED]` for a fix related to Feature FR.12.  
 - P0.15 If a task in `tasks.md` exceeds 15 lines, move its details to a new file in the `tasks/` directory following the naming convention `task-fr<feature number>-<feature name>.md` and replace the content in `tasks.md` with a link to that file. When moving a feature, ensure all related 'PR.<number> Fix' sections or sub-tasks are also moved to the same file to keep related history together.  
 - P0.15.1 When all items are completed in a specific task file under `tasks/`, move the file to the `tasks/completed/` folder and update the link in `tasks.md`.  
 - P0.15.2 To ensure compliance with P0.15 and P0.15.1, you must perform a line-count audit of all sections in `tasks.md` and check completion status of task files before finalizing any task. You can use `wc -l` on extracted sections or manually count them when reading the file.  
@@ -288,7 +286,7 @@ async function lifestyleImages(count: number = 0, productImage: string, images: 
 - G1.8 When the user approves a commit prompt, you MUST immediately execute the corresponding git commit command via bash. Do not wait for the next turn.  
 - G1.8.1 Before committing, you MUST always let the user review the commit message you created first so that they have a chance to reword it if necessary.  
 - G1.9 Test descriptions (e.g., in `describe` or `it` blocks) must not contain feature numbers or task IDs. Use domain language only.  
-- G1.10 When all sub-tasks for a parent feature are marked as `[COMPLETED]`, you must also mark the top-level parent feature as `[COMPLETED]` in `tasks.md`.  
+- G1.10 When all sub-tasks for a parent feature are marked as completed (each task for that feature is checked complete [x]), you must also mark the top-level parent feature as completed in `tasks.md`.  
 - G1.11 You MUST top and re-run the site using `yarn dev` after completing every task (after tests pass GREEN) and fix any issues that occur during startup or runtime. This is mandatory verification before proceeding to the next task.  
 
 ---
