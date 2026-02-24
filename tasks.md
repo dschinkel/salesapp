@@ -19,4 +19,5 @@ Purpose of `tasks.md`:
 - [x] UI placement in the application footer  
 - [x] Debug traceability with git short SHA  
 - [x] Architecture constraints  
-- [x] Use a shadcn footer in App.tsx  
+- [x] Use a black shadcn footer in App.tsx
+- [x] Add a shadcn badge to show the version and make the version text color #C5A55A  

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Badge } from './ui/badge';
 
 export const AppVersion = () => {
   const version = import.meta.env?.PACKAGE_VERSION;
@@ -7,8 +8,12 @@ export const AppVersion = () => {
   if (!version) return null;
 
   return (
-    <div data-testid="app-version" className="text-xs text-slate-400 text-center">
+    <Badge 
+      data-testid="app-version" 
+      variant="outline" 
+      className="text-[color:#C5A55A] border-[color:#C5A55A]"
+    >
       v{version}{sha ? ` (${sha})` : ''}
-    </div>
+    </Badge>
   );
 };
