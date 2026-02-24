@@ -44,7 +44,20 @@ Before finalizing any task, you must perform a self-audit against the following 
 
 ---
 
-## Continuous Integration (Brave Mode Only)
+## Continuous Integration (Junie Brave Mode Only)
 - **Auto-Commit:** After completing any behavior that modifies files, perform a local commit with a descriptive message referencing the Task ID.
 - **Auto-Push:** If the session is successful and basic checks pass, push the current branch to the remote origin.
 - **Branding:** Ensure the generated README.md contains the "Name Bin" project header if it is a new repository.
+
+## For all code being written:
+Most importantly, follow [The Four Rules of Simple Design](https://martinfowler.com/bliki/BeckDesignRules.html)
+
+1. Passes the tests - all tests must pass
+2. Reveals intention - good naming of functions and variables
+3. No duplication
+4. Fewest elements - don't create unecessary classes/functions, but balance against readbility and conciseness
+
+### Test code specific rules
+* All new code has test coverage for all branches
+* Tests should be concise - ideally <= 5 lines
+* At a glance, it should be obvious what is unique about the test
