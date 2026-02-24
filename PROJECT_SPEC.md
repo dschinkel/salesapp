@@ -32,7 +32,6 @@ At the start of every task and before proceeding to the next step in the PLAN, r
 - F.1.0.3 Timeline 
 - F.1.0.4 Decision Makers
 - F.1.0.5 Estimated Deal Size  
-- F.1.0.6 Concerns  
 - F.1.0.7 Competition  
 - F.1.0.8 Budget
 - F.1.0.9 Strategy

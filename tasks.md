@@ -23,3 +23,4 @@ Purpose of `tasks.md`:
 - [x] Add a shadcn badge to show the version and make the version text color #C5A55A  
 - [x] Make the badge larger and more subtle  
 - [x] Make the app version text bigger and nicer  
+- [x] Replace version badge with a shadcn label  

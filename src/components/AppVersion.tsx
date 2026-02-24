@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge } from './ui/badge';
+import { Label } from './ui/label';
 
 export const AppVersion = () => {
   const version = import.meta.env?.PACKAGE_VERSION;
@@ -8,12 +8,11 @@ export const AppVersion = () => {
   if (!version) return null;
 
   return (
-    <Badge 
+    <Label 
       data-testid="app-version" 
-      variant="outline" 
-      className="text-[color:#C5A55A] border-[color:#C5A55A]/30 px-4 py-1.5 text-sm font-semibold tracking-wide bg-transparent"
+      className="text-[color:#C5A55A] text-sm font-semibold tracking-wide"
     >
       v{version}{sha ? ` (${sha})` : ''}
-    </Badge>
+    </Label>
   );
 };
