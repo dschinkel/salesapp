@@ -75,7 +75,7 @@ Example running container
 
 #### IAM user access keys
 Used by GitHub to push to ECR
-We created an IAM user with the following permissions: `AmazonEC2ContainerRegistryPowerUser`
+We created an IAM user with the following permissions: `AmazonEC2ContainerRegistryPowerUser` and `AmazonSSMFullAccess
 Then added a key pair to the IAM user which gave us:
 `AWS_ACCESS_KEY_ID` 
 `AWS_SECRET_ACCESS_KEY`

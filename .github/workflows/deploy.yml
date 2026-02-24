@@ -63,16 +63,18 @@ jobs:
           HOST_PORT: ${{ env.HOST_PORT }}
           APP_PORT: ${{ env.APP_PORT }}
           INSTANCE_ID: ${{ secrets.EC2_INSTANCE_ID }}
+          FULL_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
 
-          # Send the command
+          SHORT_SHA="${FULL_SHA:0:7}"
+
           COMMAND_ID="$(
             aws ssm send-command \
               --region "$REGION" \
               --instance-ids "$INSTANCE_ID" \
               --document-name "AWS-RunShellScript" \
-              --comment "Deploy $IMAGE" \
+              --comment "Deploy $SHORT_SHA" \
               --parameters commands="[
                 \"set -euo pipefail\",
                 \"sudo systemctl start docker || true\",
@@ -88,7 +90,6 @@ jobs:
 
           echo "SSM CommandId: $COMMAND_ID"
 
-          # Wait for completion and print output if it fails
           aws ssm wait command-executed --region "$REGION" --command-id "$COMMAND_ID" --instance-id "$INSTANCE_ID"
 
           STATUS="$(aws ssm get-command-invocation --region "$REGION" --command-id "$COMMAND_ID" --instance-id "$INSTANCE_ID" --query Status --output text)"
