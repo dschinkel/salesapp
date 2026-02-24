@@ -62,7 +62,10 @@ The `rsync -au` flag ensures that if you’ve already started customizing the co
 
 ## Deployment
 We're using github actions to deploy to ECS (Elastic Container Registry).
-We're deplying our docker containers to ECS Ec2 instances. The instance requires an IAM role, we created a role and gave it `AmazonEC2ContainerRegistryReadOnly` rights. Then went back  and applied that role to our Ec2 instance.
+We're deploying our docker containers to ECS Ec2 instances. 
+
+The instance requires an IAM role, we created a role and gave it `AmazonEC2ContainerRegistryReadOnly` rights. Then went back  and applied that role to our Ec2 instance.
+
 Example running container
 - `<aws-account-id>.dkr.ecr.<region>.amazonaws.com/<ECR_REPOSITORY>:<image-tag>`
 - `123456789012.dkr.ecr.us-east-2.amazonaws.com/salesapp:abc123`
@@ -72,7 +75,7 @@ Example running container
 
 #### IAM user access keys
 Used by GitHub to push to ECR
-We created an IAM user with the following permissions: `AmazonEC2ContainerRegistryPowerUser` and `AmazonSSMFullAccess
+We created an IAM user with the following permissions: `AmazonEC2ContainerRegistryPowerUser` and `AmazonSSMFullAccess`
 Then added a key pair to the IAM user which gave us:
 - `AWS_ACCESS_KEY_ID` 
 - `AWS_SECRET_ACCESS_KEY`
