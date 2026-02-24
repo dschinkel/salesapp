@@ -2,14 +2,15 @@
 
 Project: `Sales Record`
 
-Purpose: 
+Purpose of `PROJECT_SPEC.md`: 
 
-This document is the **source of truth** for product behavior, architecture decisions, and key technical choices.  
+This document is the **source of truth**, a higher level list of features to be worked on by the agent(s).
+These features are then split out into smaller tasks to be worked on by the agent.
+
 All implementation work must follow `GUIDELINES.md` which is located at the root of the project.
-At the start of every task and before proceeding to the next step in the PLAN, Junie must re-load PROJECT_SPEC.md and GUIDELINES.md from disk, state what the next step is, and ask the User for permission to proceed.
-All behavior mentioned below are to be incrementally implemented will be broken down into smaller tasks defined in `tasks.md` and worked on one at a time.
+At the start of every task and before proceeding to the next step in the PLAN, re-load PROJECT_SPEC.md and GUIDELINES.md from disk, state what the next step is, and ask the User for permission to proceed.
 
-Record voice and provide a transcript
+👇All behavior mentioned below are to be incrementally implemented will be broken down into smaller tasks defined in `tasks.md` and worked on one at a time.
 
 # Brainstorming
 
@@ -19,30 +20,6 @@ Record voice and provide a transcript
 - F.0.2 Deploy the app to ECS (Elastic Container Registry) via Github Actions
 - F.0.3 Show an app version number at the bottom of the page
 
----
+## 3. Feature Requirements
 
-## 3. Product Requirements
-
-### 3.1 Feature Requirements (FR.*)
-
----
-
-## 4. Technical Requirements (TR.*)
-
-
-
----
-
-## 5. UI Specification
-
-### 5.1 Primary Screen
-
----
-
-
----
-
-## 9. Open Questions / Risk Areas
-
-
----
+### F3.1 <Feature Name>
