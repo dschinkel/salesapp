@@ -11,7 +11,7 @@ export const AppVersion = () => {
     <Badge 
       data-testid="app-version" 
       variant="outline" 
-      className="text-[color:#C5A55A] border-[color:#C5A55A]"
+      className="text-[color:#C5A55A] border-[color:#C5A55A]/30 px-3 py-1 text-xs font-medium tracking-tight bg-transparent"
     >
       v{version}{sha ? ` (${sha})` : ''}
     </Badge>
