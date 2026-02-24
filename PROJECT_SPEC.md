@@ -25,4 +25,14 @@ At the start of every task and before proceeding to the next step in the PLAN, r
 
 ## 3. Feature Requirements
 
-### F3.1 <Feature Name>
+### F3.1 Shows a list of questions to be answered
+- F.1.0.0 Company Name  
+- F.1.0.1 Topic
+- F.1.0.2 Customer's Objectives  
+- F.1.0.3 Timeline 
+- F.1.0.4 Decision Makers
+- F.1.0.5 Estimated Deal Size  
+- F.1.0.6 Concerns  
+- F.1.0.7 Competition  
+- F.1.0.8 Budget
+- F.1.0.9 Strategy
