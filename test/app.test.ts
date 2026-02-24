@@ -4,7 +4,7 @@ import React from 'react';
 import App from '../src/App';
 
 describe('App', () => {
-    it('renders "new application" text', () => {
+    it('page loads', () => {
         render(React.createElement(App));
         expect(screen.getByText(/new application/i)).toBeInTheDocument();
     });
