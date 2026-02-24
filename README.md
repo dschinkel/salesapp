@@ -1,5 +1,21 @@
 # Sales Recorder
 
+## Agent .md Files
+Keep the following format in .md files consistent. **Always keep Markdown heading syntax**.
+Add numeric section labels only if you want explicit hierarchical referencing.
+
+If you remove markdown, you lose:
+- proper heading rendering
+- table-of-contents generation
+- anchor linking
+- structural parsing for agent
+
+# defines the heading level for rendering and structure
+## F.x defines a top level feature
+### F.x.1 defines a sub-feature / slice of the top level feature
+
+
+
 ## How to use this
 1. make sure your init.sh (or `init.sh`) is marked as executable in your boilerplate repo (chmod +x init.sh). This ensures the AI agent doesn't get hung up on a "Permission Denied" error when it tries to run the bootstrap.
 2. Start a new folder for your new project: `mkdir my-new-tool && cd my-new-tool`
