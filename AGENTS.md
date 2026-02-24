@@ -106,8 +106,8 @@ Minimum required:
 - Views must be humble and ignorant of implementation details
 
 Rules:
-- Handler, fetch, and other logic must live in hooks
-- Hooks call repositories/services via injected dependencies
+- Handler, fetch, and other logic must live in hooks or layers below the view
+- Hooks call repositories/services/business logic via injected dependencies
 
 Below hooks must exist two layers:
 
@@ -163,64 +163,56 @@ Commands must not:
 
 # 7. Data Model (Initial)
 
-
-# 8. Technology Plan (Bird’s-eye)
-
-## 8.1 Client (src/client)
+## 8 Client (src/client)
 - React + TypeScript
 - shadcn/ui components:
   - Combobox / dropdown for fonts
   - Inputs for text
   - Cards / tiles
 
-## 8.2 Service (src/service)
+## 9 Service (src/service)
 
 
-# 9. Testing
+# 10. Testing
 
-## 9.1 Frameworks
+## 10.1 Frameworks
 - Jest
 - React Testing Library
 - React Hook Testing Library
 - Backend uses Jest
 
-## 9.2 TDD Enforcement
+## 10.2 TDD Enforcement
 - Tests written first (TDD), one at a time, per `GUIDELINES.md`
 
-## 9.3 Test Language Rules
+## 10.3 Test Language Rules
 - Use domain language
 - Do not use "mock"
 - Use `fakeX` for stubs
 - Do not use `jest.fn()`
 
-## 9.4 Structural Testing Rules
+## 10.4 Structural Testing Rules
 - Do not test loading state in hook tests
 - Treat SUT as black box
 - Avoid spies when output can be asserted
 
-## 9.5 UI Test Rules
+## 10.5 Outside-in TDD from UI
+- TDD outside-in starting at the React hook layer unless told otherwise
+
+## 10.6 UI Test Rules
 - Use `data-testid`
 - Do not use `getByText` / `findByText`
 - Test IDs represent domain concepts
 
-## 9.6 TDD Commit Format
+## 10.7 TDD Commit Format
 `feat: <feature-id>: Step <number>: <step-name>`
 
-## 9.7 Function Placement Rule
+## 10.8 Function Placement Rule
 Functions called from a parent must be placed below the parent.
 
-## 9.8 Coverage Requirements
+## 10.9 Coverage Requirements
 - All new code must have branch coverage
 - Tests should be concise (≤ 5 lines preferred)
 - Test uniqueness must be obvious at a glance
-
-
-# 10. Data / JSON DB
-
-Store all data in local JSON files under `src/db/`.
-
-Minimum required:
-- `src/db/<something>.json` stores font metadata used by the app
 
 
 # 11. LLM Requests (TOON)
