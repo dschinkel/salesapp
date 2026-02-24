@@ -55,7 +55,7 @@ jobs:
 
           echo "image=$IMAGE:$TAG" >> $GITHUB_OUTPUT
 
-      - name: Deploy on EC2 via SSM (pull + restart)
+      - name: Deploy on EC2 via SSM (install docker if missing, pull + restart)
         env:
           IMAGE: ${{ steps.build-image.outputs.image }}
           REGION: ${{ env.AWS_REGION }}
@@ -76,11 +76,42 @@ jobs:
               --comment "Deploy $SHORT_SHA" \
               --parameters commands="[
                 \"set -euo pipefail\",
+
+                \"echo '[deploy] ensure docker installed'\",
+
+                \"if ! command -v docker >/dev/null 2>&1; then\",
+                \"  if command -v dnf >/dev/null 2>&1; then\",
+                \"    sudo dnf -y update\",
+                \"    sudo dnf -y install docker\",
+                \"  elif command -v yum >/dev/null 2>&1; then\",
+                \"    sudo yum -y update\",
+                \"    sudo yum -y install docker\",
+                \"  else\",
+                \"    echo 'No supported package manager found (dnf/yum).'; exit 1\",
+                \"  fi\",
+                \"fi\",
+
+                \"echo '[deploy] start docker'\",
+
+                \"sudo systemctl enable --now docker\",
                 \"sudo systemctl start docker || true\",
+                \"sudo systemctl is-active docker >/dev/null\",
+
+                \"echo '[deploy] login + pull from ECR'\",
+
                 \"aws ecr get-login-password --region $REGION | sudo docker login --username AWS --password-stdin $(echo $IMAGE | cut -d/ -f1)\",
                 \"sudo docker pull $IMAGE\",
+
+                \"echo '[deploy] stop old container if exists'\",
+
                 \"if sudo docker ps -a --format '{{.Names}}' | grep -qx '$CONTAINER'; then sudo docker stop '$CONTAINER' || true; sudo docker rm '$CONTAINER' || true; fi\",
+
+                \"echo '[deploy] run new container'\",
+
                 \"sudo docker run -d --restart unless-stopped --name '$CONTAINER' -p '$HOST_PORT:$APP_PORT' '$IMAGE'\",
+
+                \"echo '[deploy] prune dangling images'\",
+
                 \"sudo docker image prune -f || true\"
               ]" \
               --query "Command.CommandId" \
@@ -100,7 +131,7 @@ jobs:
 
             case "$STATUS" in
               Pending|InProgress|Delayed)
-                sleep 3
+                sleep 5
                 ;;
               Success|Cancelled|TimedOut|Failed)
                 break
