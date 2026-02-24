@@ -98,3 +98,23 @@ Then added a key pair to the IAM user which gave us:
 
 #### EC2 instance role
 Used by the EC2 Instance (host) to pull from ECR (registry)
+
+
+## Team Agent Checklist Manual Verification
+
+These are things to always check at the start of a pair or work session to ensure the agents are indeed following `AGENTS.md` AND `GUIDELINES.md`
+These are the things that should be happening as outlined in `GUIDELINES.md`
+
+- When you typed "work on F.x" to tell it to start working on a feature, did it ask you whether you want to TDD it?
+- Did it provide a plan for you to review before it stared to code (TDD or not)?
+- If you choose a TDD workflow when prompted, did it:
+  - In the TDD Plan
+    - show you an TDD outside-in plan based on WHERE you told it to start (react hook layer or above depending on what you decided)? (default sholud be react hook layer)
+    - show you a RED / GREEN / REFACTOR plan for each layer? (It must show something for all three steps regardless if there's anything it thinks might need to be refactored)
+    - show you the test name, test file, and production file it's going to create/touch?
+    - ask you whether or not to proceed with the plan?
+    - log the TDD plan in tdd.log after it was done implementing the plan (so we have a record of wtf it did?)
+- When it was done coding and ready to commit, did it stop and allow you to review the commit message first?
+
+If any one of these are not happening, unfortunately we are in llm land so at times you may have to tell the LLM to re-read AGENTS.md and GUIDELINES.md.
+It should't be often but you might have to at the start of your coding day. For the most part it does what it's supposed to as outlined in GUIDELINES.md

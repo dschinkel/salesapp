@@ -32,7 +32,7 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
   - P0.4 After presenting the PLAN, ask whether to proceed. Do not proceed without an explicit “continue/proceed” from the user.  
   - P0.5 If the user tells you to proceed, append the approved PLAN into `tdd.log` before starting implementation (only applies when the user chooses a TDD workflow).  
   - P0.5.1 When copying the PLAN into `tdd.log`, include the full PLAN text verbatim under a `PLAN:` heading.  
-  - P0.6 After completing each step in the PLAN, summarize the step you just completed and ask to proceed to the next step. Tell me what the next step is.  
+  - P0.6 After completing each step in the PLAN, summarize the step you just completed, run the build using `yarn build` to ensure no regressions or build errors were introduced, and ask to proceed to the next step. Tell me what the next step is.  
   - P0.7 If the user stops you midstream with a question or change request, log the interruption and the resolution in `tdd.log` (only applies when the user chose a TDD workflow in P0.0).  
   - P0.8 If the user reverts an implemented plan, remove the corresponding plan and its workflow entries from `tdd.log` (only applies when the user chooses a TDD workflow).  
   - P0.9 For React work, when presenting a PLAN, ensure the starting point aligns with the choice made in P0.0 (UI Component layer vs. React Hooks layer (default)).  

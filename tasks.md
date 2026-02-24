@@ -24,3 +24,16 @@ Purpose of `tasks.md`:
 - [x] Make the badge larger and more subtle  
 - [x] Make the app version text bigger and nicer  
 - [x] Replace version badge with a shadcn label  
+
+
+## F3.1 Shows a list of questions to be answered  
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [/] F.1.0.0 Company Name  
+- [ ] F.1.0.1 Topic  
+- [ ] F.1.0.2 Customer's Objectives  
+- [ ] F.1.0.3 Timeline  
+- [ ] F.1.0.4 Decision Makers  
+- [ ] F.1.0.5 Estimated Deal Size  
+- [ ] F.1.0.6 Competition  
+- [ ] F.1.0.7 Budget  
+- [ ] F.1.0.8 Strategy  
