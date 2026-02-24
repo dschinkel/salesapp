@@ -66,7 +66,6 @@ jobs:
           FULL_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
-
           SHORT_SHA="${FULL_SHA:0:7}"
 
           COMMAND_ID="$(
@@ -90,13 +89,43 @@ jobs:
 
           echo "SSM CommandId: $COMMAND_ID"
 
-          aws ssm wait command-executed --region "$REGION" --command-id "$COMMAND_ID" --instance-id "$INSTANCE_ID"
+          while true; do
+            STATUS="$(aws ssm get-command-invocation \
+              --region "$REGION" \
+              --command-id "$COMMAND_ID" \
+              --instance-id "$INSTANCE_ID" \
+              --query Status --output text)"
 
-          STATUS="$(aws ssm get-command-invocation --region "$REGION" --command-id "$COMMAND_ID" --instance-id "$INSTANCE_ID" --query Status --output text)"
-          echo "SSM Status: $STATUS"
+            echo "SSM Status: $STATUS"
+
+            case "$STATUS" in
+              Pending|InProgress|Delayed)
+                sleep 3
+                ;;
+              Success|Cancelled|TimedOut|Failed)
+                break
+                ;;
+              *)
+                echo "Unknown SSM status: $STATUS"
+                break
+                ;;
+            esac
+          done
+
+          echo "----- STDOUT -----"
+          aws ssm get-command-invocation \
+            --region "$REGION" \
+            --command-id "$COMMAND_ID" \
+            --instance-id "$INSTANCE_ID" \
+            --query 'StandardOutputContent' --output text || true
+
+          echo "----- STDERR -----"
+          aws ssm get-command-invocation \
+            --region "$REGION" \
+            --command-id "$COMMAND_ID" \
+            --instance-id "$INSTANCE_ID" \
+            --query 'StandardErrorContent' --output text || true
 
           if [ "$STATUS" != "Success" ]; then
-            aws ssm get-command-invocation --region "$REGION" --command-id "$COMMAND_ID" --instance-id "$INSTANCE_ID" --query 'StandardOutputContent' --output text || true
-            aws ssm get-command-invocation --region "$REGION" --command-id "$COMMAND_ID" --instance-id "$INSTANCE_ID" --query 'StandardErrorContent' --output text || true
             exit 1
           fi
