@@ -8,6 +8,15 @@ Purpose of `tasks.md`:
 - To track tasks completed  
 - To track tasks in progress
 
-## F.0 Walking Skeleton
-- [x] F.0.0 Hello World is runnable
-- [x] F.0.1 If the repo has not been initialized and pushed to github, push it to the remote using the github CLI
+## F.0 Walking Skeleton  
+- [x] F.0.0 Hello World is runnable  
+- [x] F.0.1 If the repo has not been initialized and pushed to github, push it to the remote using the github CLI  
+
+## F.0.3 Show an app version number at the bottom of the page  
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [x] Build-time version injection via vite.config.ts  
+- [x] React implementation of AppVersion component  
+- [x] UI placement in the application footer  
+- [x] Debug traceability with git short SHA  
+- [x] Architecture constraints  
+- [x] Use a shadcn footer in App.tsx  
