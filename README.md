@@ -64,21 +64,18 @@ The `rsync -au` flag ensures that if you’ve already started customizing the co
 We're using github actions to deploy to ECS (Elastic Container Registry).
 We're deplying our docker containers to ECS Ec2 instances. The instance requires an IAM role, we created a role and gave it `AmazonEC2ContainerRegistryReadOnly` rights. Then went back  and applied that role to our Ec2 instance.
 Example running container
-`<aws-account-id>.dkr.ecr.<region>.amazonaws.com/<ECR_REPOSITORY>:<image-tag>`
-`123456789012.dkr.ecr.us-east-2.amazonaws.com/salesapp:abc123`
-`EC2_USER` ec2-user or ubuntu (linux username on the instance)
-`ECR_REPOSITORY` must match the same name as the repository created in ECR which is `salesapp`
-`EC2_SSH_KEY` you create a key/pair under EC2 | Network & Security | Key Pairs. It's the private key, the .pem file you get when you create a Key Pair
-- EC2 → Network & Security → Key Pairs → Create key pair → download .pem
-- Used by GitHub to auth into the EC2 box
-`EC2_HOST` public ip of the ec2 instance
+- `<aws-account-id>.dkr.ecr.<region>.amazonaws.com/<ECR_REPOSITORY>:<image-tag>`
+- `123456789012.dkr.ecr.us-east-2.amazonaws.com/salesapp:abc123`
+- `EC2_USER` ec2-user or ubuntu (linux username on the instance)
+- `ECR_REPOSITORY` must match the same name as the repository created in ECR which is `salesapp`
+- `EC2_HOST` public ip of the ec2 instance
 
 #### IAM user access keys
 Used by GitHub to push to ECR
 We created an IAM user with the following permissions: `AmazonEC2ContainerRegistryPowerUser` and `AmazonSSMFullAccess
 Then added a key pair to the IAM user which gave us:
-`AWS_ACCESS_KEY_ID` 
-`AWS_SECRET_ACCESS_KEY`
+- `AWS_ACCESS_KEY_ID` 
+- `AWS_SECRET_ACCESS_KEY`
 
 #### EC2 instance role
 Used by the EC2 Instance (host) to pull from ECR (registry)
