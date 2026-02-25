@@ -213,6 +213,7 @@ const Report = ({ questions }: ReportProps) => {
 ```
 
 - R1.8 Tests: default to hook-layer tests (React Hook Testing Library) and then unit tests for lower-level pure functions.  
+- R1.9 Hooks receive generic business via simple prop injection.  
 
 ---
 

@@ -15,3 +15,6 @@ AGENTS.md and GUIDELINES.md talks about tdd.log yet when we started the project,
   - P0.8 If the user reverts an implemented plan, remove the corresponding plan and its workflow entries from `tdd.log` (only applies when the user chooses a TDD workflow).
 
 It didn't wire up the useQuestions hook even though the plan had a step to do that: 3.Final UI Integration
+
+It's writing bad tests
+It's adding unecessary fakes and using Jest mocks, we just need simple stubs without jest.fn()
