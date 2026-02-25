@@ -15,10 +15,10 @@ export function UploadQuestions({ onUpload }: UploadQuestionsProps) {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-4 mb-8 bg-slate-50 rounded-lg border border-slate-200">
+    <div className="w-full max-w-2xl mx-auto p-6 mb-8 bg-cambria-panelDark rounded-xl border border-cambria-border shadow-lg">
       <Label 
         htmlFor="csv-upload"
-        className="block text-sm font-medium text-slate-700 mb-2"
+        className="block text-sm font-medium text-cambria-cream mb-3"
       >
         Upload CSV of questions (one per line)
       </Label>
@@ -27,7 +27,7 @@ export function UploadQuestions({ onUpload }: UploadQuestionsProps) {
         type="file"
         accept=".csv,text/csv"
         onChange={handleFileChange}
-        className="cursor-pointer"
+        className="cursor-pointer bg-cambria-panelLight border-cambria-border text-cambria-cream file:bg-cambria-gold file:text-black file:border-0 file:rounded-md file:px-4 file:py-1 hover:file:opacity-90 transition-opacity"
       />
     </div>
   );

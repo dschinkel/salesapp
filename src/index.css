@@ -1,3 +1,57 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 41 38% 95%; /* Cambria cream */
+    --card: 0 0% 7%; /* Cambria panelDark */
+    --card-foreground: 41 38% 95%; /* Cambria cream */
+    --popover: 0 0% 4%; /* Cambria blackLight */
+    --popover-foreground: 41 38% 95%; /* Cambria cream */
+    --primary: 43 45% 56%; /* Cambria gold */
+    --primary-foreground: 0 0% 0%; /* Black */
+    --secondary: 0 0% 9%; /* Cambria panelLight */
+    --secondary-foreground: 41 38% 95%; /* Cambria cream */
+    --muted: 33 13% 36%; /* Cambria mutedDarker */
+    --muted-foreground: 36 21% 60%; /* Cambria mutedDark */
+    --accent: 43 45% 56%; /* Cambria gold */
+    --accent-foreground: 0 0% 0%; /* Black */
+    --destructive: 3 66% 53%; /* Cambria red */
+    --destructive-foreground: 0 0% 98%; /* White */
+    --border: 0 0% 16%; /* Cambria border */
+    --input: 0 0% 13%; /* Cambria borderLight */
+    --ring: 43 45% 56%; /* Cambria gold */
+  }
+}
+
+@layer base {
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}

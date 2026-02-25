@@ -75,6 +75,8 @@ The `rsync -au` flag ensures that if you’ve already started customizing the co
 
 ## Local Development
 1. `yarn dev`
+Note: After an agent is done finishing implementation steps for a feature, we have it run a cleanup step. 
+In the cleanup step we need to run `yarn dev` to fix errors since we're testing using the vite dev server. But we also want to run `yarn build` so that we know if this is pushed to production that it builds.
 
 ## Deployment
 We're using github actions to deploy to ECS (Elastic Container Registry).

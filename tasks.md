@@ -58,3 +58,20 @@ Purpose of `tasks.md`:
 ## F3.4 Add Key Points Description  
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
 - [x] F3.4.0 Add a description below the Key Points header  
+
+## F3.5 Apply Cambria Color Scheme to the list of questions
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] F3.5.0 Using this set of Hex colors, apply the Cambria color scheme to the app:
+  - [x] gold gradients (#C5A55A → #9E833A) for buttons and accents
+  - [x] black backgrounds (#000000 → #0a0a0a gradient with #111111/#161616 panels)
+  - [x] cream text (#F5F0E8) for primary content
+  - [x] warm muted tones (#D9D0C0, #A09080, #7A6F60, #5A5040)
+  - [x] for secondary text, dark borders (#2a2a2a, #222222) for dividers
+  - [x] red (#D4443B)
+  - [x] ensure that is applied to our shadcn theme
+  - [x] use the context image as a reference to see how the colors should look
+  - [x] double check that the list is using shadcn components where possible
+
+## F3.6 Records a Conversation
+- [ ] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [ ] F3.5.0 Provides a section to record voice to text

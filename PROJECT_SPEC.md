@@ -53,6 +53,27 @@ list of questions of questions:
 ### F3.4 Add Key Points Description
 - [x] F3.4.0 Add a description below the Key Points header with text "Add key points or topics that should be mentioned during the call. They'll be automatically checked off when detected in the transcript."
 
+### F3.5 Apply Cambria Color Scheme to the list of questions
+- [x] F3.5.0 Using this set of Hex colors, apply the Cambria color scheme to the app:
+  - gold gradients (#C5A55A → #9E833A) for buttons and accents
+  - black backgrounds (#000000 → #0a0a0a gradient with #111111/#161616 panels)
+  - cream text (#F5F0E8) for primary content
+  - warm muted tones (#D9D0C0, #A09080, #7A6F60, #5A5040)
+  - for secondary text, dark borders (#2a2a2a, #222222) for dividers
+  - red (#D4443B)
+  - ensure that is applied to our shadcn theme
+  - use the context image as a reference to see how the colors should look
+
+### F3.6 Create a dark mode them
+In F3.5 you created a light mode theme. We want to be able to toggle to a dark mode theme whereas the questions list is themed and looks like the attached screenshot.
+- [] F3.6.0 Create a dark mode theme that matches the screenshot. Provide a toggle to switch back to light mode
+
+### F3.x Records a Conversation
+- [] F3.5.0 Provides a section to record voice to text. Text that is transcribed shows below voice recorder
+
+
+### F3.x Parses pre sales questions pasted in by sales into the question list
+
 NOTES
 later down the road
 - Use Gemini parsing of blob text

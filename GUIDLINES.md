@@ -19,7 +19,7 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
 
 ## P0. Agent Protocol (non-negotiable)
 
-- P0.0 When the user says `work on task <number>`, ask these questions BEFORE producing any PLAN:  
+- P0.0 When the user says `work on task <number>`, you must always include the feature title in your response (e.g., "I am ready to work on task F3.5: `Feature Title`"). Then ask these questions BEFORE producing any PLAN:  
     - 1. "Do you want the PLAN to include a full TDD workflow (RED → GREEN → REFACTOR + commit prompts), or a non-TDD execution plan?"  
     - 2. "If TDD is chosen, do you want to include UI component tests (starting TDD at the React Component layer), or start TDD at the React Hooks layer (default)?"  
 - P0.0.0 Do not present a PLAN until the user answers the questions in P0.0.  
@@ -32,7 +32,7 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
   - P0.4 After presenting the PLAN, ask whether to proceed. Do not proceed without an explicit “continue/proceed” from the user.  
   - P0.5 If the user tells you to proceed, append the approved PLAN into `tdd.log` before starting implementation (only applies when the user chooses a TDD workflow).  
   - P0.5.1 When copying the PLAN into `tdd.log`, include the full PLAN text verbatim under a `PLAN:` heading.  
-  - P0.6 After completing each step in the PLAN, summarize the step you just completed, run the build using `yarn build` to ensure no regressions or build errors were introduced, and ask to proceed to the next step. Tell me what the next step is.  
+  - P0.6 After completing each step in the PLAN, summarize the step you just completed, run the build using `yarn build` and also run `yarn dev` to ensure no regressions or dev-server build errors were introduced, and ask to proceed to the next step. Tell me what the next step is.
   - P0.7 If the user stops you midstream with a question or change request, log the interruption and the resolution in `tdd.log` (only applies when the user chose a TDD workflow in P0.0).  
   - P0.8 If the user reverts an implemented plan, remove the corresponding plan and its workflow entries from `tdd.log` (only applies when the user chooses a TDD workflow).  
   - P0.9 For React work, when presenting a PLAN, ensure the starting point aligns with the choice made in P0.0 (UI Component layer vs. React Hooks layer (default)).  
@@ -121,7 +121,7 @@ The Fix:
 - T1.5.1 After tests run GREEN, you MUST restart the website and services using `yarn dev` in the background and verify no errors are outputted. Fix any errors that occur during startup or runtime.  
 - T1.6 In REFACTOR, refactor only while tests are green. Make one refactoring change at a time and run tests after each small refactor (TCR).  
 - T1.7 If refactoring occurred, you MUST explicitly ask for permission to commit using: `feat: <task-id>: refactor: <behavior>`. After the commit, ask whether to push or continue.  
-- T1.8 Cleanup & Verification must include running tests and fixing lint warnings/errors. Then prompt the user to commit using: `feat: <task-id>: cleanup: <behavior>`.  
+- T1.8 Cleanup & Verification must include running tests, fixing lint warnings/errors, and running both `yarn build` and `yarn dev` to ensure the app compiles and starts without errors. Then prompt the user to commit using: `feat: <task-id>: cleanup: <behavior>`.
 - T1.9 `tdd.log` must relate every RED | GREEN | REFACTOR entry to its corresponding PLAN step number.  
 - T1.10 When fixing a defect or implementing a feature with a clear external contract, first write an “API-level” failing test. In this repo, “API-level” means the public boundary for the behavior (typically the hook public API or the domain service function), not an HTTP endpoint or end-to-end test unless explicitly requested.  
 - T1.11 When tests fail, fix implementation first, not the test, unless the test clearly contradicts the spec.  
@@ -384,6 +384,7 @@ PLAN:
 
 3. Cleanup & Verification
    - Run all tests
+   - Run `yarn build` and `yarn dev` to check for compilation/runtime errors
    - Fix linting errors
      COMMIT:
    - Proposed message: feat: <task-id>: cleanup: <behavior>
@@ -427,6 +428,7 @@ PLAN:
 
 3. Cleanup & Verification
    - Run relevant checks/tests (as applicable)
+   - Run `yarn build` and `yarn dev` to check for compilation/runtime errors
    - Fix linting errors
    - Verify the feature manually (as applicable)
 
