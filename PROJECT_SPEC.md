@@ -43,7 +43,12 @@ list of questions of questions:
 - F.1.0.8 Strategy
 
 ### F3.2 Ability to upload a list of questions
-- [x] F3.2.0 Upload a CSV file of questions
+- [x] F3.2.0 Add new questions by uploading a CSV file question list
+- [x] F3.2.1 Should only append uploaded questions not overwrite previous question
+- [x] F3.2.2 Add a header to the questions lists called "Key Points"
+
+### F3.3 Ability reorder questions
+- [x] F3.3.0 Reorder questions by dragging and dropping
 
 NOTES
 
