@@ -1,10 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export interface QuestionListProps {
   questions: string[];
+  onReorder?: (fromIndex: number, toIndex: number) => void;
 }
 
-export function QuestionList({ questions }: QuestionListProps) {
+export function QuestionList({ questions, onReorder }: QuestionListProps) {
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+
+  const handleDragStart = (e: React.DragEvent<HTMLLIElement>, index: number) => {
+    setDraggedIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLLIElement>, index: number) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLLIElement>, index: number) => {
+    e.preventDefault();
+    if (draggedIndex !== null && draggedIndex !== index && onReorder) {
+      onReorder(draggedIndex, index);
+    }
+    setDraggedIndex(null);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedIndex(null);
+  };
+
   return (
     <div className="w-full max-w-2xl mx-auto p-4">
       {questions.length > 0 && (
@@ -15,7 +40,15 @@ export function QuestionList({ questions }: QuestionListProps) {
       )}
       <ul className="space-y-2">
         {questions.map((question, index) => (
-          <li key={index} className="p-3 bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-200">
+          <li 
+            key={index} 
+            draggable={!!onReorder}
+            onDragStart={(e) => handleDragStart(e, index)}
+            onDragOver={(e) => handleDragOver(e, index)}
+            onDrop={(e) => handleDrop(e, index)}
+            onDragEnd={handleDragEnd}
+            className={`p-3 bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-200 ${draggedIndex === index ? 'opacity-50' : ''} ${!!onReorder ? 'cursor-move' : ''}`}
+          >
             {question}
           </li>
         ))}

@@ -50,8 +50,10 @@ list of questions of questions:
 ### F3.3 Ability reorder questions
 - [x] F3.3.0 Reorder questions by dragging and dropping
 
-NOTES
+### F3.4 Add Key Points Description
+- [] F3.4.0 Add a description below the Key Points header with text "Add key points or topics that should be mentioned during the call. They'll be automatically checked off when detected in the transcript."
 
+NOTES
 later down the road
 - Use Gemini parsing of blob text
 

@@ -52,5 +52,5 @@ Purpose of `tasks.md`:
 - [x] F3.2.2 Add "Key Points" header to QuestionList component  
 
 ## F3.3 Ability reorder questions
-- [ ] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
-- [ ] F3.3.0 Reorder questions by dragging and dropping
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] F3.3.0 Reorder questions by dragging and dropping
