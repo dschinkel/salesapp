@@ -20,7 +20,7 @@ export function useQuestions({ parseFile }: UseQuestionsDependencies = {}) {
   const [questions, setQuestions] = useState<string[]>(initialQuestions);
 
   const uploadQuestions = (newQuestions: string[]) => {
-    setQuestions(newQuestions);
+    setQuestions(prev => [...prev, ...newQuestions]);
   };
 
   const parseAndUploadQuestions = async (file: File) => {

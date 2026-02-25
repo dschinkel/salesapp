@@ -42,3 +42,7 @@ Purpose of `tasks.md`:
 ## F3.2 Ability to upload a list of questions  
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
 - [x] F3.2.0 Upload a CSV file of questions  
+
+## F3.2.1 Should only append uploaded questions not overwrite previous question  
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [/] F3.2.1 appends new questions  

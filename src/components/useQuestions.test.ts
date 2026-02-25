@@ -20,7 +20,8 @@ describe('Questions', () => {
     expect(result.current.questions).toEqual(expectedQuestions);
   });
 
-  test('uploads new questions', () => {
+
+  test('appends new questions', () => {
     const { result } = renderHook(() => useQuestions());
     const newQuestions = ['New Question 1', 'New Question 2'];
 
@@ -28,7 +29,21 @@ describe('Questions', () => {
       result.current.uploadQuestions(newQuestions);
     });
 
-    expect(result.current.questions).toEqual(newQuestions);
+    const expectedQuestions = [
+      'Company Name',
+      'Topic',
+      'Customer\'s Objectives',
+      'Timeline',
+      'Decision Makers',
+      'Estimated Deal Size',
+      'Competition',
+      'Budget',
+      'Strategy',
+      'New Question 1',
+      'New Question 2'
+    ];
+
+    expect(result.current.questions).toEqual(expectedQuestions);
   });
 
   test('parses and uploads questions from a file via injected dependency', async () => {
@@ -40,6 +55,21 @@ describe('Questions', () => {
       await result.current.parseAndUploadQuestions(file);
     });
 
-    expect(result.current.questions).toEqual(['Question 1', 'Question 2', 'Question 3']);
+    const expectedQuestions = [
+      'Company Name',
+      'Topic',
+      'Customer\'s Objectives',
+      'Timeline',
+      'Decision Makers',
+      'Estimated Deal Size',
+      'Competition',
+      'Budget',
+      'Strategy',
+      'Question 1',
+      'Question 2',
+      'Question 3'
+    ];
+
+    expect(result.current.questions).toEqual(expectedQuestions);
   });
 });
