@@ -276,3 +276,8 @@ https://martinfowler.com/bliki/BeckDesignRules.html
 2. Reveals intention — good naming
 3. No duplication
 4. Fewest elements — avoid unnecessary classes/functions while preserving readability
+
+
+# Voice to Text
+  - Use Gemini API for voice to text
+

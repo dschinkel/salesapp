@@ -8,3 +8,10 @@ Usually the llm reads GUIDELINES.md and follows the outside-in TDD properly mean
  It usually appends each plan to the tdd.log after it's done implementing a feature.  But again weird, it did not this time for this project.  It has in past projects
 
 It won't stop auto commit / push. I told it to first stop and show me the commit message.
+
+AGENTS.md and GUIDELINES.md talks about tdd.log yet when we started the project, it didn't even check to see that we had a tdd.log which we did not. And it did not created it nor did it log anything obviously
+  - P0.5 If the user tells you to proceed, append the approved PLAN into `tdd.log` before starting implementation (only applies when the user chooses a TDD workflow).
+  - P0.5.1 When copying the PLAN into `tdd.log`, include the full PLAN text verbatim under a `PLAN:` heading.
+  - P0.8 If the user reverts an implemented plan, remove the corresponding plan and its workflow entries from `tdd.log` (only applies when the user chooses a TDD workflow).
+
+It didn't wire up the useQuestions hook even though the plan had a step to do that: 3.Final UI Integration

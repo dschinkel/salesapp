@@ -26,6 +26,7 @@ At the start of every task and before proceeding to the next step in the PLAN, r
 - [x] F.0.1 If the repo has not been initialized and pushed to github, push it to the remote using the github CLI
 - [x] F.0.2 Deploy the app to ECS (Elastic Container Registry) via Github Actions
 - [x] F.0.3 Show an app version number at the bottom of the page
+- [x] F.0.4 Deploy app to Google Cloud Run
 
 ## 3. Feature Requirements
 
@@ -41,4 +42,11 @@ list of questions of questions:
 - F.1.0.7 Budget
 - F.1.0.8 Strategy
 
+### F3.2 Ability to upload a list of questions
+F3.2.0 Upload a CSV file of questions
+
+NOTES
+
+later down the road
+- Use Gemini parsing of blob text
 
