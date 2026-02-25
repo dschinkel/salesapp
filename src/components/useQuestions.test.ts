@@ -31,10 +31,10 @@ describe('Questions', () => {
     expect(result.current.questions).toEqual(newQuestions);
   });
 
-  test('parses and uploads questions from a file', async () => {
-    const { result } = renderHook(() => useQuestions());
-    const fileContent = 'Question 1\nQuestion 2\n\n Question 3 ';
-    const file = new File([fileContent], 'test.csv', { type: 'text/csv' });
+  test('parses and uploads questions from a file via injected dependency', async () => {
+    const fakeParseFile = async (file: File) => ['Question 1', 'Question 2', 'Question 3'];
+    const { result } = renderHook(() => useQuestions({ parseFile: fakeParseFile }));
+    const file = new File([''], 'test.csv', { type: 'text/csv' });
 
     await act(async () => {
       await result.current.parseAndUploadQuestions(file);

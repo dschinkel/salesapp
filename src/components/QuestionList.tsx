@@ -1,9 +1,10 @@
 import React from 'react';
-import { useQuestions } from './useQuestions';
 
-export function QuestionList() {
-  const { questions } = useQuestions();
+export interface QuestionListProps {
+  questions: string[];
+}
 
+export function QuestionList({ questions }: QuestionListProps) {
   return (
     <div className="w-full max-w-2xl mx-auto p-4">
       <div className="flex items-center justify-between mb-4">

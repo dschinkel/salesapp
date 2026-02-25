@@ -1,16 +1,16 @@
 import React, { ChangeEvent } from 'react';
-import { useQuestions } from '../useQuestions.ts';
-import { parseAndUploadQuestions as parseFile } from '../csvParser.ts';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 
-export function UploadQuestions() {
-  const { parseAndUploadQuestions } = useQuestions({ parseFile });
+export interface UploadQuestionsProps {
+  onUpload: (file: File) => void;
+}
 
+export function UploadQuestions({ onUpload }: UploadQuestionsProps) {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      parseAndUploadQuestions(file);
+      onUpload(file);
     }
   };
 
