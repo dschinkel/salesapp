@@ -30,9 +30,19 @@ export function useQuestions({ parseFile }: UseQuestionsDependencies = {}) {
     }
   };
 
+  const reorderQuestion = (fromIndex: number, toIndex: number) => {
+    setQuestions(prev => {
+      const result = Array.from(prev);
+      const [removed] = result.splice(fromIndex, 1);
+      result.splice(toIndex, 0, removed);
+      return result;
+    });
+  };
+
   return {
     questions,
     uploadQuestions,
-    parseAndUploadQuestions
+    parseAndUploadQuestions,
+    reorderQuestion
   };
 }

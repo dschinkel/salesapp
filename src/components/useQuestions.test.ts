@@ -46,7 +46,7 @@ describe('Questions', () => {
     expect(result.current.questions).toEqual(expectedQuestions);
   });
 
-  test('parses and uploads questions from a file via injected dependency', async () => {
+  test('parses uploaded questions', async () => {
     const fakeParseFile = async (file: File) => ['Question 1', 'Question 2', 'Question 3'];
     const { result } = renderHook(() => useQuestions({ parseFile: fakeParseFile }));
     const file = new File([''], 'test.csv', { type: 'text/csv' });
@@ -68,6 +68,27 @@ describe('Questions', () => {
       'Question 1',
       'Question 2',
       'Question 3'
+    ];
+
+    expect(result.current.questions).toEqual(expectedQuestions);
+  });
+  test('reorders questions', () => {
+    const { result } = renderHook(() => useQuestions());
+
+    act(() => {
+      result.current.reorderQuestion(0, 2);
+    });
+
+    const expectedQuestions = [
+      'Topic',
+      'Customer\'s Objectives',
+      'Company Name',
+      'Timeline',
+      'Decision Makers',
+      'Estimated Deal Size',
+      'Competition',
+      'Budget',
+      'Strategy'
     ];
 
     expect(result.current.questions).toEqual(expectedQuestions);
