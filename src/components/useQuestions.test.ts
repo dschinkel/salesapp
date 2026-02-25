@@ -30,4 +30,16 @@ describe('Questions', () => {
 
     expect(result.current.questions).toEqual(newQuestions);
   });
+
+  test('parses and uploads questions from a file', async () => {
+    const { result } = renderHook(() => useQuestions());
+    const fileContent = 'Question 1\nQuestion 2\n\n Question 3 ';
+    const file = new File([fileContent], 'test.csv', { type: 'text/csv' });
+
+    await act(async () => {
+      await result.current.parseAndUploadQuestions(file);
+    });
+
+    expect(result.current.questions).toEqual(['Question 1', 'Question 2', 'Question 3']);
+  });
 });
