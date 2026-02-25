@@ -25,6 +25,8 @@ export default defineConfig(({ mode }) => {
       plugins: [react()],
       define: {
         'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+        'process.env.PACKAGE_VERSION': JSON.stringify(packageVersion),
+        'process.env.GIT_SHA': JSON.stringify(gitSha),
         'import.meta.env.PACKAGE_VERSION': JSON.stringify(packageVersion),
         'import.meta.env.GIT_SHA': JSON.stringify(gitSha)
       },

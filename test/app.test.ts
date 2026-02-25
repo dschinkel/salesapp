@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
+import * as React from 'react';
 // @ts-ignore
 import App from '../src/App';
 
 describe('App', () => {
     it('page loads', () => {
         render(React.createElement(App));
-        expect(screen.getByText(/new application/i)).toBeInTheDocument();
+        expect(screen.getByText(/Sales Conversation Questions/i)).toBeInTheDocument();
     });
 });

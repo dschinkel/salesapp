@@ -28,12 +28,17 @@ Purpose of `tasks.md`:
 
 ## F3.1 Shows a list of questions to be answered  
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
-- [/] F.1.0.0 Company Name  
-- [ ] F.1.0.1 Topic  
-- [ ] F.1.0.2 Customer's Objectives  
-- [ ] F.1.0.3 Timeline  
-- [ ] F.1.0.4 Decision Makers  
-- [ ] F.1.0.5 Estimated Deal Size  
-- [ ] F.1.0.6 Competition  
-- [ ] F.1.0.7 Budget  
-- [ ] F.1.0.8 Strategy  
+- [x] F.1.0.0 Company Name  
+- [x] F.1.0.1 Topic  
+- [x] F.1.0.2 Customer's Objectives  
+- [x] F.1.0.3 Timeline  
+- [x] F.1.0.4 Decision Makers  
+- [x] F.1.0.5 Estimated Deal Size  
+- [x] F.1.0.6 Competition  
+- [x] F.1.0.7 Budget  
+- [x] F.1.0.8 Strategy  
+
+
+## F3.2 Ability to upload a list of questions  
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [x] F3.2.0 Upload a CSV file of questions  

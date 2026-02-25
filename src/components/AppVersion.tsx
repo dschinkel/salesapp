@@ -2,8 +2,10 @@ import React from 'react';
 import { Label } from './ui/label';
 
 export const AppVersion = () => {
-  const version = import.meta.env?.PACKAGE_VERSION;
-  const sha = import.meta.env?.GIT_SHA;
+  // @ts-ignore
+  const version = (typeof process !== 'undefined' && process.env?.PACKAGE_VERSION) || '0.0.0';
+  // @ts-ignore
+  const sha = (typeof process !== 'undefined' && process.env?.GIT_SHA) || '';
 
   if (!version) return null;
 

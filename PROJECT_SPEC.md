@@ -43,7 +43,7 @@ list of questions of questions:
 - F.1.0.8 Strategy
 
 ### F3.2 Ability to upload a list of questions
-F3.2.0 Upload a CSV file of questions
+- [x] F3.2.0 Upload a CSV file of questions
 
 NOTES
 
