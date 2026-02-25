@@ -51,7 +51,7 @@ list of questions of questions:
 - [x] F3.3.0 Reorder questions by dragging and dropping
 
 ### F3.4 Add Key Points Description
-- [] F3.4.0 Add a description below the Key Points header with text "Add key points or topics that should be mentioned during the call. They'll be automatically checked off when detected in the transcript."
+- [x] F3.4.0 Add a description below the Key Points header with text "Add key points or topics that should be mentioned during the call. They'll be automatically checked off when detected in the transcript."
 
 NOTES
 later down the road

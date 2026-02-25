@@ -54,3 +54,7 @@ Purpose of `tasks.md`:
 ## F3.3 Ability reorder questions
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
 - [x] F3.3.0 Reorder questions by dragging and dropping
+
+## F3.4 Add Key Points Description  
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [x] F3.4.0 Add a description below the Key Points header  

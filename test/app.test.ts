@@ -6,6 +6,6 @@ import App from '../src/App';
 describe('App', () => {
     it('page loads', () => {
         render(React.createElement(App));
-        expect(screen.getByText(/Key Points/i)).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: /Key Points/i })).toBeInTheDocument();
     });
 });

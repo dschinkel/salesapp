@@ -33,9 +33,14 @@ export function QuestionList({ questions, onReorder }: QuestionListProps) {
   return (
     <div className="w-full max-w-2xl mx-auto p-4">
       {questions.length > 0 && (
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-lg font-semibold text-slate-700">Key Points</h3>
-          <span className="text-sm text-slate-500">{questions.length} questions</span>
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-lg font-semibold text-slate-700">Key Points</h3>
+            <span className="text-sm text-slate-500">{questions.length} questions</span>
+          </div>
+          <p className="text-sm text-slate-600">
+            Add key points or topics that should be mentioned during the call. They'll be automatically checked off when detected in the transcript.
+          </p>
         </div>
       )}
       <ul className="space-y-2">
