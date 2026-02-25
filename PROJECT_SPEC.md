@@ -64,12 +64,13 @@ list of questions of questions:
   - ensure that is applied to our shadcn theme
   - use the context image as a reference to see how the colors should look
 
-### F3.6 Create a dark mode them
+### F3.6 Create a dark mode theme
 In F3.5 you created a light mode theme. We want to be able to toggle to a dark mode theme whereas the questions list is themed and looks like the attached screenshot.
-- [] F3.6.0 Create a dark mode theme that matches the screenshot. Provide a toggle to switch back to light mode
+- [x] F3.6.0 Create a dark mode theme that matches the screenshot. Provide a toggle to switch back to light mode
+- [] F3.6.1 Ensure that the background behind title, the title text, and description text have the same colors as the screenshot provided
 
 ### F3.x Records a Conversation
-- [] F3.5.0 Provides a section to record voice to text. Text that is transcribed shows below voice recorder
+- [] F3.x Provides a section to record voice to text. Text that is transcribed shows below voice recorder
 
 
 ### F3.x Parses pre sales questions pasted in by sales into the question list

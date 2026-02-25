@@ -72,6 +72,10 @@ Purpose of `tasks.md`:
   - [x] use the context image as a reference to see how the colors should look
   - [x] double check that the list is using shadcn components where possible
 
-## F3.6 Records a Conversation
+## F3.6 Create a dark mode theme
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] F3.6.0 Create a dark mode theme that matches the screenshot. Provide a toggle to switch back to light mode
+
+## F3.x Records a Conversation
 - [ ] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
-- [ ] F3.5.0 Provides a section to record voice to text
+- [ ] F3.x Provides a section to record voice to text
