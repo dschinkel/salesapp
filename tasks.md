@@ -45,4 +45,4 @@ Purpose of `tasks.md`:
 
 ## F3.2.1 Should only append uploaded questions not overwrite previous question  
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
-- [/] F3.2.1 appends new questions  
+- [x] F3.2.1 appends new questions  
