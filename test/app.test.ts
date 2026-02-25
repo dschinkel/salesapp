@@ -6,6 +6,6 @@ import App from '../src/App';
 describe('App', () => {
     it('page loads', () => {
         render(React.createElement(App));
-        expect(screen.getByText(/Sales Conversation Questions/i)).toBeInTheDocument();
+        expect(screen.getByText(/Key Points/i)).toBeInTheDocument();
     });
 });

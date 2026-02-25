@@ -7,10 +7,12 @@ export interface QuestionListProps {
 export function QuestionList({ questions }: QuestionListProps) {
   return (
     <div className="w-full max-w-2xl mx-auto p-4">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-slate-800">Sales Conversation Questions</h2>
-        <span className="text-sm text-slate-500">{questions.length} questions</span>
-      </div>
+      {questions.length > 0 && (
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-lg font-semibold text-slate-700">Key Points</h3>
+          <span className="text-sm text-slate-500">{questions.length} questions</span>
+        </div>
+      )}
       <ul className="space-y-2">
         {questions.map((question, index) => (
           <li key={index} className="p-3 bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-200">
