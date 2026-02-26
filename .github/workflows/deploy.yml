@@ -26,11 +26,19 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'yarn'
+          node-version: "20"
+          cache: "yarn"
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Run unit tests (client + service)
+        run: yarn test --selectProjects client,service
+
+      - name: Run data-layer integration tests (Gemini)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: yarn test --selectProjects service src/service/test/integration/GeminiClient.test.ts
 
       # Auth via Workload Identity Federation (no JSON key)
       - id: auth
@@ -38,7 +46,6 @@ jobs:
         with:
           workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
           service_account: ${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}
-          project_id: ${{ secrets.GCR_PROJECT_ID }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2

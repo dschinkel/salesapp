@@ -1,14 +1,33 @@
 import { renderHook, act } from '@testing-library/react';
 import { useVoiceRecorder } from './useVoiceRecorder';
 
+beforeAll(() => {
+  const mockMediaRecorder = {
+    start: jest.fn(),
+    stop: jest.fn(function (this: any) {
+      if (this.onstop) this.onstop();
+    }),
+    ondataavailable: null,
+    onstop: null,
+    stream: {
+      getTracks: () => [{ stop: jest.fn() }],
+    },
+  };
+
+  (global as any).MediaRecorder = jest.fn(() => mockMediaRecorder);
+  (global as any).navigator.mediaDevices = {
+    getUserMedia: jest.fn().mockResolvedValue({}),
+  };
+});
+
 describe('Voice Recorder', () => {
-  test('records audio', () => {
+  test('records audio', async () => {
     const { result } = renderHook(() => useVoiceRecorder());
 
     expect(result.current.isRecording).toBe(false);
 
-    act(() => {
-      result.current.startRecording();
+    await act(async () => {
+      await result.current.startRecording();
     });
 
     expect(result.current.isRecording).toBe(true);

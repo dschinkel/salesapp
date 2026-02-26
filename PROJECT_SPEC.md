@@ -52,7 +52,7 @@ list of questions of questions:
 - [x] F3.2.2 Add a header to the questions lists called "Key Points"
 
 ### F3.3 Ability reorder questions
-- [x] F3.3.0 Reorder questions by dragging and dropping
+- [x] F3.3.0 Reorder questions by dragging and dropping.
 
 ### F3.4 Add Key Points Description
 - [x] F3.4.0 Add a description below the Key Points header with text "Add key points or topics that should be mentioned during the call. They'll be automatically checked off when detected in the transcript."
@@ -74,8 +74,13 @@ In F3.5 you created a light mode theme. We want to be able to toggle to a dark m
 - [x] F3.6.1 Ensure that the background behind title, the title text, and description text have the same colors as the screenshot provided
 
 
-### F3.x Records a Conversation
-- [] F3.x Provides a section to record voice to text. Text that is transcribed shows below voice recorder
+### F3.7 Records a Conversation
+- [x] F3.7.0 Shows an empty transcript when recording has not started
+- [x] F3.7.1 Provides a section to record voice to text. Text that is transcribed shows below voice recorder
+  - When recording, use the https://ai.google.dev/gemini-api/docs/audio api to translate the voice
+  - A system prompt should be provided to the Gemini API to provide context for the transcription.
+  - Get the Gemini API key from github via secrets.GEMINI_API_KEY
+  - refer to ../etsy-listing-generator/src/service as just an idea of how to code the service in terms of structure, patterns, and domain driven development
 
 ### F3.x Parses pre sales questions pasted in by sales into the question list
 

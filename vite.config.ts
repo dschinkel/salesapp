@@ -15,29 +15,35 @@ try {
 }
 
 export default defineConfig(({ mode }) => {
-    const env = loadEnv(mode, '.', '');
-    
-    return {
-      server: {
-        port: 3000,
-        host: '0.0.0.0',
-        watch: {
-          usePolling: true,
+  const env = loadEnv(mode, '.', '');
+
+  return {
+    server: {
+      port: 3000,
+      host: '0.0.0.0',
+      watch: {
+        usePolling: true,
+      },
+      proxy: {
+        '/api': {
+          target: 'http://localhost:3001',
+          changeOrigin: true,
         },
       },
+    },
 
-      plugins: [react()],
-      define: {
-        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.PACKAGE_VERSION': JSON.stringify(packageVersion),
-        'process.env.GIT_SHA': JSON.stringify(gitSha),
-        'import.meta.env.PACKAGE_VERSION': JSON.stringify(packageVersion),
-        'import.meta.env.GIT_SHA': JSON.stringify(gitSha)
+    plugins: [react()],
+    define: {
+      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+      'process.env.PACKAGE_VERSION': JSON.stringify(packageVersion),
+      'process.env.GIT_SHA': JSON.stringify(gitSha),
+      'import.meta.env.PACKAGE_VERSION': JSON.stringify(packageVersion),
+      'import.meta.env.GIT_SHA': JSON.stringify(gitSha),
+    },
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, '.'),
       },
-      resolve: {
-        alias: {
-          '@': path.resolve(__dirname, '.'),
-        }
-      }
-    };
+    },
+  };
 });

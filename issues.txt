@@ -20,3 +20,13 @@ It's writing bad tests
 It's adding unecessary fakes and using Jest mocks, we just need simple stubs without jest.fn()
 
 It's sometimes not cleaning up unused constructs, imports, etc. Revisit eslint rules.
+
+it's still writting terrible test names
+
+I keep having to initialy tell it when I start for the day to add back the refactor step in TDD
+
+It sometimes doesn't put RED, GREEN, and REFACTOR on their own lines when presenting a plan, no line return sometimes
+
+It at times tries to add more behavior than stated in PROJECT_SPEC.md, for example, it added download and clear buttons to voice recorder which should be seperate features we iterate on
+
+It's taking larger steps than I want in terms of doing both happy and sad paths at the same time

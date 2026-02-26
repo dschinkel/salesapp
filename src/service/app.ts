@@ -11,7 +11,6 @@ export function createServer() {
     ctx.body = { status: 'ok' };
   });
 
-  // Wiring dependencies (temporary fake for command until Step 7)
   const fakeCommand = {
     execute: async () => ({ transcript: 'Hello from Koa backend' }),
   };

@@ -32,6 +32,13 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
   - P0.4 After presenting the PLAN, ask whether to proceed. Do not proceed without an explicit “continue/proceed” from the user.  
   - P0.5 If the user tells you to proceed, append the approved PLAN into `tdd.log` before starting implementation (only applies when the user chooses a TDD workflow).  
   - P0.5.1 When copying the PLAN into `tdd.log`, include the full PLAN text verbatim under a `PLAN:` heading.  
+  - P0.5.2 If a plan is updated by the user or changes during the course of the task, you must update `tdd.log` appropriately as well to keep it synchronized.
+  - P0.5.3 Following the `PLAN:` section in `tdd.log`, you must append the actual implementation steps executed so far during the session under an `IMPLEMENTATION:` heading. This implementation log should be appended to as the workflow proceeds. Use the following format for each step:
+    ```
+    - Step X: <Layer Name> (<optional sub-task name>)
+      - <Bullet point of what was changed/added>
+      - <Bullet point of test result (e.g. Tests passing (GREEN))>
+    ```
   - P0.6 After completing each step in the PLAN, summarize the step you just completed, run the build using `yarn build` and also run `yarn dev` to ensure no regressions or dev-server build errors were introduced, and ask to proceed to the next step. Tell me what the next step is.
   - P0.7 If the user stops you midstream with a question or change request, log the interruption and the resolution in `tdd.log` (only applies when the user chose a TDD workflow in P0.0).  
   - P0.8 If the user reverts an implemented plan, remove the corresponding plan and its workflow entries from `tdd.log` (only applies when the user chooses a TDD workflow).  
@@ -111,14 +118,15 @@ The Fix:
 - T1.3 Default test level rules:  
   - T1.3.1 For React work, the starting layer for the Outside-In TDD flow depends on the choice made in P0.0. If the user chose to start at the React Component layer, the TDD workflow (RED → GREEN → REFACTOR) begins by writing UI component tests. If the user chose to start at the React Hooks layer (default), the component layer (the "View") is created first as a non-TDD scaffold (Step 1 of the PLAN), and TDD begins at the hook layer (Step 2). You MUST NEVER write UI component tests or integration tests (e.g., tests that use `fireEvent`, `render` of components to verify behavior) if the Hook-layer was chosen, unless explicitly instructed otherwise.  
   - T1.3.2 For non-React work, write tests at the behavioral/business layer level (headless/functional) and avoid end-to-end/system tests unless explicitly instructed.  
-  - T1.3.3 You MUST NEVER write tests at the Controller layer. Controllers are delivery-mechanism adapters and must remain pass-through only. Business behavior must be defined and tested at the Command (Use Case) or Domain layer.  
+  - T1.3.3 You MUST NEVER write tests at the Controller layer unless there's quite a bit of parsing logic to take the incoming request and convert to downstream dto. Controllers are delivery-mechanism adapters and must remain pass-through only. Business behavior must be defined and tested at the Command (Use Case) or Domain layer.
+  - T1.3.3.1 Do not use words like "to gemini", "to api", "from server", etc in test names when the filename or module name already provides that context.
   - T1.3.4 Disallowed by default (unless explicitly instructed or for service data layer): browser/UI integration tests, real network calls, end-to-end tests, full-stack HTTP tests.  
   - T1.3.5 Allowed by default: in-process “integration” tests that do not require a browser and do not make real network calls (for example, repository tests using in-memory or file-backed fakes).  
   - T1.3.6 Service Data Layer Integration: Tests located in `src/service/test/integration/` MUST be integration tests that hit real external services, databases, or file systems. They must not use fakes or mocks for the primary IO target of that module. Integration test files must not use the word "integration" in their name; instead, they should be named after the behavior or component they test (e.g., `GeminiImageGenerator.test.ts`).  
   - T1.3.6 In RED you must stop and verify the failed test before proceeding. Show me the failed test before proceeding and ask me whether to proceed to the GREEN step  
 - T1.4 In GREEN, write only the minimum production code required to pass the single failing test; no extra functionality.  
 - T1.5 After GREEN, you MUST explicitly ask for permission to commit using: `feat: <task-id>: <behavior>`. After the commit, ask whether to push or continue.  
-- T1.5.1 After tests run GREEN, you MUST restart the website and services using `yarn dev` in the background and verify no errors are outputted. Fix any errors that occur during startup or runtime.  
+  - T1.5.1 After tests run GREEN, you MUST restart the website and services using `yarn dev` in the background and verify no errors are outputted. Fix any errors that occur during startup or runtime.  
 - T1.6 In REFACTOR, refactor only while tests are green. Make one refactoring change at a time and run tests after each small refactor (TCR).  
 - T1.7 If refactoring occurred, you MUST explicitly ask for permission to commit using: `feat: <task-id>: refactor: <behavior>`. After the commit, ask whether to push or continue.  
 - T1.8 Cleanup & Verification must include running tests, fixing lint warnings/errors, and running both `yarn build` and `yarn dev` to ensure the app compiles and starts without errors. Then prompt the user to commit using: `feat: <task-id>: cleanup: <behavior>`.

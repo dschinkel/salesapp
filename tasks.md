@@ -82,9 +82,9 @@ Purpose of `tasks.md`:
 - [x] F3.6.0 Create a dark mode theme that matches the screenshot. Provide a toggle to switch back to light mode
 - [x] F3.6.1 Apply colors from the screenshot
 
-## F3.x Records a Conversation
-- [ ] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
-- [ ] F3.x Provides a section to record voice to text
+## F3.7 Records a Conversation  
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [x] F3.7.0 Provides a section to record voice to text  
 
 ## I1 Code Formatting  
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  

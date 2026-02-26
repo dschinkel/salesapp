@@ -1,26 +1,34 @@
 import React from 'react';
 import { Mic, StopCircle } from 'lucide-react';
+import { useVoiceRecorder, TranscriptionRepository } from './useVoiceRecorder';
 
-export function VoiceRecorder() {
-  const isRecording = false;
-  const transcript = '';
+export function VoiceRecorder({ transcriptionRepository }: { transcriptionRepository?: TranscriptionRepository }) {
+  const { isRecording, transcript, startRecording, stopRecording } = useVoiceRecorder({ transcriptionRepository });
 
   return (
     <div className="w-full max-w-2xl mx-auto mb-8 flex flex-col shadow-lg rounded-xl overflow-hidden border border-slate-200 dark:border-cambria-border transition-colors duration-200">
-      <HeaderControls isRecording={isRecording} />
+      <HeaderControls isRecording={isRecording} onStart={startRecording} onStop={stopRecording} />
       <TranscriptArea transcript={transcript} />
     </div>
   );
 }
 
-function HeaderControls({ isRecording }: { isRecording: boolean }) {
+function HeaderControls({
+  isRecording,
+  onStart,
+  onStop,
+}: {
+  isRecording: boolean;
+  onStart: () => void;
+  onStop: () => void;
+}) {
   return (
     <div className="bg-[#D2B591] dark:bg-[#C5A55A] px-6 py-3 flex justify-between items-center">
       <div className="w-1/3 flex justify-start">
         <RecordingStatus isRecording={isRecording} />
       </div>
       <div className="w-1/3 flex justify-center">
-        <RecordingButton isRecording={isRecording} />
+        <RecordingButton isRecording={isRecording} onClick={isRecording ? onStop : onStart} />
       </div>
       <div className="w-1/3 flex justify-end">
         <RecordingDuration />
@@ -51,9 +59,12 @@ function RecordingDuration() {
   return <div className="text-white font-mono text-xl tracking-wider">00:00:00</div>;
 }
 
-function RecordingButton({ isRecording }: { isRecording: boolean }) {
+function RecordingButton({ isRecording, onClick }: { isRecording: boolean; onClick: () => void }) {
   return (
-    <button className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md hover:scale-105 transition-transform">
+    <button
+      onClick={onClick}
+      className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md hover:scale-105 transition-transform"
+    >
       <RecordingIcon isRecording={isRecording} />
     </button>
   );

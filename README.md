@@ -83,8 +83,11 @@ Google now has what's called App Hub, a centralized view of everything.
 We still want to create a new project for each app. That doesn't change.
 
 ### Github Secrets
-- `secrets.GCP_SA_KEY`
-  - the JSON key for a Google Cloud service account. Generated in Google Cloud
+These must match what exists in Artifact Registry and what you want Cloud Run to use.
+- `GCR_REPOSITORY`: Artifact Registry repository name (e.g. `apps`)
+- `GCR_IMAGE_NAME`: Docker image name (and usually your Cloud Run service name e.g. `sales-recorder`)
+So the full docker image path looks like this:
+- `<region>-docker.pkg.dev/<project-id>/<repository>/<image-name>:<tag>`
 
 ## Deployment AWS (OLD - we are deploying to GCR now instead)
 We're using github actions to deploy to ECS (Elastic Container Registry).

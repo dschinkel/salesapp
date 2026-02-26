@@ -7,6 +7,8 @@ import { VoiceRecorder } from './components/VoiceRecorder.tsx';
 import { useQuestions } from './components/useQuestions.ts';
 import { useUploadQuestions } from './components/useUploadQuestions.ts';
 import { parseFile } from './components/csvParser.ts';
+import { createTranscriptionRepository } from './client/repositories/TranscriptionRepository.ts';
+import { fetchHttpClient } from './client/data/fetchHttpClient.ts';
 import { Sun, Moon } from 'lucide-react';
 import './index.css';
 
@@ -16,6 +18,8 @@ const App = () => {
     parseFile,
   });
   const [isDark, setIsDark] = useState(true);
+
+  const transcriptionRepository = createTranscriptionRepository({ httpClient: fetchHttpClient });
 
   return (
     <div
@@ -31,7 +35,7 @@ const App = () => {
         </button>
       </header>
       <main className="flex-grow container mx-auto py-4">
-        <VoiceRecorder />
+        <VoiceRecorder transcriptionRepository={transcriptionRepository} />
         <UploadQuestions onUpload={parseAndUploadQuestions} />
         <Questionnaire questions={questions} onReorder={reorderQuestion} />
       </main>
