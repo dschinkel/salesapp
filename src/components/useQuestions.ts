@@ -18,6 +18,7 @@ export interface UseQuestionsDependencies {
 
 export function useQuestions({ parseFile }: UseQuestionsDependencies = {}) {
   const [questions, setQuestions] = useState<string[]>(initialQuestions);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   const uploadQuestions = (newQuestions: string[]) => {
     setQuestions((prev) => [...prev, ...newQuestions]);
@@ -39,10 +40,29 @@ export function useQuestions({ parseFile }: UseQuestionsDependencies = {}) {
     });
   };
 
+  const onDragStart = (index: number) => {
+    setDraggedIndex(index);
+  };
+
+  const onDragEnd = () => {
+    setDraggedIndex(null);
+  };
+
+  const onDrop = (toIndex: number) => {
+    if (draggedIndex !== null && draggedIndex !== toIndex) {
+      reorderQuestion(draggedIndex, toIndex);
+    }
+    setDraggedIndex(null);
+  };
+
   return {
     questions,
+    draggedIndex,
     uploadQuestions,
     parseAndUploadQuestions,
     reorderQuestion,
+    onDragStart,
+    onDragEnd,
+    onDrop,
   };
 }

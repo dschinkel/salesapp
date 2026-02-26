@@ -9,7 +9,9 @@ import { Sun, Moon } from 'lucide-react';
 import './index.css';
 
 const App = () => {
-  const { questions, parseAndUploadQuestions, reorderQuestion } = useQuestions({ parseFile });
+  const { questions, parseAndUploadQuestions, draggedIndex, onDragStart, onDragEnd, onDrop } = useQuestions({
+    parseFile,
+  });
   const [isDark, setIsDark] = useState(true);
 
   return (
@@ -27,7 +29,13 @@ const App = () => {
       </header>
       <main className="flex-grow container mx-auto py-4">
         <UploadQuestions onUpload={parseAndUploadQuestions} />
-        <Questionnaire questions={questions} onReorder={reorderQuestion} />
+        <Questionnaire
+          questions={questions}
+          draggedIndex={draggedIndex}
+          onDragStart={onDragStart}
+          onDragEnd={onDragEnd}
+          onDrop={onDrop}
+        />
       </main>
       <footer
         className={`border-t py-6 md:py-0 transition-colors duration-200 ${isDark ? 'bg-cambria-black border-cambria-border' : 'bg-white border-slate-200'}`}
