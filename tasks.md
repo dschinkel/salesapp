@@ -93,3 +93,10 @@ Purpose of `tasks.md`:
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
 - [x] I1.0.0 Use prettier for code formatting  
 - [x] I1.0.1 Add eslint for code linting  
+
+
+## I2 Versioning  
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [x] I2.0.0 Automated semantic versioning in package.json on push to main  
+- [x] Ensure version consistency in package.json, build, and dockerfile  
+- [x] Update AppVersion component to show the new version format  

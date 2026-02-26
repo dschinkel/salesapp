@@ -90,7 +90,10 @@ In F3.5 you created a light mode theme. We want to be able to toggle to a dark m
 - [x] I1.0.0 Use prettier for code formatting
 - [x] I1.0.1 Add eslint for code linting.  Do not add any rules. Just a placeholder for rules
 
-NOTES
-later down the road
-- Use Gemini parsing of blob text
+### I2 Versioning
+- [x] I2.0.0 The app is currently being versioned. 
+  - [x] I2.0.1 current versionin behavior sholud also update the verion in package.json any time we push code to github.
+  - [x] I2.0.2 Use semantic versioning if not doing so already
+  - [x] I2.0.3 Ensure that the version consistent in package.json, build, and dockerfile
+
 
