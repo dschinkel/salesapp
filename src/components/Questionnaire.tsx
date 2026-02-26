@@ -1,15 +1,6 @@
 import React from 'react';
 import { useReorderQuestions } from './useReorderQuestions';
 
-export interface QuestionsProps {
-  questions: string[];
-  draggedIndex?: number | null;
-  onDragStart?: (index: number, e: React.DragEvent<HTMLLIElement>) => void;
-  onDragOver?: (e: React.DragEvent<HTMLLIElement>) => void;
-  onDragEnd?: (e: React.DragEvent<HTMLLIElement>) => void;
-  onDrop?: (index: number, e: React.DragEvent<HTMLLIElement>) => void;
-}
-
 export function Questionnaire({
   questions,
   onReorder,

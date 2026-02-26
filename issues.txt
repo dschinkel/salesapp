@@ -18,3 +18,5 @@ It didn't wire up the useQuestions hook even though the plan had a step to do th
 
 It's writing bad tests
 It's adding unecessary fakes and using Jest mocks, we just need simple stubs without jest.fn()
+
+It's sometimes not cleaning up unused constructs, imports, etc. Revisit eslint rules.

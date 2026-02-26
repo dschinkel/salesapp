@@ -1,16 +1,20 @@
 # This workflow builds and pushes the Docker image to Google Artifact Registry.
-# We are using the wedotdd project to host this which doesn't have access to Gemini API so just run tests locally for now
 
 name: Build and Deploy to Artifact Registry
 on:
   push:
     branches:
       - main
+
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
-
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,16 +32,18 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      # Setup gcloud CLI
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v2'
+      # Auth via Workload Identity Federation (no JSON key)
+      - id: auth
+        uses: google-github-actions/auth@v2
         with:
-          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}
+          project_id: ${{ secrets.GCR_PROJECT_ID }}
 
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v2'
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
 
-      #  confirm what identity the runner is actually using
+      # confirm what identity the runner is actually using
       - name: Who am I (gcloud)
         run: |
           gcloud auth list
@@ -47,24 +53,24 @@ jobs:
 
       # Configure Docker to use gcloud as a credential helper for Artifact Registry
       - name: Configure Docker
-        run: |-
+        run: |
           gcloud auth configure-docker ${{ secrets.GCR_REGION }}-docker.pkg.dev --quiet
 
       # Build the Docker image
       - name: Build
-        run: |-
+        run: |
           docker build \
             --tag "${{ secrets.GCR_REGION }}-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/${{ secrets.GCR_REPOSITORY }}/${{ secrets.GCR_IMAGE_NAME }}:${{ steps.vars.outputs.sha_short }}" \
             .
 
       # Push the Docker image to Artifact Registry
       - name: Publish
-        run: |-
+        run: |
           docker push "${{ secrets.GCR_REGION }}-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/${{ secrets.GCR_REPOSITORY }}/${{ secrets.GCR_IMAGE_NAME }}:${{ steps.vars.outputs.sha_short }}"
 
       # Deploy to Cloud Run
       - name: Deploy to Cloud Run
-        run: |-
+        run: |
           gcloud run deploy ${{ secrets.GCR_IMAGE_NAME }} \
             --image "${{ secrets.GCR_REGION }}-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/${{ secrets.GCR_REPOSITORY }}/${{ secrets.GCR_IMAGE_NAME }}:${{ steps.vars.outputs.sha_short }}" \
             --region ${{ secrets.GCR_REGION }} \

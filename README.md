@@ -78,7 +78,15 @@ The `rsync -au` flag ensures that if you’ve already started customizing the co
 Note: After an agent is done finishing implementation steps for a feature, we have it run a cleanup step. 
 In the cleanup step we need to run `yarn dev` to fix errors since we're testing using the vite dev server. But we also want to run `yarn build` so that we know if this is pushed to production that it builds.
 
-## Deployment
+## Deployment Google Cloud Run
+Google now has what's called App Hub, a centralized view of everything.
+We still want to create a new project for each app. That doesn't change.
+
+### Github Secrets
+- `secrets.GCP_SA_KEY`
+  - the JSON key for a Google Cloud service account. Generated in Google Cloud
+
+## Deployment AWS (OLD - we are deploying to GCR now instead)
 We're using github actions to deploy to ECS (Elastic Container Registry).
 We're deploying our docker containers to ECS Ec2 instances. 
 
