@@ -16,7 +16,7 @@ export function UploadQuestions({ onUpload }: UploadQuestionsProps) {
 
   return (
     <div className="w-full max-w-2xl mx-auto p-6 mb-8 bg-white dark:bg-cambria-panelDark rounded-xl border border-slate-200 dark:border-cambria-border shadow-lg transition-colors duration-200">
-      <Label 
+      <Label
         htmlFor="csv-upload"
         className="block text-sm font-medium text-slate-700 dark:text-cambria-cream mb-3 transition-colors duration-200"
       >

@@ -80,3 +80,7 @@ Purpose of `tasks.md`:
 ## F3.x Records a Conversation
 - [ ] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
 - [ ] F3.x Provides a section to record voice to text
+
+## I1 Code Formatting  
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [x] I1.0.0 Use prettier for code formatting  

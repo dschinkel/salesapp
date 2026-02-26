@@ -75,6 +75,13 @@ In F3.5 you created a light mode theme. We want to be able to toggle to a dark m
 
 ### F3.x Parses pre sales questions pasted in by sales into the question list
 
+
+
+# Code Requirements (non business specific behavior / infrastructure)
+### I1 Code Formatting
+- [x] I1.0.0 Use prettier for code formatting
+- [ ] I1.0.1 Use eslint for code linting
+
 NOTES
 later down the road
 - Use Gemini parsing of blob text

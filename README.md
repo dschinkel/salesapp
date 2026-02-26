@@ -115,6 +115,7 @@ These are the things that should be happening as outlined in `GUIDELINES.md`
     - show you a RED / GREEN / REFACTOR plan for each layer? (It must show something for all three steps regardless if there's anything it thinks might need to be refactored)
     - show you the test name, test file, and production file it's going to create/touch?
     - ask you whether or not to proceed with the plan?
+    - stops after each step is completed so you can review what just did before proceeding to the next step in the plan?
     - log the TDD plan in tdd.log after it was done implementing the plan (so we have a record of wtf it did?)
 - When it was done coding and ready to commit, did it stop and allow you to review the commit message first?
 

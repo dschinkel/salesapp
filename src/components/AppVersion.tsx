@@ -10,11 +10,9 @@ export const AppVersion = () => {
   if (!version) return null;
 
   return (
-    <Label 
-      data-testid="app-version" 
-      className="text-[color:#C5A55A] text-sm font-semibold tracking-wide"
-    >
-      v{version}{sha ? ` (${sha})` : ''}
+    <Label data-testid="app-version" className="text-[color:#C5A55A] text-sm font-semibold tracking-wide">
+      v{version}
+      {sha ? ` (${sha})` : ''}
     </Label>
   );
 };

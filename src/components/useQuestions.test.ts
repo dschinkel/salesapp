@@ -8,18 +8,17 @@ describe('Questions', () => {
     const expectedQuestions = [
       'Company Name',
       'Topic',
-      'Customer\'s Objectives',
+      "Customer's Objectives",
       'Timeline',
       'Decision Makers',
       'Estimated Deal Size',
       'Competition',
       'Budget',
-      'Strategy'
+      'Strategy',
     ];
 
     expect(result.current.questions).toEqual(expectedQuestions);
   });
-
 
   test('appends new questions', () => {
     const { result } = renderHook(() => useQuestions());
@@ -32,7 +31,7 @@ describe('Questions', () => {
     const expectedQuestions = [
       'Company Name',
       'Topic',
-      'Customer\'s Objectives',
+      "Customer's Objectives",
       'Timeline',
       'Decision Makers',
       'Estimated Deal Size',
@@ -40,7 +39,7 @@ describe('Questions', () => {
       'Budget',
       'Strategy',
       'New Question 1',
-      'New Question 2'
+      'New Question 2',
     ];
 
     expect(result.current.questions).toEqual(expectedQuestions);
@@ -58,7 +57,7 @@ describe('Questions', () => {
     const expectedQuestions = [
       'Company Name',
       'Topic',
-      'Customer\'s Objectives',
+      "Customer's Objectives",
       'Timeline',
       'Decision Makers',
       'Estimated Deal Size',
@@ -67,7 +66,7 @@ describe('Questions', () => {
       'Strategy',
       'Question 1',
       'Question 2',
-      'Question 3'
+      'Question 3',
     ];
 
     expect(result.current.questions).toEqual(expectedQuestions);
@@ -81,14 +80,14 @@ describe('Questions', () => {
 
     const expectedQuestions = [
       'Topic',
-      'Customer\'s Objectives',
+      "Customer's Objectives",
       'Company Name',
       'Timeline',
       'Decision Makers',
       'Estimated Deal Size',
       'Competition',
       'Budget',
-      'Strategy'
+      'Strategy',
     ];
 
     expect(result.current.questions).toEqual(expectedQuestions);

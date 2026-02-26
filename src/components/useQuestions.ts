@@ -3,13 +3,13 @@ import { useState } from 'react';
 const initialQuestions = [
   'Company Name',
   'Topic',
-  'Customer\'s Objectives',
+  "Customer's Objectives",
   'Timeline',
   'Decision Makers',
   'Estimated Deal Size',
   'Competition',
   'Budget',
-  'Strategy'
+  'Strategy',
 ];
 
 export interface UseQuestionsDependencies {
@@ -20,7 +20,7 @@ export function useQuestions({ parseFile }: UseQuestionsDependencies = {}) {
   const [questions, setQuestions] = useState<string[]>(initialQuestions);
 
   const uploadQuestions = (newQuestions: string[]) => {
-    setQuestions(prev => [...prev, ...newQuestions]);
+    setQuestions((prev) => [...prev, ...newQuestions]);
   };
 
   const parseAndUploadQuestions = async (file: File) => {
@@ -31,7 +31,7 @@ export function useQuestions({ parseFile }: UseQuestionsDependencies = {}) {
   };
 
   const reorderQuestion = (fromIndex: number, toIndex: number) => {
-    setQuestions(prev => {
+    setQuestions((prev) => {
       const result = Array.from(prev);
       const [removed] = result.splice(fromIndex, 1);
       result.splice(toIndex, 0, removed);
@@ -43,6 +43,6 @@ export function useQuestions({ parseFile }: UseQuestionsDependencies = {}) {
     questions,
     uploadQuestions,
     parseAndUploadQuestions,
-    reorderQuestion
+    reorderQuestion,
   };
 }
