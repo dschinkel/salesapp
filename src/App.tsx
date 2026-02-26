@@ -4,16 +4,16 @@ import { AppVersion } from './components/AppVersion';
 import { Questionnaire } from './components/Questionnaire.tsx';
 import { UploadQuestions } from './components/UploadQuestions/UploadQuestions.tsx';
 import { useQuestions } from './components/useQuestions.ts';
+import { useUploadQuestions } from './components/useUploadQuestions.ts';
 import { parseFile } from './components/csvParser.ts';
 import { Sun, Moon } from 'lucide-react';
 import './index.css';
 
 const App = () => {
-  const { questions, parseAndUploadQuestions, draggedIndex, onDragStart, onDragOver, onDragEnd, onDrop } = useQuestions(
-    {
-      parseFile,
-    },
-  );
+  const { questions, appendQuestions, reorderQuestion } = useQuestions();
+  const { parseAndUploadQuestions } = useUploadQuestions(appendQuestions, {
+    parseFile,
+  });
   const [isDark, setIsDark] = useState(true);
 
   return (
@@ -31,14 +31,7 @@ const App = () => {
       </header>
       <main className="flex-grow container mx-auto py-4">
         <UploadQuestions onUpload={parseAndUploadQuestions} />
-        <Questionnaire
-          questions={questions}
-          draggedIndex={draggedIndex}
-          onDragStart={onDragStart}
-          onDragOver={onDragOver}
-          onDragEnd={onDragEnd}
-          onDrop={onDrop}
-        />
+        <Questionnaire questions={questions} onReorder={reorderQuestion} />
       </main>
       <footer
         className={`border-t py-6 md:py-0 transition-colors duration-200 ${isDark ? 'bg-cambria-black border-cambria-border' : 'bg-white border-slate-200'}`}

@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useReorderQuestions } from './useReorderQuestions';
 
 export interface QuestionsProps {
   questions: string[];
   draggedIndex?: number | null;
-  onDragStart?: (index: number, e: React.DragEvent) => void;
-  onDragOver?: (e: React.DragEvent) => void;
-  onDragEnd?: () => void;
-  onDrop?: (index: number, e: React.DragEvent) => void;
+  onDragStart?: (index: number, e: React.DragEvent<HTMLLIElement>) => void;
+  onDragOver?: (e: React.DragEvent<HTMLLIElement>) => void;
+  onDragEnd?: (e: React.DragEvent<HTMLLIElement>) => void;
+  onDrop?: (index: number, e: React.DragEvent<HTMLLIElement>) => void;
 }
 
-export function Questionnaire({ questions, draggedIndex, onDragStart, onDragOver, onDragEnd, onDrop }: QuestionsProps) {
+export function Questionnaire({
+  questions,
+  onReorder,
+}: {
+  questions: string[];
+  onReorder: (from: number, to: number) => void;
+}) {
+  const { draggedIndex, onDragStart, onDragOver, onDragEnd, onDrop } = useReorderQuestions({ onReorder });
+
   return (
     <div className="w-full max-w-2xl mx-auto flex flex-col shadow-lg rounded-xl overflow-hidden border border-slate-200 dark:border-cambria-border transition-colors duration-200">
       <Header length={questions.length} />
@@ -45,9 +54,9 @@ function Questions({ questions, draggedIndex, onDragStart, onDragOver, onDragEnd
           <Question
             key={index}
             onDragStart={(e) => onDragStart && onDragStart(index, e)}
-            onDragOver={onDragOver || ((e) => e.preventDefault())}
+            onDragOver={(e) => onDragOver && onDragOver(e)}
             onDrop={(e) => onDrop && onDrop(index, e)}
-            onDragEnd={onDragEnd || (() => {})}
+            onDragEnd={(e) => onDragEnd && onDragEnd(e)}
             isDraggable={!!onDragStart}
             isDragged={draggedIndex === index}
             question={question}
@@ -68,10 +77,10 @@ function QuestionsDescription() {
 }
 
 function Question(props: {
-  onDragStart: (e) => void;
-  onDragOver: (e) => void;
-  onDrop: (e) => void;
-  onDragEnd: () => void;
+  onDragStart: (e: React.DragEvent<HTMLLIElement>) => void;
+  onDragOver: (e: React.DragEvent<HTMLLIElement>) => void;
+  onDrop: (e: React.DragEvent<HTMLLIElement>) => void;
+  onDragEnd: (e: React.DragEvent<HTMLLIElement>) => void;
   isDraggable: boolean;
   isDragged: boolean;
   question: string;

@@ -12,23 +12,11 @@ const initialQuestions = [
   'Strategy',
 ];
 
-export interface UseQuestionsDependencies {
-  parseFile?: (file: File) => Promise<string[]>;
-}
-
-export function useQuestions({ parseFile }: UseQuestionsDependencies = {}) {
+export function useQuestions() {
   const [questions, setQuestions] = useState<string[]>(initialQuestions);
-  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
-  const uploadQuestions = (newQuestions: string[]) => {
+  const appendQuestions = (newQuestions: string[]) => {
     setQuestions((prev) => [...prev, ...newQuestions]);
-  };
-
-  const parseAndUploadQuestions = async (file: File) => {
-    if (parseFile) {
-      const parsedQuestions = await parseFile(file);
-      uploadQuestions(parsedQuestions);
-    }
   };
 
   const reorderQuestion = (fromIndex: number, toIndex: number) => {
@@ -40,41 +28,9 @@ export function useQuestions({ parseFile }: UseQuestionsDependencies = {}) {
     });
   };
 
-  const onDragStart = (index: number, e: React.DragEvent) => {
-    setDraggedIndex(index);
-    if (e.dataTransfer) {
-      e.dataTransfer.effectAllowed = 'move';
-    }
-  };
-
-  const onDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    if (e.dataTransfer) {
-      e.dataTransfer.dropEffect = 'move';
-    }
-  };
-
-  const onDragEnd = () => {
-    setDraggedIndex(null);
-  };
-
-  const onDrop = (toIndex: number, e: React.DragEvent) => {
-    e.preventDefault();
-    if (draggedIndex !== null && draggedIndex !== toIndex) {
-      reorderQuestion(draggedIndex, toIndex);
-    }
-    setDraggedIndex(null);
-  };
-
   return {
     questions,
-    draggedIndex,
-    uploadQuestions,
-    parseAndUploadQuestions,
+    appendQuestions,
     reorderQuestion,
-    onDragStart,
-    onDragOver,
-    onDragEnd,
-    onDrop,
   };
 }
