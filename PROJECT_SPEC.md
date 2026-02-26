@@ -29,8 +29,8 @@ Legend:
 - [x] F.0.0 Hello World is runnable
 - [x] F.0.1 If the repo has not been initialized and pushed to github, push it to the remote using the github CLI
 - [x] F.0.2 Deploy the app to ECS (Elastic Container Registry) via Github Actions
-- [x] F.0.3 Show an app version number at the bottom of the page
-- [x] F.0.4 Deploy app to Google Cloud Run
+- [x] F.0.3 Show an app version number at the bottom of the page  
+- [x] F.0.4 Deploy app to Google Cloud Run. Convert current deploy.yml to push app containers to google cloud run instead  
 
 ## 3. Feature Requirements
 

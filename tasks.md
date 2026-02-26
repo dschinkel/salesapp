@@ -12,6 +12,11 @@ Purpose of `tasks.md`:
 - [x] F.0.0 Hello World is runnable  
 - [x] F.0.1 If the repo has not been initialized and pushed to github, push it to the remote using the github CLI  
 
+## F.0.4 Deploy app to Google Cloud Run. Convert current deploy.yml  
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [x] Convert current deploy.yml to push app containers to google cloud run instead  
+
+
 ## F.0.3 Show an app version number at the bottom of the page  
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
 - [x] Build-time version injection via vite.config.ts  
