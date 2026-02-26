@@ -9,9 +9,11 @@ import { Sun, Moon } from 'lucide-react';
 import './index.css';
 
 const App = () => {
-  const { questions, parseAndUploadQuestions, draggedIndex, onDragStart, onDragEnd, onDrop } = useQuestions({
-    parseFile,
-  });
+  const { questions, parseAndUploadQuestions, draggedIndex, onDragStart, onDragOver, onDragEnd, onDrop } = useQuestions(
+    {
+      parseFile,
+    },
+  );
   const [isDark, setIsDark] = useState(true);
 
   return (
@@ -33,6 +35,7 @@ const App = () => {
           questions={questions}
           draggedIndex={draggedIndex}
           onDragStart={onDragStart}
+          onDragOver={onDragOver}
           onDragEnd={onDragEnd}
           onDrop={onDrop}
         />

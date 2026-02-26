@@ -40,15 +40,26 @@ export function useQuestions({ parseFile }: UseQuestionsDependencies = {}) {
     });
   };
 
-  const onDragStart = (index: number) => {
+  const onDragStart = (index: number, e: React.DragEvent) => {
     setDraggedIndex(index);
+    if (e.dataTransfer) {
+      e.dataTransfer.effectAllowed = 'move';
+    }
+  };
+
+  const onDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (e.dataTransfer) {
+      e.dataTransfer.dropEffect = 'move';
+    }
   };
 
   const onDragEnd = () => {
     setDraggedIndex(null);
   };
 
-  const onDrop = (toIndex: number) => {
+  const onDrop = (toIndex: number, e: React.DragEvent) => {
+    e.preventDefault();
     if (draggedIndex !== null && draggedIndex !== toIndex) {
       reorderQuestion(draggedIndex, toIndex);
     }
@@ -62,6 +73,7 @@ export function useQuestions({ parseFile }: UseQuestionsDependencies = {}) {
     parseAndUploadQuestions,
     reorderQuestion,
     onDragStart,
+    onDragOver,
     onDragEnd,
     onDrop,
   };

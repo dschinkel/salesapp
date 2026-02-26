@@ -3,12 +3,13 @@ import React, { useState } from 'react';
 export interface QuestionsProps {
   questions: string[];
   draggedIndex?: number | null;
-  onDragStart?: (index: number) => void;
+  onDragStart?: (index: number, e: React.DragEvent) => void;
+  onDragOver?: (e: React.DragEvent) => void;
   onDragEnd?: () => void;
-  onDrop?: (index: number) => void;
+  onDrop?: (index: number, e: React.DragEvent) => void;
 }
 
-export function Questionnaire({ questions, draggedIndex, onDragStart, onDragEnd, onDrop }: QuestionsProps) {
+export function Questionnaire({ questions, draggedIndex, onDragStart, onDragOver, onDragEnd, onDrop }: QuestionsProps) {
   return (
     <div className="w-full max-w-2xl mx-auto flex flex-col shadow-lg rounded-xl overflow-hidden border border-slate-200 dark:border-cambria-border transition-colors duration-200">
       <Header length={questions.length} />
@@ -16,6 +17,7 @@ export function Questionnaire({ questions, draggedIndex, onDragStart, onDragEnd,
         questions={questions}
         draggedIndex={draggedIndex}
         onDragStart={onDragStart}
+        onDragOver={onDragOver}
         onDragEnd={onDragEnd}
         onDrop={onDrop}
       />
@@ -33,33 +35,8 @@ function Header(props: { length: number }) {
   );
 }
 
-function Questions({ questions, draggedIndex, onDragStart, onDragEnd, onDrop }: QuestionsProps) {
+function Questions({ questions, draggedIndex, onDragStart, onDragOver, onDragEnd, onDrop }: QuestionsProps) {
   if (questions.length === 0) return null;
-
-  const handleDragStart = (e: React.DragEvent<HTMLLIElement>, index: number) => {
-    if (onDragStart) {
-      onDragStart(index);
-    }
-    e.dataTransfer.effectAllowed = 'move';
-  };
-
-  const handleDragOver = (e: React.DragEvent<HTMLLIElement>) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLLIElement>, index: number) => {
-    e.preventDefault();
-    if (onDrop) {
-      onDrop(index);
-    }
-  };
-
-  const handleDragEnd = () => {
-    if (onDragEnd) {
-      onDragEnd();
-    }
-  };
 
   return (
     <div className="bg-white dark:bg-cambria-panelDark p-4 transition-colors duration-200">
@@ -67,10 +44,10 @@ function Questions({ questions, draggedIndex, onDragStart, onDragEnd, onDrop }: 
         {questions.map((question, index) => (
           <Question
             key={index}
-            onDragStart={(e) => handleDragStart(e, index)}
-            onDragOver={handleDragOver}
-            onDrop={(e) => handleDrop(e, index)}
-            onDragEnd={handleDragEnd}
+            onDragStart={(e) => onDragStart && onDragStart(index, e)}
+            onDragOver={onDragOver || ((e) => e.preventDefault())}
+            onDrop={(e) => onDrop && onDrop(index, e)}
+            onDragEnd={onDragEnd || (() => {})}
             isDraggable={!!onDragStart}
             isDragged={draggedIndex === index}
             question={question}
