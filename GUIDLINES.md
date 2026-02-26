@@ -215,6 +215,7 @@ const Report = ({ questions }: ReportProps) => {
 - R1.8 Tests: default to hook-layer tests (React Hook Testing Library) and then unit tests for lower-level pure functions.  
 - R1.9 Hooks receive generic business via simple prop injection.  
 - R1.10 Separate hooks by their Domain behavior. For example `useQuestions` should not handle uploading. We have an `<UploadQuestions />` component so the upload behavior should be exposed through a related hook `useUploadQuestions`. Related state must also go into their related domain hook so that hooks remain small and scoped to their domain behavior only.  
+- R1.11 Keep hooks close to the components that use them. Hooks should be invoked within the specific component that requires the logic or state, rather than being lifted unnecessarily to parent components, unless the state must truly be shared across multiple branches of the component tree.  
 
 ---
 

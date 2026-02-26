@@ -17,19 +17,10 @@ export function Questionnaire({
   questions: string[];
   onReorder: (from: number, to: number) => void;
 }) {
-  const { draggedIndex, onDragStart, onDragOver, onDragEnd, onDrop } = useReorderQuestions({ onReorder });
-
   return (
     <div className="w-full max-w-2xl mx-auto flex flex-col shadow-lg rounded-xl overflow-hidden border border-slate-200 dark:border-cambria-border transition-colors duration-200">
       <Header length={questions.length} />
-      <Questions
-        questions={questions}
-        draggedIndex={draggedIndex}
-        onDragStart={onDragStart}
-        onDragOver={onDragOver}
-        onDragEnd={onDragEnd}
-        onDrop={onDrop}
-      />
+      <Questions questions={questions} onReorder={onReorder} />
       <NoQuestionsFound questions={questions} />
     </div>
   );
@@ -44,7 +35,9 @@ function Header(props: { length: number }) {
   );
 }
 
-function Questions({ questions, draggedIndex, onDragStart, onDragOver, onDragEnd, onDrop }: QuestionsProps) {
+function Questions({ questions, onReorder }: { questions: string[]; onReorder: (from: number, to: number) => void }) {
+  const { draggedIndex, onDragStart, onDragOver, onDragEnd, onDrop } = useReorderQuestions({ onReorder });
+
   if (questions.length === 0) return null;
 
   return (
@@ -56,7 +49,7 @@ function Questions({ questions, draggedIndex, onDragStart, onDragOver, onDragEnd
             onDragStart={(e) => onDragStart && onDragStart(index, e)}
             onDragOver={(e) => onDragOver && onDragOver(e)}
             onDrop={(e) => onDrop && onDrop(index, e)}
-            onDragEnd={(e) => onDragEnd && onDragEnd(e)}
+            onDragEnd={(e) => onDragEnd && onDragEnd()}
             isDraggable={!!onDragStart}
             isDragged={draggedIndex === index}
             question={question}
