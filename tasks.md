@@ -75,6 +75,7 @@ Purpose of `tasks.md`:
 ## F3.6 Create a dark mode theme
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
 - [x] F3.6.0 Create a dark mode theme that matches the screenshot. Provide a toggle to switch back to light mode
+- [x] F3.6.1 Apply colors from the screenshot
 
 ## F3.x Records a Conversation
 - [ ] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD

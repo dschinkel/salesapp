@@ -47,7 +47,7 @@ export default {
           black: "#000000",
           blackLight: "#0a0a0a",
           panelDark: "#111111",
-          panelLight: "#161616",
+          panelLight: "#000000",
           red: "#D4443B",
           border: "#2a2a2a",
           borderLight: "#222222",

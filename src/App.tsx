@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { AppVersion } from './components/AppVersion';
-import { QuestionList } from './components/QuestionList';
+import { Questionnaire } from './components/Questionnaire.tsx';
 import { UploadQuestions } from './components/UploadQuestions/UploadQuestions.tsx';
 import { useQuestions } from './components/useQuestions.ts';
 import { parseFile } from './components/csvParser.ts';
@@ -25,7 +25,7 @@ const App = () => {
       </header>
       <main className="flex-grow container mx-auto py-4">
         <UploadQuestions onUpload={parseAndUploadQuestions} />
-        <QuestionList questions={questions} onReorder={reorderQuestion} />
+        <Questionnaire questions={questions} onReorder={reorderQuestion} />
       </main>
       <footer className={`border-t py-6 md:py-0 transition-colors duration-200 ${isDark ? 'bg-cambria-black border-cambria-border' : 'bg-white border-slate-200'}`}>
         <div className="container mx-auto flex flex-col items-center justify-center gap-4 md:h-24 md:flex-row">
