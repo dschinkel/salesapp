@@ -1,6 +1,9 @@
 import Koa from 'koa';
 import Router from '@koa/router';
 import { createTranscriptionController } from './controllers/TranscriptionController';
+import { createTranscribeAudioCommand } from './commands/TranscribeAudioCommand';
+import { createTranscriptionRepository } from './repositories/TranscriptionRepository';
+import { createGeminiClient } from './data/GeminiClient';
 
 export function createServer() {
   const app = new Koa();
@@ -11,10 +14,11 @@ export function createServer() {
     ctx.body = { status: 'ok' };
   });
 
-  const fakeCommand = {
-    execute: async () => ({ transcript: 'Hello from Koa backend' }),
-  };
-  const transcriptionController = createTranscriptionController(fakeCommand);
+  const geminiClient = createGeminiClient({ apiKey: process.env.GEMINI_API_KEY });
+  const transcriptionRepository = createTranscriptionRepository({ geminiClient });
+  const command = createTranscribeAudioCommand({ transcriptionRepository });
+
+  const transcriptionController = createTranscriptionController(command);
 
   app.use(router.routes());
   app.use(router.allowedMethods());

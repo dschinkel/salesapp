@@ -85,6 +85,9 @@ Purpose of `tasks.md`:
 ## F3.7 Records a Conversation  
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
 - [x] F3.7.0 Provides a section to record voice to text  
+- [x] Add concurrently to run Vite and Koa together  
+- [x] Fix Server 500 Error on transcription endpoint  
+- [x] Implement real-time transcription while recording  
 
 ## I1 Code Formatting  
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
