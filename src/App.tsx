@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { AppVersion } from './components/AppVersion';
 import { Questionnaire } from './components/Questionnaire.tsx';
 import { UploadQuestions } from './components/UploadQuestions/UploadQuestions.tsx';
+import { VoiceRecorder } from './components/VoiceRecorder.tsx';
 import { useQuestions } from './components/useQuestions.ts';
 import { useUploadQuestions } from './components/useUploadQuestions.ts';
 import { parseFile } from './components/csvParser.ts';
@@ -30,6 +31,7 @@ const App = () => {
         </button>
       </header>
       <main className="flex-grow container mx-auto py-4">
+        <VoiceRecorder />
         <UploadQuestions onUpload={parseAndUploadQuestions} />
         <Questionnaire questions={questions} onReorder={reorderQuestion} />
       </main>
