@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { createGeminiClient } from '../../data/GeminiClient';
 
 describe('Gemini Client', () => {
