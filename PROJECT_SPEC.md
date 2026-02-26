@@ -19,6 +19,10 @@ At the start of every task and before proceeding to the next step in the PLAN, r
 
 👇All behavior mentioned below are to be incrementally implemented will be broken down into smaller tasks defined in `tasks.md` and worked on one at a time.
 
+Legend:
+`I.x` - Infrastructure Reqirements
+`F.x` - Feature Requirements
+
 # Brainstorming
 
 ## F.0 Walking Skeleton
@@ -67,20 +71,19 @@ list of questions of questions:
 ### F3.6 Create a dark mode theme
 In F3.5 you created a light mode theme. We want to be able to toggle to a dark mode theme whereas the questions list is themed and looks like the attached screenshot.
 - [x] F3.6.0 Create a dark mode theme that matches the screenshot. Provide a toggle to switch back to light mode
-- [] F3.6.1 Ensure that the background behind title, the title text, and description text have the same colors as the screenshot provided
+- [x] F3.6.1 Ensure that the background behind title, the title text, and description text have the same colors as the screenshot provided
+
 
 ### F3.x Records a Conversation
 - [] F3.x Provides a section to record voice to text. Text that is transcribed shows below voice recorder
 
-
 ### F3.x Parses pre sales questions pasted in by sales into the question list
-
 
 
 # Code Requirements (non business specific behavior / infrastructure)
 ### I1 Code Formatting
 - [x] I1.0.0 Use prettier for code formatting
-- [ ] I1.0.1 Use eslint for code linting
+- [x] I1.0.1 Add eslint for code linting.  Do not add any rules. Just a placeholder for rules
 
 NOTES
 later down the road

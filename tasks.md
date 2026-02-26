@@ -84,3 +84,4 @@ Purpose of `tasks.md`:
 ## I1 Code Formatting  
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
 - [x] I1.0.0 Use prettier for code formatting  
+- [x] I1.0.1 Add eslint for code linting  
