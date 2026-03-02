@@ -1,0 +1,3 @@
+import sys; path='tasks.md'; content=open(path).read(); old='- [] F3.8.2 Use navigator.mediaDevices.getUserMedia({ audio: true }) from a button (or other direct user action). 
+That’s the canonical way to enable browser permissions to allow a user to record audio. Ensure this is invoked when you start recording if it hasn\'t been already'; new='- [x] F3.8.2 Use navigator.mediaDevices.getUserMedia({ audio: true }) from a button (or other direct user action). 
+That’s the canonical way to enable browser permissions to allow a user to record audio. Ensure this is invoked when you start recording if it hasn\'t been already'; open(path, 'w').write(content.replace(old, new)) if old in content else sys.exit(1)

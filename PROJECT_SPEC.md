@@ -85,7 +85,9 @@ In F3.5 you created a light mode theme. We want to be able to toggle to a dark m
 ### F3.8 Transcribes a Conversation using built-in Browser Translation API  
 - [x] F3.8.0 Keep the current behavior completed in F3.7. Add a toggle that allos us to switch between using Gemini API  
  and using the built in browser Web Speech API as the mechanism that translates voice to text  
-- [x] F3.8.1 ensure that the transcribed voice to text shows up realtime as you talk  
+- [x] F3.8.1 ensure that the transcribed voice to text shows up realtime as you talk
+- [x] F3.8.2 Use navigator.mediaDevices.getUserMedia({ audio: true }) from a button (or other direct user action). 
+That’s the canonical way to enable browser permissions to allow a user to record audio. Ensure this is invoked when you start recording if it hasn't been already
 
 ### F3.x Parses pre sales questions pasted in by sales into the question list
 
