@@ -36,7 +36,8 @@ export function useVoiceRecorder({
       mediaRecorder.start();
       setIsRecording(true);
 
-      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      // WebSpeech API transcription
+      if (transcriptionSource === 'browser' && ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
         const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
         recognitionRef.current = new SpeechRecognition();
         recognitionRef.current.continuous = true;

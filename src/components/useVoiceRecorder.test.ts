@@ -64,4 +64,56 @@ describe('Voice Recorder', () => {
 
     expect(result.current.transcriptionSource).toBe('browser');
   });
+
+  test('transcribes voice using browser', async () => {
+    const { result } = renderHook(() => useVoiceRecorder());
+
+    act(() => {
+      result.current.setTranscriptionSource('browser');
+    });
+
+    let recognitionResultHandler: any = null;
+    const mockRecognition = {
+      start: jest.fn(),
+      stop: jest.fn(),
+      set onresult(handler: any) {
+        recognitionResultHandler = handler;
+      },
+    };
+    (window as any).SpeechRecognition = jest.fn(() => mockRecognition);
+
+    await act(async () => {
+      await result.current.startRecording();
+    });
+
+    expect(mockRecognition.start).toHaveBeenCalled();
+
+    act(() => {
+      recognitionResultHandler({
+        results: [[{ transcript: 'Hello browser' }]],
+      });
+    });
+
+    expect(result.current.transcript).toBe('Hello browser');
+  });
+
+  test('does not use browser transcription when Gemini is selected', async () => {
+    const { result } = renderHook(() => useVoiceRecorder());
+
+    act(() => {
+      result.current.setTranscriptionSource('gemini');
+    });
+
+    const mockRecognition = {
+      start: jest.fn(),
+      stop: jest.fn(),
+    };
+    (window as any).SpeechRecognition = jest.fn(() => mockRecognition);
+
+    await act(async () => {
+      await result.current.startRecording();
+    });
+
+    expect(mockRecognition.start).not.toHaveBeenCalled();
+  });
 });
