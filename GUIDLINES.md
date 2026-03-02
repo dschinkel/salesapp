@@ -58,16 +58,13 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
   - G1.10.8 Feature sections in `tasks.md` MUST be separated by an extra line return (two empty lines between sections) to improve readability and whitespace.  
   - G1.10.9 After each Feature title or task line in `PROJECT_SPEC.md` and `tasks.md`, you MUST add two spaces at the end of the line to force a markdown line return.  
 
-## G2. Domain-Driven Naming  
-
+## G2. Domain-Driven Naming
 - G1.11 Use domain language for files, functions, variables, tests, and modules. Do not include implementation details or technical words in variable names.  
-  - G1.11.1 Example: instead of `downloadPromises`, use a domain-specific name like `images` if they represent the images being downloaded.  
 
-## G3. Clean Code & Organization  
-
+## G3. Clean Code & Organization
 - G1.12 Organization and Naming:  
   - G1.12.1 Avoid generic buckets like util, utils, helper, helpers. Use domain terms instead. This applies to directory names, file names, and code constructs (functions, variables).  
-  - G1.12.2 Do NOT create "helper functions". Instead, use well-named composed functions that describe their domain intent.  
+  - G1.12.2 Do NOT create "helper functions". Instead, use well-named composed functions that describe their domain and intent.  
 - P0.11 When iterating on a feature, do not mark it as [FAILED] or create new "fix" tasks if it doesn't meet acceptance criteria immediately. Instead, keep the current task [IN PROGRESS] and iterate until it is completed.  
   - P0.11.1 When starting a task, you MUST move the task from [NOT STARTED] to [IN PROGRESS] in `tasks.md`.  
 - P0.12 NEVER call `submit` if there are uncommitted or unpushed changes related to the task. Every task completion must end with a push to the remote repository. Commit messages must focus on domain features and intent. Do not include technical words like "verified", "Step X", or "Frontend/Backend".  
