@@ -100,3 +100,8 @@ Purpose of `tasks.md`:
 - [x] I2.0.0 Automated semantic versioning in package.json on push to main  
 - [x] Ensure version consistency in package.json, build, and dockerfile  
 - [x] Update AppVersion component to show the new version format  
+
+
+## I3 Model Upgrade
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [x] I3.0.0 Upgrade Gemini model to `gemini-2.5-flash`  

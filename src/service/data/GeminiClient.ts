@@ -14,7 +14,7 @@ export function createGeminiClient({ apiKey }: GeminiClientDependencies): Gemini
         return 'Mock API response because GEMINI_API_KEY is missing in env';
       }
 
-      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
       const audioPart = {
         inlineData: {

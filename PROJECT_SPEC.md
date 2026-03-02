@@ -85,6 +85,9 @@ In F3.5 you created a light mode theme. We want to be able to toggle to a dark m
 ### F3.x Parses pre sales questions pasted in by sales into the question list
 
 
+### I3 Model Upgrade
+- [x] I3.0.0 Upgrade Gemini model from `gemini-2.0-flash` to `gemini-2.5-flash`  
+
 # Code Requirements (non business specific behavior / infrastructure)
 ### I1 Code Formatting
 - [x] I1.0.0 Use prettier for code formatting
