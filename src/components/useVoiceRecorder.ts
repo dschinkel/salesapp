@@ -9,11 +9,13 @@ export function useVoiceRecorder({
 }: { transcriptionRepository?: TranscriptionRepository } = {}) {
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState('');
+  const [transcriptionSource, setTranscriptionSource] = useState<'gemini' | 'browser'>('gemini');
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recognitionRef = useRef<any>(null);
   const audioChunksRef = useRef<BlobPart[]>([]);
 
   const startRecording = async () => {
+    setTranscript('');
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream);
@@ -80,6 +82,8 @@ export function useVoiceRecorder({
   return {
     isRecording,
     transcript,
+    transcriptionSource,
+    setTranscriptionSource,
     startRecording,
     stopRecording,
     transcribeAudio,

@@ -51,4 +51,17 @@ describe('Voice Recorder', () => {
 
     expect(result.current.transcript).toBe('Hello World');
   });
+
+  test('can toggle transcription converter', () => {
+    const { result } = renderHook(() => useVoiceRecorder());
+
+    // Default should be Gemini
+    expect(result.current.transcriptionSource).toBe('gemini');
+
+    act(() => {
+      result.current.setTranscriptionSource('browser');
+    });
+
+    expect(result.current.transcriptionSource).toBe('browser');
+  });
 });

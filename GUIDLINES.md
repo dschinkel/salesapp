@@ -125,11 +125,11 @@ The Fix:
   - T1.3.6 Service Data Layer Integration: Tests located in `src/service/test/integration/` MUST be integration tests that hit real external services, databases, or file systems. They must not use fakes or mocks for the primary IO target of that module. Integration test files must not use the word "integration" in their name; instead, they should be named after the behavior or component they test (e.g., `GeminiImageGenerator.test.ts`).  
   - T1.3.6 In RED you must stop and verify the failed test before proceeding. Show me the failed test before proceeding and ask me whether to proceed to the GREEN step  
 - T1.4 In GREEN, write only the minimum production code required to pass the single failing test; no extra functionality.  
-- T1.5 After GREEN, you MUST explicitly ask for permission to commit using: `feat: <task-id>: <behavior>`. After the commit, ask whether to push or continue.  
+- T1.5 After GREEN, you MUST explicitly ask for permission to commit using: `feat: <task-id>: <behavior>`. The commit message should exactly match the business behavior defined in the test name (prose). After the commit, ask whether to push or continue.
   - T1.5.1 After tests run GREEN, you MUST restart the website and services using `yarn dev` in the background and verify no errors are outputted. Fix any errors that occur during startup or runtime.  
 - T1.6 In REFACTOR, refactor only while tests are green. Make one refactoring change at a time and run tests after each small refactor (TCR).  
 - T1.7 If refactoring occurred, you MUST explicitly ask for permission to commit using: `feat: <task-id>: refactor: <behavior>`. After the commit, ask whether to push or continue.  
-- T1.8 Cleanup & Verification must include running tests, fixing lint warnings/errors, and running both `yarn build` and `yarn dev` to ensure the app compiles and starts without errors. Then prompt the user to commit using: `feat: <task-id>: cleanup: <behavior>`.
+- T1.8 Cleanup & Verification must include running tests, fixing lint warnings/errors, and running both `yarn build` and `yarn dev` to ensure the app compiles and starts without errors. Then prompt the user to commit using: `feat: <task-id>: standard cleanup at end of feature work`.
 - T1.9 `tdd.log` must relate every RED | GREEN | REFACTOR entry to its corresponding PLAN step number.  
 - T1.10 When fixing a defect or implementing a feature with a clear external contract, first write an “API-level” failing test. In this repo, “API-level” means the public boundary for the behavior (typically the hook public API or the domain service function), not an HTTP endpoint or end-to-end test unless explicitly requested.  
 - T1.11 When tests fail, fix implementation first, not the test, unless the test clearly contradicts the spec.  
@@ -397,7 +397,7 @@ PLAN:
    - Run `yarn build` and `yarn dev` to check for compilation/runtime errors
    - Fix linting errors
      COMMIT:
-   - Proposed message: feat: <task-id>: cleanup: <behavior>
+   - Proposed message: feat: <task-id>: standard cleanup at end of feature work
 
 Do you want me to proceed with this plan?
 ```
@@ -496,7 +496,7 @@ USER DECISION: <commit? push?>
 - Verified website/services run
 
 === COMMIT (CLEANUP) ===
-PROPOSED COMMIT: feat: <task-id>: cleanup: <behavior>
+PROPOSED COMMIT: feat: <task-id>: standard cleanup at end of feature work
 USER DECISION: <commit? push?>
 ```
 

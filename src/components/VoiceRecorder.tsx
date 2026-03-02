@@ -3,11 +3,18 @@ import { Mic, StopCircle } from 'lucide-react';
 import { useVoiceRecorder, TranscriptionRepository } from './useVoiceRecorder';
 
 export function VoiceRecorder({ transcriptionRepository }: { transcriptionRepository?: TranscriptionRepository }) {
-  const { isRecording, transcript, startRecording, stopRecording } = useVoiceRecorder({ transcriptionRepository });
+  const { isRecording, transcript, transcriptionSource, setTranscriptionSource, startRecording, stopRecording } =
+    useVoiceRecorder({ transcriptionRepository });
 
   return (
     <div className="w-full max-w-2xl mx-auto mb-8 flex flex-col shadow-lg rounded-xl overflow-hidden border border-slate-200 dark:border-cambria-border transition-colors duration-200">
-      <HeaderControls isRecording={isRecording} onStart={startRecording} onStop={stopRecording} />
+      <HeaderControls
+        isRecording={isRecording}
+        onStart={startRecording}
+        onStop={stopRecording}
+        transcriptionSource={transcriptionSource}
+        onSourceChange={setTranscriptionSource}
+      />
       <TranscriptArea transcript={transcript} />
     </div>
   );
@@ -17,21 +24,51 @@ function HeaderControls({
   isRecording,
   onStart,
   onStop,
+  transcriptionSource,
+  onSourceChange,
 }: {
   isRecording: boolean;
   onStart: () => void;
   onStop: () => void;
+  transcriptionSource: 'gemini' | 'browser';
+  onSourceChange: (source: 'gemini' | 'browser') => void;
 }) {
   return (
-    <div className="bg-[#D2B591] dark:bg-[#C5A55A] px-6 py-3 flex justify-between items-center">
-      <div className="w-1/3 flex justify-start">
-        <RecordingStatus isRecording={isRecording} />
+    <div className="bg-[#D2B591] dark:bg-[#C5A55A] px-6 py-3 flex flex-col gap-2">
+      <div className="flex justify-between items-center w-full">
+        <div className="w-1/3 flex justify-start">
+          <RecordingStatus isRecording={isRecording} />
+        </div>
+        <div className="w-1/3 flex justify-center">
+          <RecordingButton isRecording={isRecording} onClick={isRecording ? onStop : onStart} />
+        </div>
+        <div className="w-1/3 flex justify-end">
+          <RecordingDuration />
+        </div>
       </div>
-      <div className="w-1/3 flex justify-center">
-        <RecordingButton isRecording={isRecording} onClick={isRecording ? onStop : onStart} />
-      </div>
-      <div className="w-1/3 flex justify-end">
-        <RecordingDuration />
+      <div className="flex justify-center gap-4 mt-1">
+        <button
+          onClick={() => onSourceChange('gemini')}
+          disabled={isRecording}
+          className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded transition-colors ${
+            transcriptionSource === 'gemini'
+              ? 'bg-white text-cambria-gold shadow-sm'
+              : 'text-white/70 hover:text-white hover:bg-white/10'
+          } ${isRecording ? 'opacity-50 cursor-not-allowed' : ''}`}
+        >
+          GEMINI
+        </button>
+        <button
+          onClick={() => onSourceChange('browser')}
+          disabled={isRecording}
+          className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded transition-colors ${
+            transcriptionSource === 'browser'
+              ? 'bg-white text-cambria-gold shadow-sm'
+              : 'text-white/70 hover:text-white hover:bg-white/10'
+          } ${isRecording ? 'opacity-50 cursor-not-allowed' : ''}`}
+        >
+          BROWSER
+        </button>
       </div>
     </div>
   );
