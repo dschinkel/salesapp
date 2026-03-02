@@ -116,4 +116,21 @@ describe('Voice Recorder', () => {
 
     expect(mockRecognition.start).not.toHaveBeenCalled();
   });
+
+  test('sets gemini as transcriber', async () => {
+    const fakeRepository = {
+      transcribe: jest.fn().mockResolvedValue('Gemini Result'),
+    };
+    const { result } = renderHook(() => useVoiceRecorder({ transcriptionRepository: fakeRepository as any }));
+
+    act(() => {
+      result.current.setTranscriptionSource('browser');
+    });
+
+    await act(async () => {
+      await result.current.transcribeAudio(new Blob(['test'], { type: 'audio/webm' }));
+    });
+
+    expect(fakeRepository.transcribe).not.toHaveBeenCalled();
+  });
 });

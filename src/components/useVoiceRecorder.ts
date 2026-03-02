@@ -70,7 +70,7 @@ export function useVoiceRecorder({
   };
 
   const transcribeAudio = async (audio: Blob) => {
-    if (transcriptionRepository) {
+    if (transcriptionSource === 'gemini' && transcriptionRepository) {
       try {
         const result = await transcriptionRepository.transcribe(audio);
         setTranscript(result);
