@@ -105,3 +105,12 @@ Purpose of `tasks.md`:
 ## I3 Model Upgrade
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
 - [x] I3.0.0 Upgrade Gemini model to `gemini-2.5-flash`  
+
+
+## F3.8 Transcribes a Conversation using built-in Browser Translation API  
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [x] F3.8.0 Add a toggle to switch between Gemini API and Web Speech API  
+- [x] F3.8.1 Ensure real-time transcription shows up as you talk using Web Speech API  
+- [x] F3.8.2 Toggle state is persisted or correctly handled in useVoiceRecorder  
+- [x] F3.8.3 Real-time transcription is only active when Web Speech API is selected  
+- [x] F3.8.4 Gemini API transcription still works when selected (after recording stops)  

@@ -51,4 +51,106 @@ describe('Voice Recorder', () => {
 
     expect(result.current.transcript).toBe('Hello World');
   });
+
+  test('can toggle transcription source', () => {
+    const { result } = renderHook(() => useVoiceRecorder());
+
+    // Default should be Gemini
+    expect(result.current.transcriptionSource).toBe('gemini');
+
+    act(() => {
+      result.current.setTranscriptionSource('browser');
+    });
+
+    expect(result.current.transcriptionSource).toBe('browser');
+  });
+
+  test('does not use real-time browser transcription when Gemini is selected', async () => {
+    const { result } = renderHook(() => useVoiceRecorder());
+
+    act(() => {
+      result.current.setTranscriptionSource('gemini');
+    });
+
+    // Mock SpeechRecognition
+    const mockRecognition = {
+      start: jest.fn(),
+      stop: jest.fn(),
+    };
+    (window as any).SpeechRecognition = jest.fn(() => mockRecognition);
+
+    await act(async () => {
+      await result.current.startRecording();
+    });
+
+    expect(mockRecognition.start).not.toBeCalled();
+  });
+
+  test('uses real-time browser transcription when browser is selected', async () => {
+    const { result } = renderHook(() => useVoiceRecorder());
+
+    act(() => {
+      result.current.setTranscriptionSource('browser');
+    });
+
+    let recognitionResultHandler: any = null;
+    const mockRecognition = {
+      start: jest.fn(),
+      stop: jest.fn(),
+      set onresult(handler: any) {
+        recognitionResultHandler = handler;
+      },
+    };
+    (window as any).SpeechRecognition = jest.fn(() => mockRecognition);
+
+    await act(async () => {
+      await result.current.startRecording();
+    });
+
+    expect(mockRecognition.start).toHaveBeenCalled();
+
+    act(() => {
+      recognitionResultHandler({
+        results: [[{ transcript: 'Hello browser' }]],
+      });
+    });
+
+    expect(result.current.transcript).toBe('Hello browser');
+  });
+
+  test('clears transcript when starting new recording', async () => {
+    const { result } = renderHook(() => useVoiceRecorder());
+
+    act(() => {
+      result.current.setTranscriptionSource('browser');
+    });
+
+    let recognitionResultHandler: any = null;
+    const mockRecognition = {
+      start: jest.fn(),
+      stop: jest.fn(),
+      set onresult(handler: any) {
+        recognitionResultHandler = handler;
+      },
+    };
+    (window as any).SpeechRecognition = jest.fn(() => mockRecognition);
+
+    await act(async () => {
+      await result.current.startRecording();
+    });
+
+    act(() => {
+      recognitionResultHandler({
+        results: [[{ transcript: 'Old transcript' }]],
+      });
+    });
+
+    expect(result.current.transcript).toBe('Old transcript');
+
+    await act(async () => {
+      await result.current.startRecording();
+    });
+
+    expect(result.current.transcript).toBe('');
+  });
 });

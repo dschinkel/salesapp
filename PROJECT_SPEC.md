@@ -82,6 +82,11 @@ In F3.5 you created a light mode theme. We want to be able to toggle to a dark m
   - Get the Gemini API key from github via secrets.GEMINI_API_KEY
   - refer to ../etsy-listing-generator/src/service as just an idea of how to code the service in terms of structure, patterns, and domain driven development
 
+### F3.8 Transcribes a Conversation using built-in Browser Translation API
+- [x] F3.8.0 Keep the current behavior completed in F3.7. Add a toggle that allos us to switch between using Gemini API
+ and using the built in browser Web Speech API as the mechanism that translates voice to text
+- [x] F3.8.1 ensure that the transcribed voice to text shows up realtime as you talk
+
 ### F3.x Parses pre sales questions pasted in by sales into the question list
 
 
