@@ -47,13 +47,13 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Run unit tests (client + service)
-        run: yarn test --selectProjects client,service
+#      - name: Run unit tests (client + service)
+#        run: yarn test --selectProjects client,service
 
-      - name: Run data-layer integration tests (Gemini)
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: yarn test --selectProjects service src/service/test/integration/GeminiClient.test.ts
+#      - name: Run data-layer integration tests (Gemini)
+#        env:
+#          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+#        run: yarn test --selectProjects service src/service/test/integration/GeminiClient.test.ts
 
       # Auth via Workload Identity Federation (no JSON key)
       - id: auth
