@@ -23,7 +23,9 @@ const App = () => {
 
   return (
     <div
-      className={`flex flex-col min-h-screen transition-colors duration-200 bg-cambria-bg ${isDark ? 'dark text-cambria-cream' : 'text-cambria-cream'}`}
+      className={`flex flex-col min-h-screen transition-colors duration-200 ${
+        isDark ? 'dark bg-cambria-bg text-cambria-cream' : 'bg-cambria-cream text-cambria-black'
+      }`}
     >
       <header className="p-4 flex justify-end">
         <button
@@ -39,7 +41,7 @@ const App = () => {
         <UploadQuestions onUpload={parseAndUploadQuestions} />
         <Questionnaire questions={questions} onReorder={reorderQuestion} />
       </main>
-      <footer className="border-t py-6 md:py-0 transition-colors duration-200 bg-cambria-black border-cambria-border">
+      <footer className="border-t py-6 md:py-0 transition-colors duration-200 bg-cambria-muted dark:bg-cambria-black border-cambria-mutedDark dark:border-cambria-border">
         <div className="container mx-auto flex flex-col items-center justify-center gap-4 md:h-24 md:flex-row">
           <AppVersion />
         </div>

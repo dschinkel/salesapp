@@ -175,3 +175,15 @@ The Fix:
 - [x] Update `VoiceRecorder.tsx` to use `bg-cambria-cream` and appropriate header colors for light mode
 - [x] Update `UploadQuestions.tsx` to use `bg-cambria-cream` for its card background in light mode
 - [x] Verify fix by running build and lint
+
+## PR.3.9.1 Fix
+
+### Light mode looks exactly like the black theme
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Add `darkMode: 'class'` to `tailwind.config.js` to enable manual theme toggling via class
+- [x] Update `App.tsx` to toggle page background and text color in light mode for better visibility
+- [x] Theme the application footer in `App.tsx` to align with the chosen mode
+- [x] Verify fix by running build and lint

@@ -95,6 +95,10 @@ That’s the canonical way to enable browser permissions to allow a user to reco
 ### F3.9 Improve Light Mode
 - [x] F3.9.0 Light mode should just flip the colors for each item.  Leave the main background of the page alone. Right now the content in each section is too dark, it's using dark theme instead of light..
 
+
+### F3.10 Browser voice transcript shows which questions were answered
+- [x] F3.10.0 Onc
+- [x] F3.10.0 
 ### F3.x Parses pre sales questions pasted in by sales into the question list
 
 
