@@ -97,8 +97,10 @@ That’s the canonical way to enable browser permissions to allow a user to reco
 
 
 ### F3.10 Browser voice transcript shows which questions were answered
-- [x] F3.10.0 Onc
-- [x] F3.10.0 
+- [] F3.10.0 Once recording is complete, the questions that were answered should show green
+  - [] F3.10.1 Send the transcript text and Key Points to Gemini API to determine which Key Points were answered based on the transcript.
+    - [] Ensure that the transcript and questions are sent as a service from from our backend service
+    
 ### F3.x Parses pre sales questions pasted in by sales into the question list
 
 

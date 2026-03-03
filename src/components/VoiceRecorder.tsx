@@ -2,7 +2,13 @@ import React from 'react';
 import { Mic, StopCircle } from 'lucide-react';
 import { useVoiceRecorder, TranscriptionRepository } from './useVoiceRecorder';
 
-export function VoiceRecorder({ transcriptionRepository }: { transcriptionRepository?: TranscriptionRepository }) {
+export function VoiceRecorder({
+  transcriptionRepository,
+  onTranscriptionComplete,
+}: {
+  transcriptionRepository?: TranscriptionRepository;
+  onTranscriptionComplete?: (transcript: string) => void;
+}) {
   const {
     isRecording,
     transcript,
@@ -11,7 +17,7 @@ export function VoiceRecorder({ transcriptionRepository }: { transcriptionReposi
     setTranscriptionSource,
     startRecording,
     stopRecording,
-  } = useVoiceRecorder({ transcriptionRepository });
+  } = useVoiceRecorder({ transcriptionRepository, onTranscriptionComplete });
 
   return (
     <div className="w-full max-w-2xl mx-auto mb-8 flex flex-col shadow-lg rounded-xl overflow-hidden border border-cambria-mutedDark dark:border-cambria-border transition-colors duration-200">

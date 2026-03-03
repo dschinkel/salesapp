@@ -187,3 +187,11 @@ The Fix:
 - [x] Update `App.tsx` to toggle page background and text color in light mode for better visibility
 - [x] Theme the application footer in `App.tsx` to align with the chosen mode
 - [x] Verify fix by running build and lint
+
+
+## F3.10 Browser voice transcript shows which questions were answered  
+
+- [ ] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [ ] F3.10.1 Send transcript and key points to Gemini API for analysis via backend service  
+- [ ] F3.10.0 Display answered questions in green after recording is complete  

@@ -3,15 +3,17 @@ import { useReorderQuestions } from './useReorderQuestions';
 
 export function Questionnaire({
   questions,
+  answeredQuestions = [],
   onReorder,
 }: {
   questions: string[];
+  answeredQuestions?: string[];
   onReorder: (from: number, to: number) => void;
 }) {
   return (
     <div className="w-full max-w-2xl mx-auto flex flex-col shadow-lg rounded-xl overflow-hidden border border-cambria-mutedDark dark:border-cambria-border transition-colors duration-200">
       <Header length={questions.length} />
-      <Questions questions={questions} onReorder={onReorder} />
+      <Questions questions={questions} answeredQuestions={answeredQuestions} onReorder={onReorder} />
       <NoQuestionsFound questions={questions} />
     </div>
   );
@@ -26,7 +28,15 @@ function Header(props: { length: number }) {
   );
 }
 
-function Questions({ questions, onReorder }: { questions: string[]; onReorder: (from: number, to: number) => void }) {
+function Questions({
+  questions,
+  answeredQuestions,
+  onReorder,
+}: {
+  questions: string[];
+  answeredQuestions: string[];
+  onReorder: (from: number, to: number) => void;
+}) {
   const { draggedIndex, onDragStart, onDragOver, onDragEnd, onDrop } = useReorderQuestions({ onReorder });
 
   if (questions.length === 0) return null;
@@ -40,9 +50,10 @@ function Questions({ questions, onReorder }: { questions: string[]; onReorder: (
             onDragStart={(e) => onDragStart && onDragStart(index, e)}
             onDragOver={(e) => onDragOver && onDragOver(e)}
             onDrop={(e) => onDrop && onDrop(index, e)}
-            onDragEnd={(e) => onDragEnd && onDragEnd()}
+            onDragEnd={() => onDragEnd && onDragEnd()}
             isDraggable={!!onDragStart}
             isDragged={draggedIndex === index}
+            isAnswered={answeredQuestions.includes(question)}
             question={question}
           />
         ))}
@@ -67,6 +78,7 @@ function Question(props: {
   onDragEnd: (e: React.DragEvent<HTMLLIElement>) => void;
   isDraggable: boolean;
   isDragged: boolean;
+  isAnswered: boolean;
   question: string;
 }) {
   return (
@@ -76,10 +88,12 @@ function Question(props: {
       onDragOver={props.onDragOver}
       onDrop={props.onDrop}
       onDragEnd={props.onDragEnd}
-      className={`p-4 bg-white dark:bg-cambria-panelLight rounded-lg border border-cambria-mutedDark/30 dark:border-cambria-border shadow-sm hover:shadow-md transition-all duration-200 text-cambria-black dark:text-cambria-cream font-medium flex items-center gap-3 ${props.isDragged ? 'opacity-50 scale-[0.98]' : ''} ${props.isDraggable ? 'cursor-move' : ''}`}
+      className={`p-4 ${props.isAnswered ? 'bg-green-50 dark:bg-green-900/20 border-green-500/50' : 'bg-white dark:bg-cambria-panelLight border-cambria-mutedDark/30 dark:border-cambria-border'} rounded-lg border shadow-sm hover:shadow-md transition-all duration-200 text-cambria-black dark:text-cambria-cream font-medium flex items-center gap-3 ${props.isDragged ? 'opacity-50 scale-[0.98]' : ''} ${props.isDraggable ? 'cursor-move' : ''}`}
     >
-      <div className="flex-shrink-0 w-2 h-2 rounded-full bg-cambria-goldDark dark:bg-cambria-gold opacity-50"></div>
-      {props.question}
+      <div
+        className={`flex-shrink-0 w-2 h-2 rounded-full ${props.isAnswered ? 'bg-green-500' : 'bg-cambria-goldDark dark:bg-cambria-gold opacity-50'}`}
+      ></div>
+      <span className={props.isAnswered ? 'text-green-700 dark:text-green-400' : ''}>{props.question}</span>
     </li>
   );
 }

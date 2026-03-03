@@ -6,7 +6,11 @@ export interface TranscriptionRepository {
 
 export function useVoiceRecorder({
   transcriptionRepository,
-}: { transcriptionRepository?: TranscriptionRepository } = {}) {
+  onTranscriptionComplete,
+}: {
+  transcriptionRepository?: TranscriptionRepository;
+  onTranscriptionComplete?: (transcript: string) => void;
+} = {}) {
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [recordingDuration, setRecordingDuration] = useState(0);
@@ -169,7 +173,12 @@ export function useVoiceRecorder({
       mediaRecorderRef.current.stream.getTracks().forEach((track) => track.stop());
       mediaRecorderRef.current = null;
     }
+
     setIsRecording(false);
+
+    if (onTranscriptionComplete && transcript) {
+      onTranscriptionComplete(transcript);
+    }
   };
 
   const transcribeAudio = async (audio: Blob) => {
@@ -177,6 +186,9 @@ export function useVoiceRecorder({
       try {
         const result = await transcriptionRepository.transcribe(audio);
         setTranscript(result);
+        if (onTranscriptionComplete) {
+          onTranscriptionComplete(result);
+        }
       } catch (e) {
         console.error('Transcription failed', e);
       }
