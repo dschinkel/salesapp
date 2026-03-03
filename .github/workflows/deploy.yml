@@ -30,6 +30,14 @@ jobs:
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
+      # ✅ Helpful debug: prints the exact values your WIF attribute condition must match
+      - name: Debug GitHub context
+        run: |
+          echo "repository: $GITHUB_REPOSITORY"
+          echo "ref:        $GITHUB_REF"
+          echo "ref_name:   $GITHUB_REF_NAME"
+          echo "sha:        $GITHUB_SHA"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -47,13 +55,13 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-#      - name: Run unit tests (client + service)
-#        run: yarn test --selectProjects client,service
+      #      - name: Run unit tests (client + service)
+      #        run: yarn test --selectProjects client,service
 
-#      - name: Run data-layer integration tests (Gemini)
-#        env:
-#          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-#        run: yarn test --selectProjects service src/service/test/integration/GeminiClient.test.ts
+      #      - name: Run data-layer integration tests (Gemini)
+      #        env:
+      #          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      #        run: yarn test --selectProjects service src/service/test/integration/GeminiClient.test.ts
 
       # Auth via Workload Identity Federation (no JSON key)
       - id: auth
@@ -61,6 +69,8 @@ jobs:
         with:
           workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
           service_account: ${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}
+          # ✅ Fixes the "Failed to compute a project ID" warning:
+          project_id: ${{ secrets.GCR_PROJECT_ID }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
