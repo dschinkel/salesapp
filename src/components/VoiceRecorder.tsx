@@ -44,7 +44,7 @@ function HeaderControls({
   onSourceChange: (source: 'gemini' | 'browser') => void;
 }) {
   return (
-    <div className="bg-cambria-muted dark:bg-[#C5A55A] px-6 py-3 flex flex-col gap-2">
+    <div className="bg-cambria-black dark:bg-cambria-gold px-6 py-3 flex flex-col gap-2">
       <div className="flex justify-between items-center w-full">
         <div className="w-1/3 flex justify-start">
           <RecordingStatus isRecording={isRecording} />
@@ -63,7 +63,7 @@ function HeaderControls({
           className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded transition-colors ${
             transcriptionSource === 'gemini'
               ? 'bg-white text-cambria-gold shadow-sm'
-              : 'text-cambria-black/60 dark:text-white/70 hover:text-cambria-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10'
+              : 'text-white/60 dark:text-black/60 hover:text-white dark:hover:text-black hover:bg-white/10 dark:hover:bg-black/10'
           } ${isRecording ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           GEMINI
@@ -74,7 +74,7 @@ function HeaderControls({
           className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded transition-colors ${
             transcriptionSource === 'browser'
               ? 'bg-white text-cambria-gold shadow-sm'
-              : 'text-cambria-black/60 dark:text-white/70 hover:text-cambria-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10'
+              : 'text-white/60 dark:text-black/60 hover:text-white dark:hover:text-black hover:bg-white/10 dark:hover:bg-black/10'
           } ${isRecording ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           BROWSER
@@ -86,7 +86,7 @@ function HeaderControls({
 
 function RecordingStatus({ isRecording }: { isRecording: boolean }) {
   return (
-    <div className="text-cambria-black dark:text-white font-semibold flex items-center gap-2">
+    <div className="text-cambria-cream dark:text-cambria-black font-semibold flex items-center gap-2">
       <RecordingIndicator isRecording={isRecording} />
     </div>
   );
@@ -110,7 +110,7 @@ function RecordingDuration({ duration }: { duration: number }) {
   const format = (n: number) => n.toString().padStart(2, '0');
 
   return (
-    <div className="text-cambria-black dark:text-white font-mono text-xl tracking-wider">
+    <div className="text-cambria-cream dark:text-cambria-black font-mono text-xl tracking-wider">
       {format(hours)}:{format(minutes)}:{format(seconds)}
     </div>
   );

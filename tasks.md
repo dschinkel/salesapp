@@ -187,3 +187,14 @@ The Fix:
 - [x] Update `App.tsx` to toggle page background and text color in light mode for better visibility
 - [x] Theme the application footer in `App.tsx` to align with the chosen mode
 - [x] Verify fix by running build and lint
+
+## F3.9.2 Feature
+
+### Improve Light Mode Theme with Opposite Colors
+
+The Fix:
+
+- [ ] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [ ] Implement flipped headers and body colors for VoiceRecorder, UploadQuestions, and Questionnaire
+- [ ] Ensure high contrast between page background and content buckets in light mode
+- [ ] Verify fix by running build and lint

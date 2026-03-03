@@ -19,7 +19,7 @@ export function Questionnaire({
 
 function Header(props: { length: number }) {
   return (
-    <div className="bg-cambria-muted dark:bg-[#222222] p-6 border-b border-cambria-mutedDark dark:border-cambria-borderLight transition-colors duration-200">
+    <div className="bg-cambria-gold dark:bg-[#222222] p-6 border-b border-cambria-mutedDark dark:border-cambria-borderLight transition-colors duration-200">
       <QuestionsHeader length={props.length} />
       <QuestionsDescription />
     </div>
@@ -32,7 +32,7 @@ function Questions({ questions, onReorder }: { questions: string[]; onReorder: (
   if (questions.length === 0) return null;
 
   return (
-    <div className="bg-cambria-cream dark:bg-cambria-panelDark p-4 transition-colors duration-200">
+    <div className="bg-white dark:bg-cambria-panelDark p-4 transition-colors duration-200">
       <ul className="space-y-2">
         {questions.map((question, index) => (
           <Question
@@ -53,7 +53,7 @@ function Questions({ questions, onReorder }: { questions: string[]; onReorder: (
 
 function QuestionsDescription() {
   return (
-    <p className="text-sm text-cambria-black/60 dark:text-[#A09080] leading-relaxed">
+    <p className="text-sm text-cambria-black/80 dark:text-[#A09080] leading-relaxed">
       Add key points or topics that should be mentioned during the call. They'll be automatically checked off when
       detected in the transcript.
     </p>
@@ -76,7 +76,7 @@ function Question(props: {
       onDragOver={props.onDragOver}
       onDrop={props.onDrop}
       onDragEnd={props.onDragEnd}
-      className={`p-4 bg-white dark:bg-cambria-panelLight rounded-lg border border-cambria-mutedDark/30 dark:border-cambria-border shadow-sm hover:shadow-md transition-all duration-200 text-cambria-black dark:text-cambria-cream font-medium flex items-center gap-3 ${props.isDragged ? 'opacity-50 scale-[0.98]' : ''} ${props.isDraggable ? 'cursor-move' : ''}`}
+      className={`p-4 bg-cambria-cream dark:bg-cambria-panelLight rounded-lg border border-cambria-mutedDark/30 dark:border-cambria-border shadow-sm hover:shadow-md transition-all duration-200 text-cambria-black dark:text-cambria-cream font-medium flex items-center gap-3 ${props.isDragged ? 'opacity-50 scale-[0.98]' : ''} ${props.isDraggable ? 'cursor-move' : ''}`}
     >
       <div className="flex-shrink-0 w-2 h-2 rounded-full bg-cambria-goldDark dark:bg-cambria-gold opacity-50"></div>
       {props.question}
@@ -99,7 +99,7 @@ function QuestionsHeader(props: { length: number }) {
 
 function QuestionCount(props: { length: number }) {
   return (
-    <span className="text-sm font-medium text-cambria-black/70 dark:text-white/80 bg-cambria-black/10 dark:bg-black/10 px-3 py-1 rounded-full">
+    <span className="text-sm font-medium text-cambria-black/70 dark:text-white/80 bg-black/10 px-3 py-1 rounded-full">
       {props.length} questions
     </span>
   );
