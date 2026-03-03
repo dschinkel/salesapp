@@ -27,5 +27,29 @@ export function createGeminiClient({ apiKey }: GeminiClientDependencies): Gemini
       const response = await result.response;
       return response.text();
     },
+
+    async analyzeTranscript(transcript: string, questions: string[]): Promise<string[]> {
+      if (!apiKey) {
+        // Simple heuristic for test/mock when API key is missing
+        return questions.filter((q) => transcript.toLowerCase().includes(q.toLowerCase()));
+      }
+
+      const model = genAI.getGenerativeModel({
+        model: 'gemini-2.5-flash',
+        generationConfig: { responseMimeType: 'application/json' },
+      });
+
+      const prompt = `
+        Analyze the following transcript and determine which of the provided key points or questions were answered.
+        Return the result as a JSON array of strings containing exactly the original question text for each answered point.
+        
+        Transcript: "${transcript}"
+        Questions: ${JSON.stringify(questions)}
+      `;
+
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      return JSON.parse(response.text());
+    },
   };
 }

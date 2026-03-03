@@ -1,5 +1,6 @@
 export interface GeminiClient {
   generateContent(prompt: string, audioBuffer: Buffer, mimetype: string): Promise<string>;
+  analyzeTranscript(transcript: string, questions: string[]): Promise<string[]>;
 }
 
 export interface TranscriptionRepositoryDependencies {
