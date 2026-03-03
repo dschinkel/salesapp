@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export interface TranscriptionRepository {
   transcribe: (audio: Blob) => Promise<string>;
@@ -9,6 +9,7 @@ export function useVoiceRecorder({
 }: { transcriptionRepository?: TranscriptionRepository } = {}) {
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState('');
+  const [recordingDuration, setRecordingDuration] = useState(0);
   const [transcriptionSource, setTranscriptionSource] = useState<'gemini' | 'browser'>('gemini');
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recognitionRef = useRef<any>(null);
@@ -18,6 +19,22 @@ export function useVoiceRecorder({
   const retryDelayRef = useRef(0);
   const consecutiveNetworkErrorsRef = useRef(0);
   const restartTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (isRecording) {
+      timerRef.current = setInterval(() => {
+        setRecordingDuration((prev) => prev + 1);
+      }, 1000);
+    } else {
+      if (timerRef.current) clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [isRecording]);
 
   const startBrowserRecognition = () => {
     if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
@@ -97,6 +114,7 @@ export function useVoiceRecorder({
 
   const startRecording = async () => {
     setTranscript('');
+    setRecordingDuration(0);
     try {
       if (transcriptionSource === 'browser') {
         shouldBeRecordingRef.current = true;
@@ -168,6 +186,7 @@ export function useVoiceRecorder({
   return {
     isRecording,
     transcript,
+    recordingDuration,
     transcriptionSource,
     setTranscriptionSource,
     startRecording,

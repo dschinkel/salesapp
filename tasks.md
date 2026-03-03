@@ -150,3 +150,15 @@ The Fix:
 - [x] Add concurrency group to `.github/workflows/deploy.yml` to prevent race conditions  
 - [x] Add `git pull --rebase` to the version bump step in CI  
 - [x] Consolidate local remotes to simplify Git workflow  
+
+
+## PR.3.8.4 Fix  
+
+### Recording Counter is not incremented  
+
+The Fix:  
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [x] Implement `recordingDuration` state and timer logic in `useVoiceRecorder.ts`  
+- [x] Update `VoiceRecorder.tsx` to display formatted recording duration  
+- [x] Verify fix by running build and tests  

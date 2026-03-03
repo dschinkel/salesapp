@@ -57,6 +57,49 @@ describe('Voice Recorder', () => {
     expect(result.current.isRecording).toBe(false);
   });
 
+  test('increments recording duration', async () => {
+    jest.useFakeTimers();
+    const { result } = renderHook(() => useVoiceRecorder());
+
+    expect(result.current.recordingDuration).toBe(0);
+
+    await act(async () => {
+      await result.current.startRecording();
+    });
+
+    expect(result.current.isRecording).toBe(true);
+
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.recordingDuration).toBe(1);
+
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+
+    expect(result.current.recordingDuration).toBe(3);
+
+    act(() => {
+      result.current.stopRecording();
+    });
+
+    expect(result.current.isRecording).toBe(false);
+
+    // Duration should stay at 3 after stop
+    expect(result.current.recordingDuration).toBe(3);
+
+    // Duration should reset on next start
+    await act(async () => {
+      await result.current.startRecording();
+    });
+
+    expect(result.current.recordingDuration).toBe(0);
+
+    jest.useRealTimers();
+  });
+
   test('transcribes audio', async () => {
     const fakeRepository = {
       transcribe: async (audio: Blob) => 'Hello World',

@@ -3,13 +3,21 @@ import { Mic, StopCircle } from 'lucide-react';
 import { useVoiceRecorder, TranscriptionRepository } from './useVoiceRecorder';
 
 export function VoiceRecorder({ transcriptionRepository }: { transcriptionRepository?: TranscriptionRepository }) {
-  const { isRecording, transcript, transcriptionSource, setTranscriptionSource, startRecording, stopRecording } =
-    useVoiceRecorder({ transcriptionRepository });
+  const {
+    isRecording,
+    transcript,
+    recordingDuration,
+    transcriptionSource,
+    setTranscriptionSource,
+    startRecording,
+    stopRecording,
+  } = useVoiceRecorder({ transcriptionRepository });
 
   return (
     <div className="w-full max-w-2xl mx-auto mb-8 flex flex-col shadow-lg rounded-xl overflow-hidden border border-slate-200 dark:border-cambria-border transition-colors duration-200">
       <HeaderControls
         isRecording={isRecording}
+        recordingDuration={recordingDuration}
         onStart={startRecording}
         onStop={stopRecording}
         transcriptionSource={transcriptionSource}
@@ -22,12 +30,14 @@ export function VoiceRecorder({ transcriptionRepository }: { transcriptionReposi
 
 function HeaderControls({
   isRecording,
+  recordingDuration,
   onStart,
   onStop,
   transcriptionSource,
   onSourceChange,
 }: {
   isRecording: boolean;
+  recordingDuration: number;
   onStart: () => void;
   onStop: () => void;
   transcriptionSource: 'gemini' | 'browser';
@@ -43,7 +53,7 @@ function HeaderControls({
           <RecordingButton isRecording={isRecording} onClick={isRecording ? onStop : onStart} />
         </div>
         <div className="w-1/3 flex justify-end">
-          <RecordingDuration />
+          <RecordingDuration duration={recordingDuration} />
         </div>
       </div>
       <div className="flex justify-center gap-4 mt-1">
@@ -92,8 +102,18 @@ function RecordingIndicator({ isRecording }: { isRecording: boolean }) {
   );
 }
 
-function RecordingDuration() {
-  return <div className="text-white font-mono text-xl tracking-wider">00:00:00</div>;
+function RecordingDuration({ duration }: { duration: number }) {
+  const hours = Math.floor(duration / 3600);
+  const minutes = Math.floor((duration % 3600) / 60);
+  const seconds = duration % 60;
+
+  const format = (n: number) => n.toString().padStart(2, '0');
+
+  return (
+    <div className="text-white font-mono text-xl tracking-wider">
+      {format(hours)}:{format(minutes)}:{format(seconds)}
+    </div>
+  );
 }
 
 function RecordingButton({ isRecording, onClick }: { isRecording: boolean; onClick: () => void }) {
