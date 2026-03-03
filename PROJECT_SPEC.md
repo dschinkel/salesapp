@@ -105,7 +105,7 @@ That’s the canonical way to enable browser permissions to allow a user to reco
 
 
 ### I3 Model Upgrade
-- [x] I3.0.0 Upgrade Gemini model from `gemini-2.0-flash` to `gemini-2.5-flash`  
+- [x] I3.0.0 Upgrade Gemini model from `gemini-2.0-flash` to `gemini-2.5-flash`
 
 # Code Requirements (non business specific behavior / infrastructure)
 ### I1 Code Formatting

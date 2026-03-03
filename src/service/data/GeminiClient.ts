@@ -14,18 +14,23 @@ export function createGeminiClient({ apiKey }: GeminiClientDependencies): Gemini
         return 'Mock API response because GEMINI_API_KEY is missing in env';
       }
 
-      const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+      try {
+        const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-      const audioPart = {
-        inlineData: {
-          data: audioBuffer.toString('base64'),
-          mimeType: mimetype,
-        },
-      };
+        const audioPart = {
+          inlineData: {
+            data: audioBuffer.toString('base64'),
+            mimeType: mimetype,
+          },
+        };
 
-      const result = await model.generateContent([prompt, audioPart]);
-      const response = await result.response;
-      return response.text();
+        const result = await model.generateContent([prompt, audioPart]);
+        const response = await result.response;
+        return response.text();
+      } catch (error: any) {
+        console.error('Gemini generateContent error:', error.status, error.message);
+        throw error;
+      }
     },
 
     async analyzeTranscript(transcript: string, questions: string[]): Promise<string[]> {
@@ -34,12 +39,13 @@ export function createGeminiClient({ apiKey }: GeminiClientDependencies): Gemini
         return questions.filter((q) => transcript.toLowerCase().includes(q.toLowerCase()));
       }
 
-      const model = genAI.getGenerativeModel({
-        model: 'gemini-2.5-flash',
-        generationConfig: { responseMimeType: 'application/json' },
-      });
+      try {
+        const model = genAI.getGenerativeModel({
+          model: 'gemini-2.5-flash',
+          generationConfig: { responseMimeType: 'application/json' },
+        });
 
-      const prompt = `
+        const prompt = `
         Analyze the following transcript and determine which of the provided key points or questions were answered.
         Return the result as a JSON array of strings containing exactly the original question text for each answered point.
         
@@ -47,9 +53,13 @@ export function createGeminiClient({ apiKey }: GeminiClientDependencies): Gemini
         Questions: ${JSON.stringify(questions)}
       `;
 
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      return JSON.parse(response.text());
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        return JSON.parse(response.text());
+      } catch (error: any) {
+        console.error('Gemini analyzeTranscript error:', error.status, error.message);
+        throw error;
+      }
     },
   };
 }
