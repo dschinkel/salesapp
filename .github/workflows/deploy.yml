@@ -1,3 +1,6 @@
+# This workflow builds and pushes the Docker image to Google Artifact Registry and deploys to Cloud Run
+# using Workload Identity Federation (no JSON keys).
+
 name: Build and Deploy to Artifact Registry
 on:
   push:
@@ -18,6 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0 # needed for rebase/push + tags
 
       - name: Setup Git identity
         run: |
@@ -28,6 +32,14 @@ jobs:
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
+      # Optional debug (safe): helps confirm repo/ref match your WIF condition
+      - name: Debug GitHub context
+        run: |
+          echo "repository: $GITHUB_REPOSITORY"
+          echo "ref:        $GITHUB_REF"
+          echo "ref_name:   $GITHUB_REF_NAME"
+          echo "sha:        $GITHUB_SHA"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -37,16 +49,28 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      # ✅ Fixes non-fast-forward pushes by rebasing on origin/main and pushing tags
       - name: Bump version
         id: bump
         run: |
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
+
           npm version patch -m "chore: bump version to %s [skip ci]"
-          git push origin main
+
+          # minimize race conditions if another push happened while we were bumping
+          git fetch origin main
+          git rebase origin/main
+
+          git push origin HEAD:main --follow-tags
+
           VERSION=$(node -p "require('./package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       # ✅ Auth via Workload Identity Federation (no JSON key)
-      # IMPORTANT: request an access token so we can login to Artifact Registry without gcloud token refresh weirdness
+      # NOTE: GCP_WIF_SERVICE_ACCOUNT must be a raw email like:
+      # deploy-service-account@YOUR_PROJECT_ID.iam.gserviceaccount.com
       - id: auth
         uses: google-github-actions/auth@v2
         with:
@@ -59,14 +83,13 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      # ✅ Confirm gcloud can run (no interactive login)
       - name: Who am I (gcloud)
         run: |
           gcloud config set project "${{ secrets.GCR_PROJECT_ID }}"
           gcloud auth list
           gcloud config list
 
-      # ✅ Docker login using the access token output from the auth action
+      # ✅ Robust login for Artifact Registry using the access token from auth@v2
       - name: Docker login to Artifact Registry
         run: |
           echo "${{ steps.auth.outputs.access_token }}" \
