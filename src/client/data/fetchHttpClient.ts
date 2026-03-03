@@ -1,10 +1,12 @@
 import { HttpClient } from '../repositories/TranscriptionRepository';
 
-export const fetchHttpClient: HttpClient = {
-  async post(url: string, data: FormData): Promise<{ transcript: string }> {
+export const fetchHttpClient: any = {
+  async post(url: string, data: any): Promise<any> {
+    const isFormData = data instanceof FormData;
     const response = await fetch(url, {
       method: 'POST',
-      body: data,
+      headers: isFormData ? {} : { 'Content-Type': 'application/json' },
+      body: isFormData ? data : JSON.stringify(data),
     });
 
     if (!response.ok) {

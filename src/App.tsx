@@ -9,6 +9,8 @@ import { useUploadQuestions } from './components/useUploadQuestions.ts';
 import { parseFile } from './components/csvParser.ts';
 import { createTranscriptionRepository } from './client/repositories/TranscriptionRepository.ts';
 import { fetchHttpClient } from './client/data/fetchHttpClient.ts';
+import { createTranscriptAnalysisRepository } from './client/repositories/TranscriptAnalysisRepository.ts';
+import { useTranscriptAnalysis } from './components/useTranscriptAnalysis.ts';
 import { Sun, Moon } from 'lucide-react';
 import './index.css';
 
@@ -20,6 +22,12 @@ const App = () => {
   const [isDark, setIsDark] = useState(true);
 
   const transcriptionRepository = createTranscriptionRepository({ httpClient: fetchHttpClient });
+  const analysisRepository = createTranscriptAnalysisRepository({ httpClient: fetchHttpClient });
+  const { answeredQuestions, analyzeTranscript } = useTranscriptAnalysis({ analysisRepository });
+
+  const handleTranscriptionComplete = (transcript: string) => {
+    analyzeTranscript(transcript, questions);
+  };
 
   return (
     <div
@@ -37,9 +45,12 @@ const App = () => {
         </button>
       </header>
       <main className="flex-grow container mx-auto py-4">
-        <VoiceRecorder transcriptionRepository={transcriptionRepository} />
+        <VoiceRecorder
+          transcriptionRepository={transcriptionRepository}
+          onTranscriptionComplete={handleTranscriptionComplete}
+        />
         <UploadQuestions onUpload={parseAndUploadQuestions} />
-        <Questionnaire questions={questions} onReorder={reorderQuestion} />
+        <Questionnaire questions={questions} answeredQuestions={answeredQuestions} onReorder={reorderQuestion} />
       </main>
       <footer className="border-t py-6 md:py-0 transition-colors duration-200 bg-cambria-muted dark:bg-cambria-black border-cambria-mutedDark dark:border-cambria-border">
         <div className="container mx-auto flex flex-col items-center justify-center gap-4 md:h-24 md:flex-row">

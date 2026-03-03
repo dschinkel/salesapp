@@ -4,6 +4,8 @@ import bodyParser from 'koa-bodyparser';
 import { createTranscriptionController } from './controllers/TranscriptionController';
 import { createTranscriptAnalysisController } from './controllers/TranscriptAnalysisController';
 import { createTranscribeAudioCommand } from './commands/TranscribeAudioCommand';
+import { createAnalyzeTranscriptCommand } from './commands/AnalyzeTranscriptCommand';
+import { createTranscriptAnalysisRepository } from './repositories/TranscriptAnalysisRepository';
 import { createTranscriptionRepository } from './repositories/TranscriptionRepository';
 import { createGeminiClient } from './data/GeminiClient';
 
@@ -23,10 +25,9 @@ export function createServer() {
   const transcriptionController = createTranscriptionController(command);
 
   // Analyze transcript (F3.10)
-  const fakeAnalysisCommand = {
-    execute: async (req: any) => ({ answeredQuestions: [] }),
-  };
-  const analysisController = createTranscriptAnalysisController(fakeAnalysisCommand as any);
+  const analysisRepository = createTranscriptAnalysisRepository({ geminiClient });
+  const analysisCommand = createAnalyzeTranscriptCommand({ analysisRepository });
+  const analysisController = createTranscriptAnalysisController(analysisCommand);
 
   app.use(bodyParser());
   app.use(router.routes());

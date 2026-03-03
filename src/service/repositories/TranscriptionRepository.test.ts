@@ -13,6 +13,7 @@ describe('Transcription Repository', () => {
         capturedMimetype = mimetype;
         return 'mock gemini transcript';
       },
+      analyzeTranscript: async () => [],
     };
 
     const repository = createTranscriptionRepository({ geminiClient: fakeGeminiClient });
