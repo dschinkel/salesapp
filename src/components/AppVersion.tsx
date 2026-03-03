@@ -11,10 +11,10 @@ export const AppVersion = () => {
 
   return (
     <div className="flex items-center gap-2">
-      <Label data-testid="app-version" className="text-[color:#C5A55A] text-sm font-semibold tracking-wide">
+      <Label data-testid="app-version" className="text-primary text-sm font-semibold tracking-wide">
         v{version}
       </Label>
-      {sha && <span className="text-[color:#A09080] text-xs font-medium opacity-70">({sha})</span>}
+      {sha && <span className="text-muted-foreground text-xs font-medium opacity-70">({sha})</span>}
     </div>
   );
 };

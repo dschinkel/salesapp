@@ -15,10 +15,10 @@ export function UploadQuestions({ onUpload }: UploadQuestionsProps) {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-6 mb-8 bg-white dark:bg-cambria-panelDark rounded-xl border border-cambria-mutedDark dark:border-cambria-border shadow-lg transition-colors duration-200">
+    <div className="w-full max-w-2xl mx-auto p-6 mb-8 bg-background rounded-xl border border-border shadow-lg transition-colors duration-200">
       <Label
         htmlFor="csv-upload"
-        className="block text-sm font-medium text-cambria-black dark:text-cambria-cream mb-3 transition-colors duration-200"
+        className="block text-sm font-medium text-foreground mb-3 transition-colors duration-200"
       >
         Upload CSV of questions (one per line)
       </Label>
@@ -27,7 +27,7 @@ export function UploadQuestions({ onUpload }: UploadQuestionsProps) {
         type="file"
         accept=".csv,text/csv"
         onChange={handleFileChange}
-        className="cursor-pointer bg-cambria-cream dark:bg-cambria-panelLight border-cambria-mutedDark dark:border-cambria-border text-cambria-black dark:text-cambria-cream file:bg-cambria-black dark:file:bg-cambria-gold file:text-white dark:file:text-black file:border-0 file:rounded-md file:px-4 file:py-1 hover:file:opacity-90 transition-opacity"
+        className="cursor-pointer bg-background border-border text-foreground file:bg-secondary file:text-foreground file:border-0 file:rounded-md file:px-4 file:py-1 hover:file:opacity-90 transition-all duration-200"
       />
     </div>
   );

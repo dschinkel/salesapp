@@ -188,13 +188,14 @@ The Fix:
 - [x] Theme the application footer in `App.tsx` to align with the chosen mode
 - [x] Verify fix by running build and lint
 
-## F3.9.2 Feature
+## PR.3.9.2 Refinement
 
-### Improve Light Mode Theme with Opposite Colors
+### Refine Light Mode Theme
 
 The Fix:
 
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
-- [x] Implement flipped headers and body colors for VoiceRecorder, UploadQuestions, and Questionnaire
-- [x] Ensure high contrast between page background and content buckets in light mode
+- [x] Refine `VoiceRecorder.tsx` light mode colors for better readability
+- [x] Refine `Questionnaire.tsx` light mode colors for better visual hierarchy
+- [x] Refine `UploadQuestions.tsx` light mode colors to match the refined theme
 - [x] Verify fix by running build and lint

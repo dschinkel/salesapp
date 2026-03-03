@@ -9,7 +9,7 @@ export function Questionnaire({
   onReorder: (from: number, to: number) => void;
 }) {
   return (
-    <div className="w-full max-w-2xl mx-auto flex flex-col shadow-lg rounded-xl overflow-hidden border border-cambria-mutedDark dark:border-cambria-border transition-colors duration-200">
+    <div className="w-full max-w-2xl mx-auto flex flex-col shadow-lg rounded-xl overflow-hidden border border-border transition-colors duration-200">
       <Header length={questions.length} />
       <Questions questions={questions} onReorder={onReorder} />
       <NoQuestionsFound questions={questions} />
@@ -19,7 +19,7 @@ export function Questionnaire({
 
 function Header(props: { length: number }) {
   return (
-    <div className="bg-cambria-gold dark:bg-[#222222] p-6 border-b border-cambria-mutedDark dark:border-cambria-borderLight transition-colors duration-200">
+    <div className="bg-secondary dark:bg-panelLight p-6 border-b border-border transition-colors duration-200">
       <QuestionsHeader length={props.length} />
       <QuestionsDescription />
     </div>
@@ -32,7 +32,7 @@ function Questions({ questions, onReorder }: { questions: string[]; onReorder: (
   if (questions.length === 0) return null;
 
   return (
-    <div className="bg-white dark:bg-cambria-panelDark p-4 transition-colors duration-200">
+    <div className="bg-background p-4 transition-colors duration-200">
       <ul className="space-y-2">
         {questions.map((question, index) => (
           <Question
@@ -53,7 +53,7 @@ function Questions({ questions, onReorder }: { questions: string[]; onReorder: (
 
 function QuestionsDescription() {
   return (
-    <p className="text-sm text-cambria-black/80 dark:text-[#A09080] leading-relaxed">
+    <p className="text-sm text-foreground/60 dark:text-muted-foreground leading-relaxed transition-colors duration-200">
       Add key points or topics that should be mentioned during the call. They'll be automatically checked off when
       detected in the transcript.
     </p>
@@ -76,16 +76,16 @@ function Question(props: {
       onDragOver={props.onDragOver}
       onDrop={props.onDrop}
       onDragEnd={props.onDragEnd}
-      className={`p-4 bg-cambria-cream dark:bg-cambria-panelLight rounded-lg border border-cambria-mutedDark/30 dark:border-cambria-border shadow-sm hover:shadow-md transition-all duration-200 text-cambria-black dark:text-cambria-cream font-medium flex items-center gap-3 ${props.isDragged ? 'opacity-50 scale-[0.98]' : ''} ${props.isDraggable ? 'cursor-move' : ''}`}
+      className={`p-4 bg-background rounded-lg border border-border shadow-sm hover:shadow-md transition-all duration-200 text-foreground font-medium flex items-center gap-3 ${props.isDragged ? 'opacity-50 scale-[0.98]' : ''} ${props.isDraggable ? 'cursor-move' : ''}`}
     >
-      <div className="flex-shrink-0 w-2 h-2 rounded-full bg-cambria-goldDark dark:bg-cambria-gold opacity-50"></div>
+      <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary opacity-50"></div>
       {props.question}
     </li>
   );
 }
 
 function QuestionsTitle() {
-  return <h3 className="text-xl font-bold text-cambria-black dark:text-[#C5A55A] tracking-wide">Key Points</h3>;
+  return <h3 className="text-xl font-bold text-foreground tracking-wide transition-colors duration-200">Key Points</h3>;
 }
 
 function QuestionsHeader(props: { length: number }) {
@@ -99,7 +99,7 @@ function QuestionsHeader(props: { length: number }) {
 
 function QuestionCount(props: { length: number }) {
   return (
-    <span className="text-sm font-medium text-cambria-black/70 dark:text-white/80 bg-black/10 px-3 py-1 rounded-full">
+    <span className="text-sm font-medium text-foreground/80 bg-foreground/10 px-3 py-1 rounded-full transition-colors duration-200">
       {props.length} questions
     </span>
   );
@@ -108,10 +108,8 @@ function QuestionCount(props: { length: number }) {
 const NoQuestionsFound = ({ questions }: { questions: string[] }) => {
   if (questions.length > 0) return null;
   return (
-    <div className="text-center py-12 bg-white dark:bg-cambria-panelLight rounded-lg border-2 border-dashed border-cambria-muted dark:border-cambria-border transition-colors duration-200">
-      <p className="text-cambria-mutedDarkest dark:text-cambria-muted font-medium">
-        No questions found. Upload a CSV to get started.
-      </p>
+    <div className="text-center py-12 bg-background rounded-lg border-2 border-dashed border-border transition-colors duration-200">
+      <p className="text-muted-foreground font-medium">No questions found. Upload a CSV to get started.</p>
     </div>
   );
 };
