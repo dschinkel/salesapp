@@ -191,7 +191,6 @@ The Fix:
 
 ## F3.10 Browser voice transcript shows which questions were answered  
 
-- [ ] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
-- [ ] F3.10.1 Send transcript and key points to Gemini API for analysis via backend service  
-- [ ] F3.10.0 Display answered questions in green after recording is complete  
+- [x] F3.10.1 Send transcript and key points to Gemini API for analysis via backend service  
+- [x] F3.10.0 Display answered questions in green after recording is complete  
