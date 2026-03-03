@@ -55,7 +55,23 @@ export function createGeminiClient({ apiKey }: GeminiClientDependencies): Gemini
 
         const result = await model.generateContent(prompt);
         const response = await result.response;
-        return JSON.parse(response.text());
+        const text = response.text();
+
+        try {
+          return JSON.parse(text);
+        } catch (parseError) {
+          console.error('Gemini analyzeTranscript JSON parse error. Raw text:', text);
+          // Attempt to extract JSON from code blocks if present
+          const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
+          if (jsonMatch) {
+            try {
+              return JSON.parse(jsonMatch[1]);
+            } catch (innerParseError) {
+              console.error('Gemini analyzeTranscript inner JSON parse error:', innerParseError);
+            }
+          }
+          throw parseError;
+        }
       } catch (error: any) {
         console.error('Gemini analyzeTranscript error:', error.status, error.message);
         throw error;

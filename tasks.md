@@ -194,4 +194,7 @@ The Fix:
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
 - [x] F3.10.1 Send questions and answers to be analyzed via backend service  
 - [x] F3.10.0 Display answered questions in green after recording is complete  
-- [x] PR.3.10.2 Fix 404 error on `/api/analyze-transcript` by adding `koa-bodyparser` and correct route registration  
+- [x] PR.3.10.2 Fix 404 error on `/api/analyze-transcript` by adding `koa-bodyparser` and correct route registration
+- [x] PR.3.10.3 Fix "Analysis failed" error by adding detailed backend error logging and identifying gemini-2.5-flash quota limits (429)
+- [x] PR.3.10.4 Enhance GeminiClient with robust JSON parsing to handle potential non-JSON responses during analysis
+- [x] PR.3.10.5 Implement detailed rate limit error reporting for Gemini API 429 status codes (limit: 20 requests/day for gemini-2.5-flash)<!-- id: PR.3.10.5 -->
