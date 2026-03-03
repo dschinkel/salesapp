@@ -1,6 +1,3 @@
-# This workflow builds and pushes the Docker image to Google Artifact Registry and deploys to Cloud Run
-# using Workload Identity Federation (no JSON keys).
-
 name: Build and Deploy to Artifact Registry
 on:
   push:
@@ -31,13 +28,6 @@ jobs:
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
-      - name: Debug GitHub context
-        run: |
-          echo "repository: $GITHUB_REPOSITORY"
-          echo "ref:        $GITHUB_REF"
-          echo "ref_name:   $GITHUB_REF_NAME"
-          echo "sha:        $GITHUB_SHA"
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -55,50 +45,44 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      # Auth via Workload Identity Federation (no JSON key)
+      # ✅ Auth via Workload Identity Federation (no JSON key)
+      # IMPORTANT: request an access token so we can login to Artifact Registry without gcloud token refresh weirdness
       - id: auth
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
           service_account: ${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}
           project_id: ${{ secrets.GCR_PROJECT_ID }}
+          token_format: "access_token"
           create_credentials_file: true
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      # ✅ Hard reset any inherited gcloud config and force use of WIF creds
-      - name: Configure gcloud to use WIF creds
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
+      # ✅ Confirm gcloud can run (no interactive login)
+      - name: Who am I (gcloud)
         run: |
-          rm -rf ~/.config/gcloud
           gcloud config set project "${{ secrets.GCR_PROJECT_ID }}"
-          gcloud auth login --cred-file="$GOOGLE_APPLICATION_CREDENTIALS"
           gcloud auth list
           gcloud config list
-          gcloud auth print-access-token >/dev/null
 
-      # ✅ Robust login for Artifact Registry (avoids docker-helper refresh issues)
+      # ✅ Docker login using the access token output from the auth action
       - name: Docker login to Artifact Registry
         run: |
-          gcloud auth print-access-token \
+          echo "${{ steps.auth.outputs.access_token }}" \
             | docker login -u oauth2accesstoken --password-stdin \
               "${{ secrets.GCR_REGION }}-docker.pkg.dev"
 
-      # Build the Docker image
       - name: Build
         run: |
           docker build \
             --tag "${{ secrets.GCR_REGION }}-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/${{ secrets.GCR_REPOSITORY }}/${{ secrets.GCR_IMAGE_NAME }}:${{ steps.vars.outputs.sha_short }}" \
             .
 
-      # Push the Docker image to Artifact Registry
       - name: Publish
         run: |
           docker push "${{ secrets.GCR_REGION }}-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/${{ secrets.GCR_REPOSITORY }}/${{ secrets.GCR_IMAGE_NAME }}:${{ steps.vars.outputs.sha_short }}"
 
-      # Deploy to Cloud Run
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy ${{ secrets.GCR_IMAGE_NAME }} \
