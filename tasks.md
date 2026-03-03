@@ -194,7 +194,7 @@ The Fix:
 
 The Fix:
 
-- [ ] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
-- [ ] Implement flipped headers and body colors for VoiceRecorder, UploadQuestions, and Questionnaire
-- [ ] Ensure high contrast between page background and content buckets in light mode
-- [ ] Verify fix by running build and lint
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Implement flipped headers and body colors for VoiceRecorder, UploadQuestions, and Questionnaire
+- [x] Ensure high contrast between page background and content buckets in light mode
+- [x] Verify fix by running build and lint
