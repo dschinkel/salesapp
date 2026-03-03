@@ -1,7 +1,7 @@
 {
   "name": "react-app-boilerplate",
   "private": true,
-  "version": "0.0.15",
+  "version": "0.0.16",
   "type": "module",
   "scripts": {
     "dev": "concurrently \"vite\" \"tsx src/service/index.ts\"",
