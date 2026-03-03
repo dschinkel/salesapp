@@ -1,20 +1,11 @@
-# This workflow builds and pushes the Docker image to Google Artifact Registry.
-
 name: Build and Deploy to Artifact Registry
 on:
   push:
-    branches:
-      - main
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
+    branches: [main]
 
 jobs:
   setup-build-publish-deploy:
-    name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
       id-token: write
@@ -25,22 +16,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Git identity
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
       - name: Set Short SHA
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
-      # ✅ Helpful debug: prints the exact values your WIF attribute condition must match
-      - name: Debug GitHub context
-        run: |
-          echo "repository: $GITHUB_REPOSITORY"
-          echo "ref:        $GITHUB_REF"
-          echo "ref_name:   $GITHUB_REF_NAME"
-          echo "sha:        $GITHUB_SHA"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -51,73 +29,38 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Bump version
-        id: bump
-        run: |
-          git pull origin main --rebase
-          npm version patch -m "chore: bump version to %s [skip ci]"
-          git push origin main
-          VERSION=$(node -p "require('./package.json').version")
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-
-      #      - name: Run unit tests (client + service)
-      #        run: yarn test --selectProjects client,service
-
-      #      - name: Run data-layer integration tests (Gemini)
-      #        env:
-      #          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      #        run: yarn test --selectProjects service src/service/test/integration/GeminiClient.test.ts
-
       # Auth via Workload Identity Federation (no JSON key)
       - id: auth
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
           service_account: ${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}
-          # ✅ Fixes the "Failed to compute a project ID" warning:
           project_id: ${{ secrets.GCR_PROJECT_ID }}
+          create_credentials_file: true
+          export_environment_variables: true
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      # confirm what identity the runner is actually using
-      - name: Who am I (gcloud)
+      - name: Verify gcloud auth
         run: |
           gcloud auth list
-          gcloud config list
-          gcloud config get-value account
-          gcloud config get-value project
+          gcloud config set project "${{ secrets.GCR_PROJECT_ID }}"
+          gcloud auth print-access-token >/dev/null
 
-      # Configure Docker to use gcloud as a credential helper for Artifact Registry
-      - name: Configure Docker
+      # ✅ Robust login for Artifact Registry
+      - name: Docker login to Artifact Registry
         run: |
-          gcloud auth configure-docker ${{ secrets.GCR_REGION }}-docker.pkg.dev --quiet
+          gcloud auth print-access-token \
+            | docker login -u oauth2accesstoken --password-stdin \
+              "${{ secrets.GCR_REGION }}-docker.pkg.dev"
 
-      # Build the Docker image
       - name: Build
         run: |
           docker build \
             --tag "${{ secrets.GCR_REGION }}-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/${{ secrets.GCR_REPOSITORY }}/${{ secrets.GCR_IMAGE_NAME }}:${{ steps.vars.outputs.sha_short }}" \
             .
 
-      # Push the Docker image to Artifact Registry
       - name: Publish
         run: |
           docker push "${{ secrets.GCR_REGION }}-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/${{ secrets.GCR_REPOSITORY }}/${{ secrets.GCR_IMAGE_NAME }}:${{ steps.vars.outputs.sha_short }}"
-
-      # Deploy to Cloud Run
-      - name: Deploy to Cloud Run
-        run: |
-          gcloud run deploy ${{ secrets.GCR_IMAGE_NAME }} \
-            --image "${{ secrets.GCR_REGION }}-docker.pkg.dev/${{ secrets.GCR_PROJECT_ID }}/${{ secrets.GCR_REPOSITORY }}/${{ secrets.GCR_IMAGE_NAME }}:${{ steps.vars.outputs.sha_short }}" \
-            --region ${{ secrets.GCR_REGION }} \
-            --set-env-vars="GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" \
-            --platform managed \
-            --allow-unauthenticated \
-            --cpu 0.08 \
-            --memory 128Mi \
-            --concurrency 1 \
-            --min-instances 0 \
-            --max-instances 1 \
-            --cpu-throttling \
-            --execution-environment gen1
