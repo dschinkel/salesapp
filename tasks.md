@@ -140,3 +140,13 @@ The Fix:
 - [x] Implement exponential backoff for network-related speech recognition errors in `useVoiceRecorder.ts`  
 - [x] Ensure that persistent network errors eventually stop the recording or notify the user  
 - [x] Verify with tests  
+
+## PR.3.8.3 Fix  
+
+### GitHub Action push failure during version bump  
+
+The Fix:  
+
+- [x] Add concurrency group to `.github/workflows/deploy.yml` to prevent race conditions  
+- [x] Add `git pull --rebase` to the version bump step in CI  
+- [x] Consolidate local remotes to simplify Git workflow  

@@ -6,6 +6,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
@@ -50,6 +54,7 @@ jobs:
       - name: Bump version
         id: bump
         run: |
+          git pull origin main --rebase
           npm version patch -m "chore: bump version to %s [skip ci]"
           git push origin main
           VERSION=$(node -p "require('./package.json').version")
