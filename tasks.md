@@ -199,3 +199,15 @@ The Fix:
 - [x] Refine `Questionnaire.tsx` light mode colors for better visual hierarchy
 - [x] Refine `UploadQuestions.tsx` light mode colors to match the refined theme
 - [x] Verify fix by running build and lint
+
+## PR.3.9.3 Fix
+
+### Dark theme lost after light mode refinement
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Restore all theme-related files to the known good state (commit `1f34960`) to bring back the original dark theme
+- [x] Apply global theme toggle logic to `document.documentElement` in `App.tsx`
+- [x] Fix HSL variable wrappers in `tailwind.config.js` to ensure semantic classes work in all modes
+- [x] Verify the restoration and fix by running the build

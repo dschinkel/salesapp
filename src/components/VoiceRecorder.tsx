@@ -14,7 +14,7 @@ export function VoiceRecorder({ transcriptionRepository }: { transcriptionReposi
   } = useVoiceRecorder({ transcriptionRepository });
 
   return (
-    <div className="w-full max-w-2xl mx-auto mb-8 flex flex-col shadow-lg rounded-xl overflow-hidden border border-border transition-colors duration-200">
+    <div className="w-full max-w-2xl mx-auto mb-8 flex flex-col shadow-lg rounded-xl overflow-hidden border border-cambria-mutedDark dark:border-cambria-border transition-colors duration-200">
       <HeaderControls
         isRecording={isRecording}
         recordingDuration={recordingDuration}
@@ -44,7 +44,7 @@ function HeaderControls({
   onSourceChange: (source: 'gemini' | 'browser') => void;
 }) {
   return (
-    <div className="bg-secondary dark:bg-primary px-6 py-3 flex flex-col gap-2 transition-colors duration-200">
+    <div className="bg-cambria-black dark:bg-cambria-gold px-6 py-3 flex flex-col gap-2">
       <div className="flex justify-between items-center w-full">
         <div className="w-1/3 flex justify-start">
           <RecordingStatus isRecording={isRecording} />
@@ -62,8 +62,8 @@ function HeaderControls({
           disabled={isRecording}
           className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded transition-colors ${
             transcriptionSource === 'gemini'
-              ? 'bg-background text-primary shadow-sm'
-              : 'text-foreground/60 hover:text-foreground hover:bg-foreground/5'
+              ? 'bg-white text-cambria-gold shadow-sm'
+              : 'text-white/60 dark:text-black/60 hover:text-white dark:hover:text-black hover:bg-white/10 dark:hover:bg-black/10'
           } ${isRecording ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           GEMINI
@@ -73,8 +73,8 @@ function HeaderControls({
           disabled={isRecording}
           className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded transition-colors ${
             transcriptionSource === 'browser'
-              ? 'bg-background text-primary shadow-sm'
-              : 'text-foreground/60 hover:text-foreground hover:bg-foreground/5'
+              ? 'bg-white text-cambria-gold shadow-sm'
+              : 'text-white/60 dark:text-black/60 hover:text-white dark:hover:text-black hover:bg-white/10 dark:hover:bg-black/10'
           } ${isRecording ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           BROWSER
@@ -86,7 +86,7 @@ function HeaderControls({
 
 function RecordingStatus({ isRecording }: { isRecording: boolean }) {
   return (
-    <div className="text-foreground font-semibold flex items-center gap-2">
+    <div className="text-cambria-cream dark:text-cambria-black font-semibold flex items-center gap-2">
       <RecordingIndicator isRecording={isRecording} />
     </div>
   );
@@ -110,7 +110,7 @@ function RecordingDuration({ duration }: { duration: number }) {
   const format = (n: number) => n.toString().padStart(2, '0');
 
   return (
-    <div className="text-foreground font-mono text-xl tracking-wider">
+    <div className="text-cambria-cream dark:text-cambria-black font-mono text-xl tracking-wider">
       {format(hours)}:{format(minutes)}:{format(seconds)}
     </div>
   );
@@ -120,7 +120,7 @@ function RecordingButton({ isRecording, onClick }: { isRecording: boolean; onCli
   return (
     <button
       onClick={onClick}
-      className="w-12 h-12 bg-background rounded-full flex items-center justify-center shadow-md hover:scale-105 transition-transform"
+      className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md hover:scale-105 transition-transform"
     >
       <RecordingIcon isRecording={isRecording} />
     </button>
@@ -134,7 +134,7 @@ function RecordingIcon({ isRecording }: { isRecording: boolean }) {
 
 function TranscriptArea({ transcript }: { transcript: string }) {
   return (
-    <div className="bg-background p-6 min-h-[150px] transition-colors duration-200 text-foreground">
+    <div className="bg-white dark:bg-cambria-panelDark p-6 min-h-[150px] transition-colors duration-200 text-cambria-black dark:text-cambria-cream">
       <TranscriptText transcript={transcript} />
       <EmptyTranscriptPrompt transcript={transcript} />
     </div>
@@ -149,7 +149,7 @@ function TranscriptText({ transcript }: { transcript: string }) {
 function EmptyTranscriptPrompt({ transcript }: { transcript: string }) {
   if (transcript) return null;
   return (
-    <div className="flex flex-col items-center justify-center text-foreground/30 h-full py-8 gap-3">
+    <div className="flex flex-col items-center justify-center text-cambria-black/30 dark:text-cambria-mutedDarker h-full py-8 gap-3">
       <Mic className="w-10 h-10 opacity-30" />
       <p className="text-sm font-medium">Press the microphone to start recording...</p>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { AppVersion } from './components/AppVersion';
 import { Questionnaire } from './components/Questionnaire.tsx';
@@ -18,22 +18,29 @@ const App = () => {
     parseFile,
   });
   const [isDark, setIsDark] = useState(true);
-
   const transcriptionRepository = createTranscriptionRepository({ httpClient: fetchHttpClient });
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDark]);
 
   return (
     <div
       className={`flex flex-col min-h-screen transition-colors duration-200 ${
-        isDark ? 'dark bg-background text-foreground' : 'bg-background text-foreground'
+        isDark ? 'dark bg-cambria-bg text-cambria-cream' : 'bg-cambria-cream text-cambria-black'
       }`}
     >
       <header className="p-4 flex justify-end">
         <button
           onClick={() => setIsDark(!isDark)}
-          className="p-2 rounded-full hover:bg-foreground/10 transition-colors"
+          className="p-2 rounded-full hover:bg-white/10 dark:hover:bg-cambria-panelLight transition-colors"
           aria-label="Toggle theme"
         >
-          {isDark ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
+          {isDark ? <Sun className="w-5 h-5 text-cambria-gold" /> : <Moon className="w-5 h-5 text-cambria-gold" />}
         </button>
       </header>
       <main className="flex-grow container mx-auto py-4">
@@ -41,7 +48,7 @@ const App = () => {
         <UploadQuestions onUpload={parseAndUploadQuestions} />
         <Questionnaire questions={questions} onReorder={reorderQuestion} />
       </main>
-      <footer className="border-t py-6 md:py-0 transition-colors duration-200 bg-secondary border-border">
+      <footer className="border-t py-6 md:py-0 transition-colors duration-200 bg-cambria-muted dark:bg-cambria-black border-cambria-mutedDark dark:border-cambria-border">
         <div className="container mx-auto flex flex-col items-center justify-center gap-4 md:h-24 md:flex-row">
           <AppVersion />
         </div>
