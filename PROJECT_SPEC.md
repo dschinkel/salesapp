@@ -93,7 +93,8 @@ That’s the canonical way to enable browser permissions to allow a user to reco
 - [x] F3.8.3.0 Counter is not incremented during recording
 
 ### F3.9 Improve Light Mode
-- [x] F3.9.0 Light mode should just flip the colors for each item. Right now the list and headers are too dark.
+- [x] F3.9.0 Light mode should just flip the colors for each item.  Leave the main background of the page alone. Right now the content in each section is too dark, it's using dark theme instead of light..
+
 ### F3.x Parses pre sales questions pasted in by sales into the question list
 
 

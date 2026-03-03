@@ -23,15 +23,15 @@ const App = () => {
 
   return (
     <div
-      className={`flex flex-col min-h-screen transition-colors duration-200 ${isDark ? 'dark bg-cambria-bg text-cambria-cream' : 'bg-slate-50 text-slate-900'}`}
+      className={`flex flex-col min-h-screen transition-colors duration-200 bg-cambria-bg ${isDark ? 'dark text-cambria-cream' : 'text-cambria-cream'}`}
     >
       <header className="p-4 flex justify-end">
         <button
           onClick={() => setIsDark(!isDark)}
-          className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-cambria-panelLight transition-colors"
+          className="p-2 rounded-full hover:bg-white/10 dark:hover:bg-cambria-panelLight transition-colors"
           aria-label="Toggle theme"
         >
-          {isDark ? <Sun className="w-5 h-5 text-cambria-gold" /> : <Moon className="w-5 h-5 text-slate-700" />}
+          {isDark ? <Sun className="w-5 h-5 text-cambria-gold" /> : <Moon className="w-5 h-5 text-cambria-gold" />}
         </button>
       </header>
       <main className="flex-grow container mx-auto py-4">
@@ -39,9 +39,7 @@ const App = () => {
         <UploadQuestions onUpload={parseAndUploadQuestions} />
         <Questionnaire questions={questions} onReorder={reorderQuestion} />
       </main>
-      <footer
-        className={`border-t py-6 md:py-0 transition-colors duration-200 ${isDark ? 'bg-cambria-black border-cambria-border' : 'bg-white border-slate-200'}`}
-      >
+      <footer className="border-t py-6 md:py-0 transition-colors duration-200 bg-cambria-black border-cambria-border">
         <div className="container mx-auto flex flex-col items-center justify-center gap-4 md:h-24 md:flex-row">
           <AppVersion />
         </div>

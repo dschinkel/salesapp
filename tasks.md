@@ -162,3 +162,16 @@ The Fix:
 - [x] Implement `recordingDuration` state and timer logic in `useVoiceRecorder.ts`  
 - [x] Update `VoiceRecorder.tsx` to display formatted recording duration  
 - [x] Verify fix by running build and tests  
+
+## F3.9.0 Feature
+
+### Improve Light Mode
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Modify `App.tsx` to preserve `bg-cambria-bg` in both light and dark modes, only toggling the `dark` class
+- [x] Update `Questionnaire.tsx` to use `bg-cambria-cream` and `text-cambria-black` (flipped theme) for light mode
+- [x] Update `VoiceRecorder.tsx` to use `bg-cambria-cream` and appropriate header colors for light mode
+- [x] Update `UploadQuestions.tsx` to use `bg-cambria-cream` for its card background in light mode
+- [x] Verify fix by running build and lint
