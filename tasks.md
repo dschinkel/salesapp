@@ -107,10 +107,36 @@ Purpose of `tasks.md`:
 - [x] I3.0.0 Upgrade Gemini model to `gemini-2.5-flash`  
 
 
-## F3.8 Transcribes a Conversation using built-in Browser Translation API  
+## PR.3.8 Fix  
+
+### Real-time transcription not working in Chrome  
+
+The Fix:  
+
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
-- [x] F3.8.0 Add a toggle to switch between Gemini API and Web Speech API  
-- [x] F3.8.1 Ensure real-time transcription shows up as you talk using Web Speech API  
-- [x] F3.8.2 Toggle state is correctly handled in useVoiceRecorder  
-- [x] F3.8.3 Real-time transcription is only active when Web Speech API is selected  
-- [x] F3.8.4 Gemini API transcription still works when selected (after recording stops)  
+- [x] Investigate why Web Speech API transcription is only showing after stop in Chrome  
+- [x] Fix real-time updates in `useVoiceRecorder.ts` and resolve microphone conflict errors  
+- [x] Update test mocks to support `getUserMedia` stream tracks  
+- [x] Verify real-time updates with tests/logs  
+
+## PR.3.8.1 Fix  
+
+### Speech recognition error in browser mode  
+
+The Fix:  
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [x] Add error handling to `useVoiceRecorder.ts` to set `isRecording` to false on error  
+- [x] Refactor tests to use fakes instead of `jest.fn()` and verify error handling  
+- [x] Investigate and resolve root cause of frequent speech recognition errors  
+
+## PR.3.8.2 Fix  
+
+### Network error in speech recognition browser mode  
+
+The Fix:  
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
+- [x] Implement exponential backoff for network-related speech recognition errors in `useVoiceRecorder.ts`  
+- [x] Ensure that persistent network errors eventually stop the recording or notify the user  
+- [x] Verify with tests  
