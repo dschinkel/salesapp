@@ -30,18 +30,18 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
   - P0.2 The PLAN must include, in the first line, the task number and the feature name.  
   - P0.3 The PLAN must list each planned increment and explicitly name the test(s) that will be written for each increment if (and only if) the user chose a TDD workflow in P0.0. Each TDD increment in the PLAN must strictly follow the RED → GREEN → REFACTOR cycle. The REFACTOR step MUST ALWAYS be explicitly included in the PLAN for every TDD increment, even if no immediate refactoring is anticipated, to ensure the opportunity for improvement is never overlooked.  
   - P0.4 After presenting the PLAN, ask whether to proceed. Do not proceed without an explicit “continue/proceed” from the user.  
-  - P0.5 If the user tells you to proceed, append the approved PLAN into `tdd.log` before starting implementation (only applies when the user chooses a TDD workflow).  
-  - P0.5.1 When copying the PLAN into `tdd.log`, include the full PLAN text verbatim under a `PLAN:` heading.  
-  - P0.5.2 If a plan is updated by the user or changes during the course of the task, you must update `tdd.log` appropriately as well to keep it synchronized.
-  - P0.5.3 Following the `PLAN:` section in `tdd.log`, you must append the actual implementation steps executed so far during the session under an `IMPLEMENTATION:` heading. This implementation log should be appended to as the workflow proceeds. Use the following format for each step:
+  - P0.5 If the user tells you to proceed, append the approved PLAN into `log/tdd.log` before starting implementation (only applies when the user chooses a TDD workflow).  
+  - P0.5.1 When copying the PLAN into `log/tdd.log`, include the full PLAN text verbatim under a `PLAN:` heading.  
+  - P0.5.2 If a plan is updated by the user or changes during the course of the task, you must update `log/tdd.log` appropriately as well to keep it synchronized.
+  - P0.5.3 Following the `PLAN:` section in `log/tdd.log`, you must append the actual implementation steps executed so far during the session under an `IMPLEMENTATION:` heading. This implementation log should be appended to as the workflow proceeds. Use the following format for each step:
     ```
     - Step X: <Layer Name> (<optional sub-task name>)
       - <Bullet point of what was changed/added>
       - <Bullet point of test result (e.g. Tests passing (GREEN))>
     ```
   - P0.6 After completing each step in the PLAN, summarize the step you just completed, run the build using `yarn build` and also run `yarn dev` to ensure no regressions or dev-server build errors were introduced, and ask to proceed to the next step. Tell me what the next step is.
-  - P0.7 If the user stops you midstream with a question or change request, log the interruption and the resolution in `tdd.log` (only applies when the user chose a TDD workflow in P0.0).  
-  - P0.8 If the user reverts an implemented plan, remove the corresponding plan and its workflow entries from `tdd.log` (only applies when the user chooses a TDD workflow).  
+  - P0.7 If the user stops you midstream with a question or change request, log the interruption and the resolution in `log/tdd.log` (only applies when the user chose a TDD workflow in P0.0).  
+  - P0.8 If the user reverts an implemented plan, remove the corresponding plan and its workflow entries from `log/tdd.log` (only applies when the user chooses a TDD workflow).  
   - P0.9 For React work, when presenting a PLAN, ensure the starting point aligns with the choice made in P0.0 (UI Component layer vs. React Hooks layer (default)).  
   - P0.10 At the very end of a task (after all steps and cleanup), you MUST mark the task as commpleted by checking the box [x] next to the task in `tasks.md`, run all tests one last time, run the linter and fix any errors, start the app and verify no runtime errors, and then perform a final cleanup commit and push before calling `submit`.  
 
@@ -58,8 +58,8 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
   - G1.10.7 You MUST NEVER overwrite or delete existing features or tasks in `PROJECT_SPEC.md` or `tasks.md` when adding new ones. Always append or insert new items while preserving the existing history and numbering.  
   - G1.10.8 Feature sections in `tasks.md` MUST be separated by an extra line return (two empty lines between sections) to improve readability and whitespace.  
   - G1.10.9 After each Feature title or task line in `PROJECT_SPEC.md` and `tasks.md`, you MUST add two spaces at the end of the line to force a markdown line return.  
-  - G1.10.10 Whenever appending to `refactor.log`, include a heading that explicitly states which task the refactor entry is related to.  
-  - G1.10.11 Whenever a deploy issue is fixed, append an entry to `deploy.log` under a heading that matches the related task title and include what was changed or done.  
+  - G1.10.10 Whenever appending to `log/refactor.log`, include a heading that explicitly states which task the refactor entry is related to.  
+  - G1.10.11 Whenever a deploy issue is fixed, append an entry to `log/deploy.log` under a heading that matches the related task title and include what was changed or done.  
 
 ## G2. Domain-Driven Naming
 - G1.11 Use domain language for files, functions, variables, tests, and modules. Do not include implementation details or technical words in variable names.  
@@ -132,7 +132,7 @@ The Fix:
 - T1.6 In REFACTOR, refactor only while tests are green. Make one refactoring change at a time and run tests after each small refactor (TCR).  
 - T1.7 If refactoring occurred, you MUST explicitly ask for permission to commit using: `feat: <task-id>: refactor: <behavior>`. After the commit, ask whether to push or continue.  
 - T1.8 Cleanup & Verification must include running tests, fixing lint warnings/errors, and running both `yarn build` and `yarn dev` to ensure the app compiles and starts without errors. Then prompt the user to commit using: `feat: <task-id>: standard cleanup at end of feature work`.
-- T1.9 `tdd.log` must relate every RED | GREEN | REFACTOR entry to its corresponding PLAN step number.  
+- T1.9 `log/tdd.log` must relate every RED | GREEN | REFACTOR entry to its corresponding PLAN step number.  
 - T1.10 When fixing a defect or implementing a feature with a clear external contract, first write an “API-level” failing test. In this repo, “API-level” means the public boundary for the behavior (typically the hook public API or the domain service function), not an HTTP endpoint or end-to-end test unless explicitly requested.  
 - T1.11 When tests fail, fix implementation first, not the test, unless the test clearly contradicts the spec.  
 - T1.12 Always follow an outside-in TDD approach. Start implementation at the highest permitted layer (e.g., UI components or Hooks for frontend, Controllers or API routes for backend) and work your way down to the lower-level collaborators (repositories, commands, domain logic). When a dependency is needed but has not been implemented yet, provide a simple custom stub (a "fake") for that dependency to satisfy the current test and allow the current step to go GREEN.  
@@ -449,9 +449,9 @@ PLAN:
 Do you want me to proceed with this plan?
 ```
 
-### Appendix B — `tdd.log` Entry Template (TDD only)
+### Appendix B — `log/tdd.log` Entry Template (TDD only)
 
-Use this structure when appending to `tdd.log`. Each section must reference the PLAN step number.
+Use this structure when appending to `log/tdd.log`. Each section must reference the PLAN step number.
 
 ```
 GOAL: <use case in business language>
@@ -504,7 +504,7 @@ PROPOSED COMMIT: feat: <task-id>: standard cleanup at end of feature work
 USER DECISION: <commit? push?>
 ```
 
-### Appendix C — Example `tdd.log` Entry (canonical)
+### Appendix C — Example `log/tdd.log` Entry (canonical)
 
 ```
 GOAL: rollback shows decremented current version on system-prompt page

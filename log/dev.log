@@ -1,0 +1,4 @@
+yarn run v1.22.22
+$ kill-port 3000 3001; concurrently "vite" "tsx src/service/index.ts"
+Could not kill process on port 3000,3001. No process running on port.
+Process on port 3000 killed

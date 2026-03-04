@@ -1,0 +1,385 @@
+PLAN:
+F3.2 Ability to upload a list of questions - PLAN
+
+1.  Increment 1: `useQuestions` hook supports uploading questions (React Hook Layer TDD)
+=== RED PHASE ===
+TEST ADDED: src/components/useQuestions.test.ts - uploads new questions
+CHANGESET:
+  test('uploads new questions', () => {
+    const { result } = renderHook(() => useQuestions());
+    const newQuestions = ['New Question 1', 'New Question 2'];
+
+    act(() => {
+      result.current.uploadQuestions(newQuestions);
+    });
+
+    expect(result.current.questions).toEqual(newQuestions);
+  });
+
+COMMANDS RUN: yarn jest src/components/useQuestions.test.ts
+TEST OUTPUT: RED - TypeError: result.current.uploadQuestions is not a function
+
+NEXT STEP: Update useQuestions.ts to use useState and implement uploadQuestions.
+=== GREEN PHASE ===
+CHANGESET:
+import { useState } from 'react';
+
+const initialQuestions = [
+  'Company Name',
+  'Topic',
+  'Customer\'s Objectives',
+  'Timeline',
+  'Decision Makers',
+  'Estimated Deal Size',
+  'Competition',
+  'Budget',
+  'Strategy'
+];
+
+export function useQuestions() {
+  const [questions, setQuestions] = useState<string[]>(initialQuestions);
+
+  const uploadQuestions = (newQuestions: string[]) => {
+    setQuestions(newQuestions);
+  };
+
+  return {
+    questions,
+    uploadQuestions
+  };
+}
+
+COMMANDS RUN: yarn jest src/components/useQuestions.test.ts
+TEST OUTPUT: GREEN - All tests passing
+
+=== COMMIT ===
+PROPOSED COMMIT: feat: F3.2.0: Frontend: Hook: uploads new questions
+USER DECISION: commit
+
+=== REFACTOR PHASE ===
+REFRACTORING NOTES:
+No refactoring was necessary.
+
+2.  Increment 2: `QuestionUpload` component for CSV files
+    *   RED: Add test `src/components/QuestionUpload.test.tsx` to verify a file input exists and it triggers the upload process when a CSV file is selected.
+    *   GREEN: Create `src/components/QuestionUpload.tsx`. This component will handle file selection, parse the CSV content (simple CSV parsing for now), and call `uploadQuestions` from the hook.
+    *   REFACTOR: Style the component using Tailwind CSS and any available shadcn-like components to match the app's aesthetic.
+
+3.  Increment 3: Integration into the UI
+    *   GREEN: Integrate the `QuestionUpload` component into `src/App.tsx` or `src/components/QuestionList.tsx` so users can access the upload functionality.
+
+4.  Final Verification & Cleanup
+    *   Run `yarn build` to ensure no build regressions.
+    *   Run all tests using `yarn test`.
+    *   Run linter via `yarn lint`.
+    *   Perform a manual check of the upload functionality in the browser.
+    *   Mark the task as completed in `tasks.md` and `PROJECT_SPEC.md`.
+    *   Final cleanup commit and push.
+
+
+PLAN:
+
+1. Frontend: Component Layer
+   - Goal: Create the `VoiceRecorder.tsx` component (matching the visual design) without behavior. Add it to `App.tsx`.
+   - Changes: `src/components/VoiceRecorder.tsx`, `src/App.tsx`.
+   - COMMIT: `feat: F3.7.0: adds voice recorder`
+   REFACTOR: Ensure styling aligns exactly with the reference image, using guard clauses and small components per R1.1.1 and R1.7.
+
+2. Frontend: Hook Layer (TDD)
+
+   RED:
+   - Test name: `records audio`
+   - Location: `src/components/useVoiceRecorder.test.ts`
+   - Intent: Verify the hook manages recording state.
+
+   GREEN:
+   - Minimal implementation: Implement `useVoiceRecorder.ts`.
+   - COMMIT: `feat: F3.7.1: records audio`
+
+   REFACTOR:
+   - Candidate refactors: Clean up hook logic if needed.
+
+3. Frontend: Hook Layer (TDD)
+
+   RED:
+   - Test name: `transcribes audio`
+   - Location: `src/components/useVoiceRecorder.test.ts`
+   - Intent: Verify the hook calls an injected `TranscriptionRepository` to get the transcript.
+
+   GREEN:
+   - Minimal implementation: Update `useVoiceRecorder.ts` to transcribe.
+   - COMMIT: `feat: F3.7.1: transcribes audio`
+
+   REFACTOR:
+   - Candidate refactors: Clean up hook logic if needed.
+
+4. Frontend: Repository Layer (TDD)
+
+   RED:
+   - Test name: `sends audio`
+   - Location: `src/client/repositories/TranscriptionRepository.test.ts`
+   - Intent: Verify the repository receives the audio and calls the injected HTTP client to post to the backend.
+
+   GREEN:
+   - Minimal implementation: Implement `TranscriptionRepository.ts` (using a fetch-based data layer dependency).
+   - COMMIT: `feat: F3.7.1: sends audio`
+
+   REFACTOR:
+   - Candidate refactors: None anticipated at this step.
+
+5. Backend Setup
+   - Goal: Install Koa.js dependencies (`koa`, `@koa/router`, `@koa/multer`, etc.) and set up test environments in `jest.config.js` (`src/client` vs `src/service`).
+
+6. Backend: Controller Layer
+   - Goal: Implement `TranscriptionController.ts` and Koa route setup to parse the audio file and pass request DTO to a Command, returning transcribed text. (No TDD for controllers per guidelines).
+   - COMMIT: `feat: F3.7.1: adds transcription controller`
+
+7. Backend: Command Layer (TDD)
+
+   RED:
+   - Test name: `orchestrates transcription`
+   - Location: `src/service/commands/TranscribeAudioCommand.test.ts`
+   - Intent: Verify the command takes a Request DTO, invokes the injected `TranscriptionRepository` with the audio file, and returns a Response DTO.
+
+   GREEN:
+   - Minimal implementation: Implement `TranscribeAudioCommand.ts`.
+   - COMMIT: `feat: F3.7.1: orchestrates transcription`
+
+   REFACTOR:
+   - Candidate refactors: None anticipated at this step.
+
+8. Backend: Repository Layer (TDD)
+
+   RED:
+   - Test name: `formats system prompt`
+   - Location: `src/service/repositories/TranscriptionRepository.test.ts`
+   - Intent: Verify the repository formats the system prompt correctly and calls the injected data layer (`GeminiClient`).
+
+   GREEN:
+   - Minimal implementation: Implement `TranscriptionRepository.ts`.
+   - COMMIT: `feat: F3.7.1: formats system prompt`
+
+   REFACTOR:
+   - Candidate refactors: None anticipated at this step.
+
+9. Backend: Data Layer (Integration Test)
+
+   RED:
+   - Test name: `sends audio`
+   - Location: `src/service/test/integration/GeminiClient.test.ts`
+   - Intent: Verify the real `GeminiClient` sends audio and prompt to the actual Gemini API and returns a transcript.
+
+   GREEN:
+   - Minimal implementation: Implement `src/service/data/GeminiClient.ts`.
+   - COMMIT: `feat: F3.7.1: sends audio`
+
+   REFACTOR:
+   - Candidate refactors: None anticipated at this step.
+
+10. Integration
+   - Goal: Wire up the `VoiceRecorder` component to use `useVoiceRecorder` with the real `TranscriptionRepository`. Run the Koa app and the Vite dev server together.
+   - Verification: Run `yarn test`, run `yarn build`, and start servers to ensure full stack works without errors. Mark task completed in `tasks.md` and `PROJECT_SPEC.md`.
+   - COMMIT: `feat: F3.7.1: cleanup: voice recorder`
+
+IMPLEMENTATION:
+
+- Step 1: Frontend Component Layer
+  - Created `src/components/VoiceRecorder.tsx` and wired in `src/App.tsx`.
+
+- Step 2: Frontend Hook Layer (records audio)
+  - Added `src/components/useVoiceRecorder.ts` and `src/components/useVoiceRecorder.test.ts`.
+  - Tests passing (GREEN).
+
+- Step 3: Frontend Hook Layer (transcribes audio)
+  - Injected `TranscriptionRepository`.
+  - Implemented `transcribeAudio` function.
+  - Tests passing (GREEN).
+
+- Step 4: Frontend Repository Layer (sends audio)
+  - Added `src/client/repositories/TranscriptionRepository.ts` and test.
+  - Tests passing (GREEN).
+
+- Step 5: Backend Setup
+  - Created `src/service/app.ts`, `src/service/index.ts`, and `src/service/app.test.ts`.
+  - Split jest projects in `jest.config.js`.
+  - Adjusted `tsconfig.json` for `esModuleInterop`.
+  - Tests passing (GREEN).
+
+- Step 6: Backend Controller Layer
+  - Created `src/service/commands/TranscribeAudioCommand.ts` (interfaces) and `src/service/controllers/TranscriptionController.ts` (multer processing).
+  - Wired into `src/service/app.ts` with a fake command.
+  - Tests passing (GREEN).
+
+- Step 7: Backend Command Layer (orchestrates transcription)
+  - Added test and implementation for `TranscribeAudioCommand.ts`.
+  - Tests passing (GREEN).
+
+- Step 8: Backend Repository Layer (formats system prompt)
+  - Added test and implementation for `TranscriptionRepository.ts`.
+  - Tests passing (GREEN).
+
+- Step 9: Backend Data Layer (sends audio)
+  - Created integration test `GeminiClient.test.ts` and implementation `GeminiClient.ts` using `@google/generative-ai`.
+  - Tests passing (skipped locally if missing API key, run in CI) (GREEN).
+
+- Step 10: Integration
+  - Created `src/client/data/fetchHttpClient.ts`.
+  - Configured Vite proxy in `vite.config.ts`.
+  - Wired `useVoiceRecorder` and `fetchHttpClient` into `VoiceRecorder` component in `App.tsx`.
+  - Added actual `MediaRecorder` logic to `useVoiceRecorder.ts`.
+  - Tests passing and app rendering manually.
+
+- Step 11: Troubleshoot and Fix Server 500 Error
+  - Discovered 500 was caused by 429 Too Many Requests (Quota limit) and 404 for deprecated model.
+  - Updated `src/service/data/GeminiClient.ts` to use `gemini-2.0-flash`.
+  - Integration test correctly simulated backend error and now passes or accurately detects rate-limits.
+  - Added `concurrently` to `package.json` to run Vite and Koa service together with `yarn dev`.
+  - Tests passing (GREEN).
+
+- Step 12: Implement Real-time Transcription
+  - Added native `SpeechRecognition` (Web Speech API) logic to `src/components/useVoiceRecorder.ts`.
+  - Transcripts update in real-time on the UI while recording.
+  - Tests passing (GREEN).
+
+FIX: PR.3.8.1: Robust browser speech recognition with auto-restart
+
+1.  Implemented `shouldBeRecordingRef` to track recording intent independent of transient browser states.
+2.  Refactored browser recognition into a reusable `startBrowserRecognition` function.
+3.  Added `onend` auto-restart logic: if the browser stops recognition (due to silence/timeout) while the user still intends to record, it automatically restarts.
+4.  Improved `onerror` handling:
+    - Critical errors (`not-allowed`, `service-not-allowed`) stop the recording and update UI.
+    - Transient errors (`no-speech`, `network`, etc.) are logged as warnings and let `onend` trigger a restart.
+5.  Verified with unit tests in `useVoiceRecorder.test.ts` ensuring:
+    - Auto-restart on transient errors.
+    - UI state remains "Recording" during restarts.
+    - Clean stop on critical errors or manual stop.
+
+
+PLAN:
+
+1. Scaffold UI changes
+   - Goal: Add answeredQuestions prop to Questionnaire and style answered items in green. Update VoiceRecorder to accept an onTranscriptionComplete callback.
+   - Changes: src/components/Questionnaire.tsx, src/components/VoiceRecorder.tsx, src/App.tsx.
+   - Verification: Manual check of UI elements.
+
+2. Frontend: Hook TDD (useTranscriptAnalysis)
+   RED:
+   - Test name: analyzes transcript and returns answered questions
+   - Location: src/components/useTranscriptAnalysis.test.ts
+   - Intent: Define the hook that calls the analysis repository and manages the list of answered questions.
+
+   GREEN:
+
+   - Minimal implementation: Create useTranscriptAnalysis hook.
+   - Files expected to change: src/components/useTranscriptAnalysis.ts
+
+   COMMIT:
+
+   - Proposed message: feat: F3.10.1: Step 2: Frontend: Hook: Analyzes transcript and returns answered questions
+
+   REFACTOR:
+
+   - Candidate refactors: None anticipated.
+
+3. Frontend: Repository TDD (TranscriptAnalysisRepository)
+   RED:
+   - Test name: sends questions and answers to be analyzed
+   - Location: src/client/repositories/TranscriptAnalysisRepository.test.ts
+   - Intent: Define the repository that makes the API call to /api/analyze-transcript.
+
+   GREEN:
+
+   - Minimal implementation: Create TranscriptAnalysisRepository.
+   - Files expected to change: src/client/repositories/TranscriptAnalysisRepository.ts
+
+   COMMIT:
+
+   - Proposed message: feat: F3.10.1: Step 3: Frontend: Repository: Sends questions and answers to be analyzed
+
+   REFACTOR:
+
+   - Candidate refactors: None.
+
+4. Backend: Controller TDD (TranscriptAnalysisController)
+   RED:
+   - Test name: sends questions and answers to be analyzed
+   - Location: src/service/controllers/TranscriptAnalysisController.test.ts
+   - Intent: Define the controller that handles the POST /api/analyze-transcript request.
+
+   GREEN:
+
+   - Minimal implementation: Create TranscriptAnalysisController.
+   - Files expected to change: src/service/controllers/TranscriptAnalysisController.ts, src/service/app.ts (wiring).
+
+   COMMIT:
+
+   - Proposed message: feat: F3.10.1: Step 4: Backend: Controller: Sends questions and answers to be analyzed
+
+   REFACTOR:
+
+   - Candidate refactors: None.
+
+5. Backend: Command TDD (AnalyzeTranscriptCommand)
+   RED:
+   - Test name: orchestrates transcript analysis
+   - Location: src/service/commands/AnalyzeTranscriptCommand.test.ts
+   - Intent: Define the command that uses the analysis repository to get answered questions.
+
+   GREEN:
+
+   - Minimal implementation: Create AnalyzeTranscriptCommand.
+   - Files expected to change: src/service/commands/AnalyzeTranscriptCommand.ts
+
+   COMMIT:
+
+   - Proposed message: feat: F3.10.1: Step 5: Backend: Command: Orchestrates transcript analysis
+
+   REFACTOR:
+
+   - Candidate refactors: None.
+
+6. Backend: Repository TDD (TranscriptAnalysisRepository)
+   RED:
+   - Test name: calls gemini client for transcript analysis
+   - Location: src/service/repositories/TranscriptAnalysisRepository.test.ts
+   - Intent: Define the repository that uses the Gemini client to analyze the transcript.
+
+   GREEN:
+
+   - Minimal implementation: Create TranscriptAnalysisRepository.
+   - Files expected to change: src/service/repositories/TranscriptAnalysisRepository.ts
+
+   COMMIT:
+
+   - Proposed message: feat: F3.10.1: Step 6: Backend: Repository: Calls gemini client for transcript analysis
+
+   REFACTOR:
+
+   - Candidate refactors: None.
+
+7. Backend: Data Layer (GeminiClient analysis support)
+   RED:
+   - Test name: analyzes transcript and returns questions that were answered
+   - Location: src/service/test/integration/GeminiClientAnalysis.test.ts
+   - Intent: Add analysis support to the Gemini client.
+
+   GREEN:
+
+   - Minimal implementation: Update GeminiClient with analyzeTranscript method.
+   - Files expected to change: src/service/data/GeminiClient.ts
+
+   COMMIT:
+
+   - Proposed message: feat: F3.10.1: Step 7: Backend: Data Layer: Analyzes transcript and returns questions that were answered
+
+   REFACTOR:
+
+   - Candidate refactors: None.
+
+8. Cleanup & Verification
+   - Run all tests
+   - Run yarn build and yarn dev to check for compilation/runtime errors
+   - Fix linting errors
+   - Commit: feat: F3.10: standard cleanup at end of feature work
+
+IMPLEMENTATION:

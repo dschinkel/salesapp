@@ -1,0 +1,24 @@
+2026-03-04 - Refactor Increment 1
+- Updated GUIDLINES.md to forbid the term "fake" in variable names, test names, and code constructs.
+- Clarified naming rule: use domain-intent names for stubs/captures only.
+- Refactored src/components/useQuestions.test.ts to remove all jest.fn() usage.
+- Replaced callback spies with explicit TypeScript capture stubs:
+  - upload behavior now captures uploadedQuestions directly.
+  - reorder behavior now captures reorderedFrom/reorderedTo directly.
+  - drag-over preventDefault now uses a prevented boolean capture.
+- Validation: yarn test src/components/useQuestions.test.ts --runInBand (PASS, 5/5 tests).
+2026-03-04 - Refactor Increment 2
+- Updated naming guidance to forbid unnecessary technical suffixes when a domain term is sufficient.
+- Added explicit examples in GUIDLINES.md: prefer parseQuestion over parseQuestionFile.
+- Renamed parseQuestionFile to parseQuestion in useQuestions test naming.
+- Validation: yarn test src/components/useQuestions.test.ts --runInBand (PASS, 5/5 tests).
+2026-03-04 - Refactor Increment 3
+- Updated successfully transcribes service test to skip when GEMINI_API_KEY is missing.
+- Adjusted acceptable transcription test outcomes to include provider access and quota statuses.
+- Added tasks.md entry for refactor request workflow and commit message pattern: refactor <filename>: remove jest mocks, use simple TS stubs or fakes.
+## Task: PR.3.10.8 Refactor
+2026-03-04 - Refactor Increment 4
+- Refactored Upload Questions test to remove jest.fn usage.
+- Replaced callback spy usage with domain capture stubs (`onUpload`, `uploadedFile`).
+- Removed unnecessary mock-clearing setup no longer needed after stub refactor.
+- Validation: yarn test src/components/UploadQuestions/QuestionUpload.test.tsx --runInBand (PASS, 2/2 tests).
