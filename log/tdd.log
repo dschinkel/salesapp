@@ -61,7 +61,7 @@ REFRACTORING NOTES:
 No refactoring was necessary.
 
 2.  Increment 2: `QuestionUpload` component for CSV files
-    *   RED: Add test `src/components/QuestionUpload.test.tsx` to verify a file input exists and it triggers the upload process when a CSV file is selected.
+    *   RED: Add test `src/components/UploadQuestion.test.tsx` to verify a file input exists and it triggers the upload process when a CSV file is selected.
     *   GREEN: Create `src/components/QuestionUpload.tsx`. This component will handle file selection, parse the CSV content (simple CSV parsing for now), and call `uploadQuestions` from the hook.
     *   REFACTOR: Style the component using Tailwind CSS and any available shadcn-like components to match the app's aesthetic.
 

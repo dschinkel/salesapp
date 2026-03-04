@@ -1,12 +1,12 @@
 import Koa from 'koa';
 import Router from '@koa/router';
 import bodyParser from 'koa-bodyparser';
-import { createTranscriptionController } from './controllers/TranscriptionController';
-import { createTranscriptAnalysisController } from './controllers/TranscriptAnalysisController';
-import { createTranscribeAudioCommand } from './commands/TranscribeAudioCommand';
-import { createAnalyzeTranscriptCommand } from './commands/AnalyzeTranscriptCommand';
-import { createTranscriptAnalysisRepository } from './repositories/TranscriptAnalysisRepository';
-import { createTranscriptionRepository } from './repositories/TranscriptionRepository';
+import { createTranscriptionController } from './controllers/Transcription/TranscriptionController';
+import { createTranscriptAnalysisController } from './controllers/TranscriptAnalysis/TranscriptAnalysisController';
+import { createTranscribeAudioCommand } from './commands/Transcription/TranscribeAudioCommand';
+import { createAnalyzeTranscriptCommand } from './commands/TranscriptAnalysis/AnalyzeTranscriptCommand';
+import { createTranscriptAnalysisRepository } from './repositories/TranscriptAnalysis/TranscriptAnalysisRepository';
+import { createTranscriptionRepository } from './repositories/Transcription/TranscriptionRepository';
 import { createGeminiClient } from './data/GeminiClient';
 
 export function createServer() {

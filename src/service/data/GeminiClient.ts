@@ -1,5 +1,5 @@
 import { GoogleGenAI } from '@google/genai';
-import { GeminiClient } from '../repositories/TranscriptionRepository';
+import { GeminiClient } from '../repositories/Transcription/TranscriptionRepository';
 
 export interface GeminiClientDependencies {
   apiKey?: string;
@@ -88,9 +88,9 @@ function normalizeCandidates(parsed: unknown): string[] {
     return parsed.filter((item): item is string => typeof item === 'string');
   }
   if (parsed && typeof parsed === 'object') {
-    const value = (parsed as any).answeredQuestions;
-    if (Array.isArray(value)) {
-      return value.filter((item): item is string => typeof item === 'string');
+    const answeredQuestions = (parsed as any).answeredQuestions;
+    if (Array.isArray(answeredQuestions)) {
+      return answeredQuestions.filter((item): item is string => typeof item === 'string');
     }
   }
   return [];

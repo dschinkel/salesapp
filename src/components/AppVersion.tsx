@@ -1,5 +1,5 @@
 import React from 'react';
-import { Label } from './ui/label';
+import { Label } from '@/components/shared/label';
 
 export const AppVersion = () => {
   // @ts-ignore

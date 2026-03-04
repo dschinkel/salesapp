@@ -314,3 +314,53 @@ The Fix:
 - [x] Add helper-placement rule to GUIDELINES
 - [x] Move test helper functions in `useVoiceRecorder.test.ts` to below the last describe block
 - [x] Verify with targeted tests and lint
+
+
+## PR.3.10.11 Refactor
+
+### Remove capture-tracking prefixes from test variable names
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Rename `captured*` variables to simple domain names in service and client tests
+- [x] Preserve test behavior with variable rename-only refactors
+- [x] Verify with targeted tests
+
+
+## Add new rule to GUIDELINES.md: Forbid the word value in construct names
+
+### Refactor value-based identifier names in code and tests
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Add naming rule that forbids `value` in construct names
+- [x] Rename `*Value` and `value` identifiers to direct domain names in modified code and tests
+- [x] Verify with targeted tests and lint
+
+
+## Add new rule to GUIDELINES.md: Group related component files into granular domain folders
+
+### Reorganize Questionnaire files into component-level and concern-level folders
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Add component-folder organization rule with granular concern subfolders in GUIDELINES
+- [x] Move `csvParser.ts` and `csvParser.test.ts` into `src/components/Questionnaire/CSVParser/`
+- [x] Move `useQuestions.ts` and `useQuestions.test.ts` into `src/components/Questionnaire/Questions/`
+- [x] Update imports and verify with targeted component tests
+
+
+## Add new rule to GUIDELINES.md: Group related client and service files into domain folders
+
+### Reorganize client and server code by shared domain terms
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Add client/service domain-folder grouping rule to GUIDELINES
+- [x] Group client repository implementation and tests into `Transcription` and `TranscriptAnalysis` folders
+- [x] Group service command/controller/repository implementation and tests into `Transcription` and `TranscriptAnalysis` folders
+- [x] Update imports and verify with full test run

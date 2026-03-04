@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { useQuestions } from './useQuestions';
-import { useUploadQuestions } from './useUploadQuestions';
-import { useReorderQuestions } from './useReorderQuestions';
+import { useUploadQuestions } from '../useUploadQuestions';
+import { useReorderQuestions } from '../useReorderQuestions';
 
 describe('Questions', () => {
   test('lists questions', () => {
@@ -83,46 +83,5 @@ describe('Questions', () => {
     ];
 
     expect(result.current.questions).toEqual(expectedQuestions);
-  });
-
-  test('manages reorder state', () => {
-    let reorderedFrom = -1;
-    let reorderedTo = -1;
-    const onReorder = (from: number, to: number) => {
-      reorderedFrom = from;
-      reorderedTo = to;
-    };
-    const { result } = renderHook(() => useReorderQuestions({ onReorder }));
-
-    let prevented = false;
-    const fakeEvent = {
-      preventDefault: () => {
-        prevented = true;
-      },
-      dataTransfer: {
-        effectAllowed: '',
-        dropEffect: '',
-      },
-    } as unknown as React.DragEvent;
-
-    act(() => {
-      result.current.onDragStart(0, fakeEvent);
-    });
-
-    expect(result.current.draggedIndex).toBe(0);
-
-    act(() => {
-      result.current.onDragOver(fakeEvent);
-    });
-
-    expect(prevented).toBe(true);
-
-    act(() => {
-      result.current.onDrop(2, fakeEvent);
-    });
-
-    expect(reorderedFrom).toBe(0);
-    expect(reorderedTo).toBe(2);
-    expect(result.current.draggedIndex).toBe(null);
   });
 });

@@ -1,7 +1,7 @@
 import { createGeminiClient } from './GeminiClient';
 
 describe('Gemini Client', () => {
-  it('parses analysis response wrapped in markdown code fences', async () => {
+  it('returnes answered questions based on transcript', async () => {
     const fakeGenAI = {
       models: {
         generateContent: async () => ({
@@ -11,12 +11,16 @@ describe('Gemini Client', () => {
     };
 
     const client = createGeminiClient({ apiKey: 'test-key', genAI: fakeGenAI as any });
-    const result = await client.analyzeTranscript('Budget and Timeline were discussed', ['Budget', 'Timeline', 'Topic']);
+    const result = await client.analyzeTranscript('Budget and Timeline were discussed', [
+      'Budget',
+      'Timeline',
+      'Topic',
+    ]);
 
     expect(result).toEqual(['Budget', 'Timeline']);
   });
 
-  it('parses analysis response from object payload', async () => {
+  it('returns answered questions list', async () => {
     const fakeGenAI = {
       models: {
         generateContent: async () => ({
@@ -26,7 +30,11 @@ describe('Gemini Client', () => {
     };
 
     const client = createGeminiClient({ apiKey: 'test-key', genAI: fakeGenAI as any });
-    const result = await client.analyzeTranscript('Competition and Budget were discussed', ['Competition', 'Budget', 'Topic']);
+    const result = await client.analyzeTranscript('Competition and Budget were discussed', [
+      'Competition',
+      'Budget',
+      'Topic',
+    ]);
 
     expect(result).toEqual(['Competition', 'Budget']);
   });

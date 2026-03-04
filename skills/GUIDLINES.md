@@ -71,11 +71,14 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
 - G1.11.1 Do not append technical storage or transport terms to names (for example: `File`, `Data`, `Api`, `Http`, `Json`, `Dto`) when the domain term already explains intent.  
 - G1.11.2 Prefer the shortest domain term that preserves meaning (example: `parseQuestion` instead of `parseQuestionFile`).  
 - G1.11.3 Avoid capture-tracking prefixes (for example: `capturedUrl`, `capturedData`) when simple domain names (`url`, `data`) are sufficient and unambiguous.  
+- G1.11.4 The word `value` is forbidden in construct names (variables, functions, test names, and helpers). Use direct domain terms instead (for example: `transcript`, `questions`, `audio`, `mimeType`).  
 
 ## G3. Clean Code & Organization
 - G1.12 Organization and Naming:  
   - G1.12.1 Avoid generic buckets like util, utils, helper, helpers. Use domain terms instead. This applies to directory names, file names, and code constructs (functions, variables).  
   - G1.12.2 Do NOT create "helper functions". Instead, use well-named composed functions that describe their domain and intent.  
+  - G1.12.3 In `src/components`, group each component with its related hooks/tests in a component-named folder, and use granular domain subfolders for distinct concerns (for example: `Questionnaire/CSVParser`, `Questionnaire/Questions`).  
+  - G1.12.4 In `src/client` and `src/service`, group related implementation and test files under shared domain folders (for example: `Transcription`, `TranscriptAnalysis`) while preserving architecture layers.  
 - P0.11 When iterating on a feature, do not mark it as [FAILED] or create new "fix" tasks if it doesn't meet acceptance criteria immediately. Instead, keep the current task [IN PROGRESS] and iterate until it is completed.  
   - P0.11.1 When starting a task, you MUST move the task from [NOT STARTED] to [IN PROGRESS] in `tasks.md`.  
 - P0.12 NEVER call `submit` if there are uncommitted or unpushed changes related to the task. Every task completion must end with a push to the remote repository. Commit messages must focus on domain features and intent. Do not include technical words like "verified", "Step X", or "Frontend/Backend".  
@@ -153,6 +156,7 @@ The Fix:
 ## N1. Test Naming (non-negotiable; applies when tests are being written)
 
 - N1.1 Tests and test suites (describes) must describe business behavior in clear prose.  
+- N1.1.1 Test names must never include function names or callback names (for example: `onTranscriptionComplete`). Use domain prose only (for example: `stops recording`).  
 - N1.2 Do not include function names (e.g., `removeImage`, `callback`), technical patterns (e.g., `command`, `repository`), status codes (e.g., `201`), endpoints, browser/view terms, or technical sources (e.g., `from server`) in test or describe names. This keeps them decoupled from the actual implementation. Test names do not need to specify their parent names or unnecessary technical words (e.g., use "removes a font" instead of "removes a font use case" or "RemoveFontCommand removes a font").  
   - N1.2.1 Example: instead of `deletes image from server when removeImage is called`, use `deletes image`.  
 - N1.3 Avoid “should”, "succeeds", or any technical jargon. Prefer short domain behavior labels.  
@@ -166,7 +170,7 @@ The Fix:
 - N1.7 Treat the System Under Test (SUT) as a black box. Avoid using spies or asserting that internal dependencies were called when the output itself can be asserted.  
 - N1.7.1 Do not use `jest.fn()` or any testing library "magic" for creating stubs or fakes. Use simple JavaScript functions instead.  
   - Good: `const fakeRepository = { getFonts: () => fonts };`  
-  - Bad: `const fakeRepository = { getFonts: jest.fn().mockResolvedValue(fonts) };`  
+  - Bad: `const fakeRepository = { getFonts: jest.fn().mockResolvedResponse(fonts) };`  
 - N1.8 Use JSX syntax in React tests. Do not use `React.createElement` in tests.  
   - Bad: `render(React.createElement(FontSelector, { fonts: fonts, onSelect: () => {} }));`  
   - Good: `render(<FontSelector fonts={fonts} onSelect={() => {}} />);`  
@@ -524,7 +528,7 @@ CHANGESET:
         const v1 = 'TEST_OVERRIDE_' + Math.random().toString(36).slice(2);
         const e1 = appendOverride(v1, new Date('2025-01-02T03:04:05.000Z'), 'new', 'first save comment');
 
-        expect(e1.value).toBe(v1);
+        expect(e1.content).toBe(v1);
         expect(typeof e1.version).toBe('number');
         expect(e1.version).toBe(1);
     });
@@ -558,7 +562,7 @@ describe('AdobeTypekitClient', () => {
 describe('addFontCommand', () => {
 test('Should correctly parse tags from the OpenAI response')
 test('myFunction should be called with correct arguments')
-test('renders slider and handles value change')
+test('renders slider and handles slider change')
 test('parseTags() returns valid results')
 test('GET /api/scoring creates [store]-seo-scores.json = {} if missing')
 test('returns filled-outer svg when requested')

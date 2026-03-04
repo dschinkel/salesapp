@@ -1,18 +1,18 @@
 import { createTranscriptAnalysisRepository } from './TranscriptAnalysisRepository';
 
 describe('Transcript Analysis Repository', () => {
-  it('calls gemini client for transcript analysis', async () => {
+  it('analyzes transcript', async () => {
     const transcript = 'The company name is Acme Corp.';
     const questions = ['What is the company name?'];
     const answeredQuestions = ['What is the company name?'];
 
-    let capturedTranscript = '';
-    let capturedQuestions: string[] = [];
+    let transcriptText = '';
+    let questionList: string[] = [];
 
     const fakeGeminiClient = {
       analyzeTranscript: async (t: string, q: string[]) => {
-        capturedTranscript = t;
-        capturedQuestions = q;
+        transcriptText = t;
+        questionList = q;
         return answeredQuestions;
       },
     };
@@ -20,8 +20,8 @@ describe('Transcript Analysis Repository', () => {
     const repository = createTranscriptAnalysisRepository({ geminiClient: fakeGeminiClient as any });
     const result = await repository.analyze(transcript, questions);
 
-    expect(capturedTranscript).toBe(transcript);
-    expect(capturedQuestions).toEqual(questions);
+    expect(transcriptText).toBe(transcript);
+    expect(questionList).toEqual(questions);
     expect(result).toEqual(answeredQuestions);
   });
 });

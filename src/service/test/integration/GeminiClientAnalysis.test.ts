@@ -1,7 +1,7 @@
 import { createGeminiClient } from '../../data/GeminiClient';
 
 describe('Gemini Client Analysis', () => {
-  it('analyzes transcript and returns questions that were answered', async () => {
+  it('returns questions that were answered based on transcript', async () => {
     if (process.env.RUN_GEMINI_INTEGRATION !== 'true') {
       console.warn('RUN_GEMINI_INTEGRATION not set to true; skipping data-layer integration test.');
       return;

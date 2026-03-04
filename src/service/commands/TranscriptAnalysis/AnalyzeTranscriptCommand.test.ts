@@ -6,13 +6,13 @@ describe('Analyze Transcript Command', () => {
     const questions = ['What is the company name?'];
     const answeredQuestions = ['What is the company name?'];
 
-    let capturedTranscript = '';
-    let capturedQuestions: string[] = [];
+    let transcriptText = '';
+    let questionList: string[] = [];
 
     const fakeRepository = {
       analyze: async (t: string, q: string[]) => {
-        capturedTranscript = t;
-        capturedQuestions = q;
+        transcriptText = t;
+        questionList = q;
         return answeredQuestions;
       },
     };
@@ -20,8 +20,8 @@ describe('Analyze Transcript Command', () => {
     const command = createAnalyzeTranscriptCommand({ analysisRepository: fakeRepository as any });
     const result = await command.execute({ transcript, questions });
 
-    expect(capturedTranscript).toBe(transcript);
-    expect(capturedQuestions).toEqual(questions);
+    expect(transcriptText).toBe(transcript);
+    expect(questionList).toEqual(questions);
     expect(result).toEqual({ answeredQuestions });
   });
 });

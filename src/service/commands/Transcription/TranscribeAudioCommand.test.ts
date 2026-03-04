@@ -2,13 +2,13 @@ import { createTranscribeAudioCommand } from './TranscribeAudioCommand';
 
 describe('Transcribe Audio Command', () => {
   test('orchestrates transcription', async () => {
-    let capturedAudio: Buffer | null = null;
-    let capturedMimetype: string | null = null;
+    let audio: Buffer | null = null;
+    let mimeType: string | null = null;
 
     const fakeRepository = {
       transcribe: async (audioBuffer: Buffer, mimetype: string) => {
-        capturedAudio = audioBuffer;
-        capturedMimetype = mimetype;
+        audio = audioBuffer;
+        mimeType = mimetype;
         return 'orchestrated transcript result';
       },
     };
@@ -23,7 +23,7 @@ describe('Transcribe Audio Command', () => {
     const response = await command.execute(request);
 
     expect(response.transcript).toBe('orchestrated transcript result');
-    expect(capturedAudio).toBe(request.audioBuffer);
-    expect(capturedMimetype).toBe('audio/webm');
+    expect(audio).toBe(request.audioBuffer);
+    expect(mimeType).toBe('audio/webm');
   });
 });

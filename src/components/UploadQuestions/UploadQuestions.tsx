@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
+import { Input } from '@/components/shared/input';
+import { Label } from '@/components/shared/label';
 
 export interface UploadQuestionsProps {
   onUpload: (file: File) => void;

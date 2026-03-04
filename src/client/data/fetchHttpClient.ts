@@ -1,4 +1,4 @@
-import { HttpClient } from '../repositories/TranscriptionRepository';
+import { HttpClient } from '../repositories/Transcription/TranscriptionRepository';
 
 export const fetchHttpClient: any = {
   async post(url: string, data: any): Promise<any> {

@@ -340,7 +340,7 @@ describe('Voice Recorder', () => {
     jest.useRealTimers();
   });
 
-  test('calls onTranscriptionComplete once after browser recording stops', async () => {
+  test('stops recording', async () => {
     const completedTranscripts: string[] = [];
     const onTranscriptionComplete = (t: string) => {
       completedTranscripts.push(t);
@@ -421,10 +421,7 @@ describe('Voice Recorder', () => {
   });
 });
 
-function createSpeechRecognitionFactory(
-  onCreate?: (instance: any) => void,
-  onStart?: (instance: any) => void,
-) {
+function createSpeechRecognitionFactory(onCreate?: (instance: any) => void, onStart?: (instance: any) => void) {
   const SpeechRecognitionFactory = function (this: any) {
     SpeechRecognition.call(this);
     if (onStart) {

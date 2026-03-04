@@ -1,6 +1,6 @@
 import multer from '@koa/multer';
 import Router from '@koa/router';
-import { TranscribeAudioCommand } from '../commands/TranscribeAudioCommand';
+import { TranscribeAudioCommand } from '../../commands/Transcription/TranscribeAudioCommand';
 
 export function createTranscriptionController(command: TranscribeAudioCommand) {
   const router = new Router();

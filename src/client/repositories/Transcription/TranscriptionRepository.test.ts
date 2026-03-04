@@ -2,11 +2,11 @@ import { createTranscriptionRepository } from './TranscriptionRepository';
 
 describe('Transcription Repository', () => {
   test('sends audio', async () => {
-    let capturedFormData: FormData | null = null;
+    let formData: FormData | null = null;
 
     const fakeHttpClient = {
       post: async (url: string, data: FormData) => {
-        capturedFormData = data;
+        formData = data;
         return { transcript: 'test transcript' };
       },
     };
@@ -17,9 +17,9 @@ describe('Transcription Repository', () => {
     const result = await repository.transcribe(audioBlob);
 
     expect(result).toBe('test transcript');
-    expect(capturedFormData).toBeInstanceOf(FormData);
-    expect(capturedFormData?.get('audio')).toBeInstanceOf(File);
-    const appendedFile = capturedFormData?.get('audio') as File;
+    expect(formData).toBeInstanceOf(FormData);
+    expect(formData?.get('audio')).toBeInstanceOf(File);
+    const appendedFile = formData?.get('audio') as File;
     expect(appendedFile.type).toBe('audio/webm');
     expect(appendedFile.size).toBe(audioBlob.size);
   });

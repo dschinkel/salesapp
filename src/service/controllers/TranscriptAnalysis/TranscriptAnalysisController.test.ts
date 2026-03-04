@@ -9,11 +9,11 @@ describe('Transcript Analysis Controller', () => {
     const questions = ['What is the company name?'];
     const answeredQuestions = ['What is the company name?'];
 
-    let capturedRequest = null;
+    let requestData = null;
 
     const fakeCommand = {
       execute: async (req: any) => {
-        capturedRequest = req;
+        requestData = req;
         return { answeredQuestions };
       },
     };
@@ -27,7 +27,7 @@ describe('Transcript Analysis Controller', () => {
     const res = await request(app.callback()).post('/api/analyze-transcript').send({ transcript, questions });
 
     expect(res.status).toBe(200);
-    expect(capturedRequest).toEqual({ transcript, questions });
+    expect(requestData).toEqual({ transcript, questions });
     expect(res.body).toEqual({ answeredQuestions });
   });
 
@@ -52,7 +52,7 @@ describe('Transcript Analysis Controller', () => {
     expect(res.body.error).toContain('Quota exceeded');
   });
 
-  it('returns command error details when analysis fails', async () => {
+  it('returns error details when analysis fails', async () => {
     const fakeCommand = {
       execute: async () => {
         throw new Error('Gemini returned non-JSON analysis response');
