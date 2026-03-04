@@ -364,3 +364,16 @@ The Fix:
 - [x] Group client repository implementation and tests into `Transcription` and `TranscriptAnalysis` folders
 - [x] Group service command/controller/repository implementation and tests into `Transcription` and `TranscriptAnalysis` folders
 - [x] Update imports and verify with full test run
+
+
+## Add new rule to GUIDELINES.md: Run lint auto-fix and lint verification after every task
+
+### Enforce mandatory linting completion workflow
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Add rule requiring `eslint --fix` followed by `eslint` verification after every task
+- [x] Align alias config so lint/type-check/build resolve current module paths consistently
+- [x] Run lint auto-fix and lint verification
+- [x] Verify with build and tests

@@ -51,3 +51,5 @@ Add skills for each section of my guideline, it may not always be reading my gui
 [1]   ]
 
 It's creating way too big of tests in many cases.
+
+It runs lint but there are often linting errors I still see in the IDE
