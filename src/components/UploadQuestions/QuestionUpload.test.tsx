@@ -6,18 +6,18 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 describe('Upload Questions', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   test('shows uploaded questions', () => {
-    render(<UploadQuestions onUpload={jest.fn()} />);
+    const onUpload = (file: File) => {};
+    render(<UploadQuestions onUpload={onUpload} />);
     expect(screen.getByLabelText(/upload csv/i)).toBeInTheDocument();
   });
 
   test('initiates the upload', () => {
-    const mockOnUpload = jest.fn();
-    render(<UploadQuestions onUpload={mockOnUpload} />);
+    let uploadedFile: File | null = null;
+    const onUpload = (file: File) => {
+      uploadedFile = file;
+    };
+    render(<UploadQuestions onUpload={onUpload} />);
 
     const csvContent = fs.readFileSync(path.resolve(__dirname, '../../../test/questions.csv'), 'utf-8');
     const file = new File([csvContent], 'questions.csv', { type: 'text/csv' });
@@ -25,6 +25,6 @@ describe('Upload Questions', () => {
 
     fireEvent.change(input, { target: { files: [file] } });
 
-    expect(mockOnUpload).toHaveBeenCalledWith(file);
+    expect(uploadedFile).toBe(file);
   });
 });
