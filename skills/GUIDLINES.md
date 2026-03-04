@@ -65,6 +65,7 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
 - G1.11 Use domain language for files, functions, variables, tests, and modules. Do not include implementation details or technical words in variable names.  
 - G1.11.1 Do not append technical storage or transport terms to names (for example: `File`, `Data`, `Api`, `Http`, `Json`, `Dto`) when the domain term already explains intent.  
 - G1.11.2 Prefer the shortest domain term that preserves meaning (example: `parseQuestion` instead of `parseQuestionFile`).  
+- G1.11.3 Avoid capture-tracking prefixes (for example: `capturedUrl`, `capturedData`) when simple domain names (`url`, `data`) are sufficient and unambiguous.  
 
 ## G3. Clean Code & Organization
 - G1.12 Organization and Naming:  

@@ -279,3 +279,14 @@ The Fix:
 - [x] Update deploy workflow to fetch tags before bumping version
 - [x] Replace `npm version patch` auto-tag behavior with explicit next-available patch version selection
 - [x] Create commit/tag manually with the selected version and push with follow-tags
+
+
+## Add new rule to GUIDELINES.md: Prefer plain domain names over capture-tracking prefixes
+
+### Remove unnecessary technical capture naming in repository tests
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Refactor transcript analysis repository test naming from capture prefixes to simple domain names
+- [x] Add guideline rule to avoid capture-tracking prefixes when plain domain names are sufficient

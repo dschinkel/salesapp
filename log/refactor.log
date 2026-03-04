@@ -22,3 +22,11 @@
 - Replaced callback spy usage with domain capture stubs (`onUpload`, `uploadedFile`).
 - Removed unnecessary mock-clearing setup no longer needed after stub refactor.
 - Validation: yarn test src/components/UploadQuestions/QuestionUpload.test.tsx --runInBand (PASS, 2/2 tests).
+## Task: Add new rule to GUIDELINES.md: Prefer plain domain names over capture-tracking prefixes
+2026-03-04 - Refactor Increment 5
+- Refactored transcript analysis repository test naming:
+  - capturedUrl -> url
+  - capturedData -> data
+  - fakeHttpClient -> httpClient
+- Added guideline rule in skills/GUIDLINES.md to avoid capture-tracking prefixes when plain domain names are sufficient.
+- Validation: yarn test src/client/repositories/TranscriptAnalysisRepository.test.ts --runInBand (PASS, 1/1 tests).

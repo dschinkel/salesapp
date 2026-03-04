@@ -54,10 +54,29 @@ jobs:
         id: bump
         run: |
           git fetch origin main
+          git fetch --tags origin
           git checkout main
           git reset --hard origin/main
 
-          npm version patch -m "chore: bump version to %s [skip ci]"
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          MAJOR=$(echo "$CURRENT_VERSION" | cut -d. -f1)
+          MINOR=$(echo "$CURRENT_VERSION" | cut -d. -f2)
+          PATCH=$(echo "$CURRENT_VERSION" | cut -d. -f3)
+
+          NEXT_PATCH=$PATCH
+          while true; do
+            NEXT_PATCH=$((NEXT_PATCH + 1))
+            CANDIDATE_VERSION="${MAJOR}.${MINOR}.${NEXT_PATCH}"
+            if git rev-parse -q --verify "refs/tags/v${CANDIDATE_VERSION}" >/dev/null; then
+              continue
+            fi
+            break
+          done
+
+          npm version "${CANDIDATE_VERSION}" --no-git-tag-version
+          git add package.json
+          git commit -m "chore: bump version to ${CANDIDATE_VERSION} [skip ci]"
+          git tag -a "v${CANDIDATE_VERSION}" -m "chore: bump version to ${CANDIDATE_VERSION} [skip ci]"
 
           # minimize race conditions if another push happened while we were bumping
           git fetch origin main
