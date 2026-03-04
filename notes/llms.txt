@@ -4,4 +4,6 @@ Codex vs Gemini
     - Seems smarter, gives very precise plan like gemini but just in a different format
     - I do not see it showing me the TDD plan though, find out why
     - There is no brave mode for this like Gemini
+        - so when I need it to stop asking at times to run scripts I can't just click a brave button
+
 

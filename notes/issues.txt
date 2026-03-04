@@ -49,3 +49,5 @@ Add skills for each section of my guideline, it may not always be reading my gui
 [1]       retryDelay: '36s'
 [1]     }
 [1]   ]
+
+It's creating way too big of tests in many cases.
