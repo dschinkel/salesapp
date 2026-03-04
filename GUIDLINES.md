@@ -60,6 +60,8 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
 
 ## G2. Domain-Driven Naming
 - G1.11 Use domain language for files, functions, variables, tests, and modules. Do not include implementation details or technical words in variable names.  
+- G1.11.1 Do not append technical storage or transport terms to names (for example: `File`, `Data`, `Api`, `Http`, `Json`, `Dto`) when the domain term already explains intent.  
+- G1.11.2 Prefer the shortest domain term that preserves meaning (example: `parseQuestion` instead of `parseQuestionFile`).  
 
 ## G3. Clean Code & Organization
 - G1.12 Organization and Naming:  
@@ -148,7 +150,9 @@ The Fix:
   - N1.3.1 Test names (`it`, `test`) must be written in all lowercase.  
   - N1.3.2 Describe names (`describe`) should be written in normal case (sentence case or title case) with spaces.  
 - N1.4 Canonical examples live in Appendix D.  
-- N1.5 Test data and stubs must not use the word "mock". Use domain terms for data and "fake" if it's a JS object and you're stubbing something inside it, OR call it a stub if it's JUST a function not wrapped in anything else (e.g., `fakeRepository`, `fakeFonts`, `fakeReader`).  
+- N1.5 Test data and stubs must not use the word "mock". Use domain terms only.  
+- N1.5.1 The word "fake" is forbidden in variable names, test names, function names, and all code constructs.  
+- N1.5.2 Name stubs/captures with domain intent only (examples: `questionUpload`, `reorderCapture`, `preventDefaultHandler`).  
 - N1.6 Do not test for loading state in hook tests.  
 - N1.7 Treat the System Under Test (SUT) as a black box. Avoid using spies or asserting that internal dependencies were called when the output itself can be asserted.  
 - N1.7.1 Do not use `jest.fn()` or any testing library "magic" for creating stubs or fakes. Use simple JavaScript functions instead.  

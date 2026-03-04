@@ -104,7 +104,7 @@ Purpose of `tasks.md`:
 
 ## I3 Model Upgrade
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
-- [x] I3.0.0 Upgrade Gemini model to `gemini-2.5-flash`
+- [x] I3.0.0 Upgrade Gemini model to `gemini-2.5-flash`  
 
 
 ## PR.3.8 Fix  
@@ -189,12 +189,81 @@ The Fix:
 - [x] Verify fix by running build and lint
 
 
-## F3.10 Browser voice transcript shows which questions were answered  
+## PR.3.10.3 Fix
 
-- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD  
-- [x] F3.10.1 Send questions and answers to be analyzed via backend service  
-- [x] F3.10.0 Display answered questions in green after recording is complete  
-- [x] PR.3.10.2 Fix 404 error on `/api/analyze-transcript` by adding `koa-bodyparser` and correct route registration
-- [x] PR.3.10.3 Fix "Analysis failed" error by adding detailed backend error logging and identifying gemini-2.5-flash quota limits (429)
-- [x] PR.3.10.4 Enhance GeminiClient with robust JSON parsing to handle potential non-JSON responses during analysis
-- [x] PR.3.10.5 Implement detailed rate limit error reporting for Gemini API 429 status codes (limit: 20 requests/day for gemini-2.5-flash)<!-- id: PR.3.10.5 -->
+### Gemini call failing (Quota exceeded)
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Implement 429 error handling in `TranscriptionController.ts`
+- [x] Propagate error messages through `fetchHttpClient.ts`
+- [x] Add error state to `useVoiceRecorder.ts` to capture transcription failures
+- [x] Update `VoiceRecorder.tsx` to display transcription errors to the user
+- [x] Verify fix with backend and frontend tests
+
+
+## PR.3.10.4 Fix
+
+### Browser transcript analysis calls Gemini multiple times while recording
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Update `useVoiceRecorder.ts` to avoid invoking transcript analysis callbacks during live browser recognition results
+- [x] Trigger transcript analysis callback once after recording stops with the final transcript
+- [x] Update `useVoiceRecorder.test.ts` to verify a single final callback in browser mode
+- [x] Verify with hook tests and build
+
+
+## PR.3.10.5 Fix
+
+### Transcript analysis returns generic "Analysis failed"
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Improve `GeminiClient.ts` transcript analysis parsing to support fenced JSON and object payloads
+- [x] Return detailed backend analysis errors from `TranscriptAnalysisController.ts` instead of generic message
+- [x] Return 429 with quota message for analysis requests when Gemini quota is exceeded
+- [x] Add/Update backend tests for resilient parsing and error propagation
+- [x] Verify with tests and build
+
+
+## PR.3.10.6 Fix
+
+### Migrate Gemini SDK to current @google/genai package
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Replace deprecated `@google/generative-ai` with `@google/genai`
+- [x] Update Gemini client calls to `models.generateContent` with current config shape
+- [x] Run `yarn install` immediately after dependency change
+- [x] Update Gemini client tests for the new SDK shape
+- [x] Verify with tests and build
+
+
+## PR.3.10.7 Fix
+
+### Remove Gemini API key fallbacks and bubble configuration errors
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Remove `fake-key` fallback from `GeminiClient.ts`
+- [x] Remove no-key transcript/analysis fallback behavior in `GeminiClient.ts`
+- [x] Fail fast when `GEMINI_API_KEY` is missing and no test double is injected
+- [x] Update integration test gating for explicit real-service runs
+- [x] Verify with tests and build
+
+
+## PR.3.10.8 Refactor
+
+### Remove Jest Mocks. We just need simple TS Stubs, Fakes, or Dummies.
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Fix the `successfully transcribes` test behavior for no-key environments
+- [x] Add new rule to GUIDELINES.md: For refactors that replace jest mocks with TS stubs, use commit message pattern: `refactor <filename>: remove jest mocks, use simple TS stubs or fakes`

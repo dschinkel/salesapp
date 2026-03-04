@@ -48,16 +48,19 @@ describe('Questions', () => {
   });
 
   test('parses uploaded questions', async () => {
-    const fakeParseFile = async (file: File) => ['Question 1', 'Question 2', 'Question 3'];
-    const mockOnUpload = jest.fn();
-    const { result } = renderHook(() => useUploadQuestions(mockOnUpload, { parseFile: fakeParseFile }));
+    const parseQuestion = async (file: File) => ['Question 1', 'Question 2', 'Question 3'];
+    let uploadedQuestions: string[] = [];
+    const onUpload = (questions: string[]) => {
+      uploadedQuestions = questions;
+    };
+    const { result } = renderHook(() => useUploadQuestions(onUpload, { parseFile: parseQuestion }));
     const file = new File([''], 'test.csv', { type: 'text/csv' });
 
     await act(async () => {
       await result.current.parseAndUploadQuestions(file);
     });
 
-    expect(mockOnUpload).toHaveBeenCalledWith(['Question 1', 'Question 2', 'Question 3']);
+    expect(uploadedQuestions).toEqual(['Question 1', 'Question 2', 'Question 3']);
   });
 
   test('reorders questions', () => {
@@ -83,11 +86,19 @@ describe('Questions', () => {
   });
 
   test('manages reorder state', () => {
-    const mockOnReorder = jest.fn();
-    const { result } = renderHook(() => useReorderQuestions({ onReorder: mockOnReorder }));
+    let reorderedFrom = -1;
+    let reorderedTo = -1;
+    const onReorder = (from: number, to: number) => {
+      reorderedFrom = from;
+      reorderedTo = to;
+    };
+    const { result } = renderHook(() => useReorderQuestions({ onReorder }));
 
+    let prevented = false;
     const fakeEvent = {
-      preventDefault: jest.fn(),
+      preventDefault: () => {
+        prevented = true;
+      },
       dataTransfer: {
         effectAllowed: '',
         dropEffect: '',
@@ -104,13 +115,14 @@ describe('Questions', () => {
       result.current.onDragOver(fakeEvent);
     });
 
-    expect(fakeEvent.preventDefault).toHaveBeenCalled();
+    expect(prevented).toBe(true);
 
     act(() => {
       result.current.onDrop(2, fakeEvent);
     });
 
-    expect(mockOnReorder).toHaveBeenCalledWith(0, 2);
+    expect(reorderedFrom).toBe(0);
+    expect(reorderedTo).toBe(2);
     expect(result.current.draggedIndex).toBe(null);
   });
 });
