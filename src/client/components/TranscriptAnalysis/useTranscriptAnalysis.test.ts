@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { useTranscriptAnalysis } from './useTranscriptAnalysis';
+import { useTranscriptAnalysis } from './useTranscriptAnalysis.ts';
 
 describe('Transcript Analysis', () => {
   it('analyzes transcript and returns answered questions', async () => {

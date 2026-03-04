@@ -1,5 +1,5 @@
 import React from 'react';
-import { useReorderQuestions } from './useReorderQuestions';
+import { useReorderQuestions } from './useReorderQuestions.ts';
 
 export function Questionnaire({
   questions,

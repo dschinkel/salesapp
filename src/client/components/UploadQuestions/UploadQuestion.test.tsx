@@ -19,7 +19,7 @@ describe('Upload Questions', () => {
     };
     render(<UploadQuestions onUpload={onUpload} />);
 
-    const csvContent = fs.readFileSync(path.resolve(__dirname, '../../../test/questions.csv'), 'utf-8');
+    const csvContent = fs.readFileSync(path.resolve(__dirname, '../../../../test/questions.csv'), 'utf-8');
     const file = new File([csvContent], 'questions.csv', { type: 'text/csv' });
     const input = screen.getByLabelText(/upload csv/i);
 

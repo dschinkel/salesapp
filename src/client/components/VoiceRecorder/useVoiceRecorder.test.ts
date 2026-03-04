@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { useVoiceRecorder } from './useVoiceRecorder';
+import { useVoiceRecorder } from './useVoiceRecorder.ts';
 
 beforeAll(() => {
   (global as any).MediaRecorder = MediaRecorder as any;

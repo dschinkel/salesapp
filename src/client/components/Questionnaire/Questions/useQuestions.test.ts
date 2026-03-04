@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
-import { useQuestions } from './useQuestions';
-import { useUploadQuestions } from '../useUploadQuestions';
-import { useReorderQuestions } from '../useReorderQuestions';
+import { useQuestions } from './useQuestions.ts';
+import { useUploadQuestions } from '../useUploadQuestions.ts';
+import { useReorderQuestions } from '../useReorderQuestions.ts';
 
 describe('Questions', () => {
   test('lists questions', () => {

@@ -1,7 +1,7 @@
 import { createGeminiClient } from './GeminiClient';
 
 describe('Gemini Client', () => {
-  it('returnes answered questions based on transcript', async () => {
+  it('returns answered questions based on transcript', async () => {
     const fakeGenAI = {
       models: {
         generateContent: async () => ({

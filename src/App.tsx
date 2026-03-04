@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import { AppVersion } from './components/AppVersion';
-import { Questionnaire } from './components/Questionnaire/Questionnaire.tsx';
-import { UploadQuestions } from './components/UploadQuestions/UploadQuestions.tsx';
-import { VoiceRecorder } from './components/VoiceRecorder/VoiceRecorder.tsx';
-import { useQuestions } from './components/Questionnaire/Questions/useQuestions.ts';
-import { useUploadQuestions } from './components/Questionnaire/useUploadQuestions.ts';
-import { parseFile } from './components/Questionnaire/CSVParser/csvParser.ts';
+import { AppVersion } from '@/client/components/AppVersion';
+import { Questionnaire } from '@/client/components/Questionnaire/Questionnaire.tsx';
+import { UploadQuestions } from '@/client/components/UploadQuestions/UploadQuestions.tsx';
+import { VoiceRecorder } from '@/client/components/VoiceRecorder/VoiceRecorder.tsx';
+import { useQuestions } from '@/client/components/Questionnaire/Questions/useQuestions.ts';
+import { useUploadQuestions } from '@/client/components/Questionnaire/useUploadQuestions.ts';
+import { parseFile } from '@/client/components/Questionnaire/CSVParser/csvParser.ts';
 import { createTranscriptionRepository } from './client/repositories/Transcription/TranscriptionRepository.ts';
 import { fetchHttpClient } from './client/data/fetchHttpClient.ts';
 import { createTranscriptAnalysisRepository } from './client/repositories/TranscriptAnalysis/TranscriptAnalysisRepository.ts';
-import { useTranscriptAnalysis } from './components/TranscriptAnalysis/useTranscriptAnalysis.ts';
+import { useTranscriptAnalysis } from '@/client/components/TranscriptAnalysis/useTranscriptAnalysis.ts';
 import { Sun, Moon } from 'lucide-react';
 import './index.css';
 

@@ -1,4 +1,4 @@
-import { parseFile } from './csvParser';
+import { parseFile } from './csvParser.ts';
 
 describe('CSV Parser', () => {
   test('parses a file of questions', async () => {

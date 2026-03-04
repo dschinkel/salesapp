@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mic, StopCircle } from 'lucide-react';
-import { useVoiceRecorder, TranscriptionRepository } from './useVoiceRecorder';
+import { useVoiceRecorder, TranscriptionRepository } from './useVoiceRecorder.ts';
 
 export function VoiceRecorder({
   transcriptionRepository,
