@@ -1,4 +1,4 @@
-# Sales Recorder
+# Sales Closer
 
 ## Agent .md Files
 Keep the following format in .md files consistent. **Always keep Markdown heading syntax**.
@@ -85,7 +85,7 @@ We still want to create a new project for each app. That doesn't change.
 ### Github Secrets
 These must match what exists in Artifact Registry and what you want Cloud Run to use.
 - `GCR_REPOSITORY`: Artifact Registry repository name (e.g. `apps`)
-- `GCR_IMAGE_NAME`: Docker image name (and usually your Cloud Run service name e.g. `sales-recorder`)
+- `GCR_IMAGE_NAME`: Docker image name (and usually your Cloud Run service name e.g. `sales-closer`)
 So the full docker image path looks like this:
 - `<region>-docker.pkg.dev/<project-id>/<repository>/<image-name>:<tag>`
 
