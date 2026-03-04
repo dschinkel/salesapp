@@ -267,3 +267,15 @@ The Fix:
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
 - [x] Fix the `successfully transcribes` test behavior for no-key environments
 - [x] Add new rule to GUIDELINES.md: For refactors that replace jest mocks with TS stubs, use commit message pattern: `refactor <filename>: remove jest mocks, use simple TS stubs or fakes`
+
+
+## PR.3.10.9 Fix
+
+### GitHub Actions version bump fails when git tag already exists
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Update deploy workflow to fetch tags before bumping version
+- [x] Replace `npm version patch` auto-tag behavior with explicit next-available patch version selection
+- [x] Create commit/tag manually with the selected version and push with follow-tags
