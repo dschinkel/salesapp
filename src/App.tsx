@@ -10,7 +10,7 @@ import { parseFile } from './components/Questionnaire/CSVParser/csvParser.ts';
 import { createTranscriptionRepository } from './client/repositories/Transcription/TranscriptionRepository.ts';
 import { fetchHttpClient } from './client/data/fetchHttpClient.ts';
 import { createTranscriptAnalysisRepository } from './client/repositories/TranscriptAnalysis/TranscriptAnalysisRepository.ts';
-import { useTranscriptAnalysis } from './components/useTranscriptAnalysis.ts';
+import { useTranscriptAnalysis } from './components/TranscriptAnalysis/useTranscriptAnalysis.ts';
 import { Sun, Moon } from 'lucide-react';
 import './index.css';
 
