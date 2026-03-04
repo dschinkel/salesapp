@@ -25,19 +25,13 @@ export function createTranscriptionController(command: TranscribeAudioCommand) {
       ctx.body = responseDto;
     } catch (error: any) {
       console.error('Transcription error:', error);
-
       if (error.status === 429) {
         ctx.status = 429;
-        ctx.body = {
-          error: 'Rate limit exceeded',
-          details: 'You hit the 20 requests per day limit for gemini-2.5-flash on the free tier. Try again later.',
-          originalError: error.message,
-        };
+        ctx.body = { error: 'Gemini API Quota exceeded. Please try again later.' };
         return;
       }
-
       ctx.status = 500;
-      ctx.body = { error: 'Transcription failed', details: error.message };
+      ctx.body = { error: 'Transcription failed' };
     }
   });
 

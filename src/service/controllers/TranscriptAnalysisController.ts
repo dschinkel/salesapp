@@ -20,28 +20,14 @@ export function createTranscriptAnalysisController(command: AnalyzeTranscriptCom
       const responseDto = await command.execute({ transcript, questions });
       ctx.body = responseDto;
     } catch (error: any) {
-      console.error('Analysis error details:', {
-        message: error.message,
-        status: error.status,
-        response: error.response?.data || error.response,
-        stack: error.stack,
-      });
-
-      if (error.status === 429) {
+      console.error('Analysis error:', error);
+      if (error.status === 429 || String(error.message || '').toLowerCase().includes('quota')) {
         ctx.status = 429;
-        ctx.body = {
-          error: 'Rate limit exceeded',
-          details: 'You hit the 20 requests per day limit for gemini-2.5-flash on the free tier. Try again later.',
-          originalError: error.message,
-        };
+        ctx.body = { error: 'Gemini API Quota exceeded. Please try again later.' };
         return;
       }
-
       ctx.status = 500;
-      ctx.body = {
-        error: 'Analysis failed',
-        details: error.message,
-      };
+      ctx.body = { error: error.message || 'Analysis failed' };
     }
   });
 

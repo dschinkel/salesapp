@@ -30,4 +30,46 @@ describe('Transcript Analysis Controller', () => {
     expect(capturedRequest).toEqual({ transcript, questions });
     expect(res.body).toEqual({ answeredQuestions });
   });
+
+  it('returns 429 when analysis exceeds quota', async () => {
+    const fakeCommand = {
+      execute: async () => {
+        throw { status: 429, message: 'quota exceeded' };
+      },
+    };
+
+    const app = new Koa();
+    app.use(bodyParser());
+    const controller = createTranscriptAnalysisController(fakeCommand as any);
+    app.use(controller.routes());
+    app.use(controller.allowedMethods());
+
+    const res = await request(app.callback())
+      .post('/api/analyze-transcript')
+      .send({ transcript: 'hello', questions: ['Budget'] });
+
+    expect(res.status).toBe(429);
+    expect(res.body.error).toContain('Quota exceeded');
+  });
+
+  it('returns command error details when analysis fails', async () => {
+    const fakeCommand = {
+      execute: async () => {
+        throw new Error('Gemini returned non-JSON analysis response');
+      },
+    };
+
+    const app = new Koa();
+    app.use(bodyParser());
+    const controller = createTranscriptAnalysisController(fakeCommand as any);
+    app.use(controller.routes());
+    app.use(controller.allowedMethods());
+
+    const res = await request(app.callback())
+      .post('/api/analyze-transcript')
+      .send({ transcript: 'hello', questions: ['Budget'] });
+
+    expect(res.status).toBe(500);
+    expect(res.body.error).toContain('non-JSON analysis response');
+  });
 });

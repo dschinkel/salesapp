@@ -268,6 +268,21 @@ describe('Voice Recorder', () => {
     expect(result.current.isRecording).toBe(false);
   });
 
+  test('captures and exposes transcription errors', async () => {
+    const errorRepo = {
+      transcribe: async () => {
+        throw new Error('Gemini API Quota exceeded. Please try again later.');
+      },
+    };
+    const { result } = renderHook(() => useVoiceRecorder({ transcriptionRepository: errorRepo }));
+
+    await act(async () => {
+      await result.current.transcribeAudio(new Blob(['test'], { type: 'audio/webm' }));
+    });
+
+    expect(result.current.error).toBe('Gemini API Quota exceeded. Please try again later.');
+  });
+
   test('implements exponential backoff on network error', async () => {
     jest.useFakeTimers();
     const { result } = renderHook(() => useVoiceRecorder());
@@ -361,6 +376,47 @@ describe('Voice Recorder', () => {
     expect(startCount).toBe(4);
 
     jest.useRealTimers();
+  });
+
+  test('calls onTranscriptionComplete once after browser recording stops', async () => {
+    const completedTranscripts: string[] = [];
+    const onTranscriptionComplete = (t: string) => {
+      completedTranscripts.push(t);
+    };
+    const { result } = renderHook(() => useVoiceRecorder({ onTranscriptionComplete }));
+
+    act(() => {
+      result.current.setTranscriptionSource('browser');
+    });
+
+    let recognitionInstance: FakeSpeechRecognition | null = null;
+    (window as any).SpeechRecognition = class extends FakeSpeechRecognition {
+      constructor() {
+        super();
+        recognitionInstance = this;
+      }
+    };
+
+    await act(async () => {
+      await result.current.startRecording();
+    });
+
+    act(() => {
+      if (recognitionInstance?.onresult) {
+        recognitionInstance.onresult({
+          results: [[{ transcript: 'Hello world' }]],
+        });
+      }
+    });
+
+    expect(result.current.transcript).toBe('Hello world');
+    expect(completedTranscripts).toEqual([]);
+
+    act(() => {
+      result.current.stopRecording();
+    });
+
+    expect(completedTranscripts).toEqual(['Hello world']);
   });
 
   test('stops recording after too many consecutive network errors', async () => {

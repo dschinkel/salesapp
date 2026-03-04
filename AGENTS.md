@@ -2,6 +2,9 @@
 
 Treat the following files as the authoritative sources for project state and behavior:
 
+## 0.0 Do no use training data for today's date
+- look up today's date
+
 ## 1.1 Execution Guidance — `@AGENTS.md`
 Execution contract for autonomous agents and AI tooling. Defines:
 
@@ -281,3 +284,5 @@ https://martinfowler.com/bliki/BeckDesignRules.html
 # Voice to Text
   - Use Gemini API for voice to text
 
+# 16. Do not use fall-backs in code
+- get rid of fake values in production code; I do not want fallbacks just let errors bubble up

@@ -12,6 +12,7 @@ export function VoiceRecorder({
   const {
     isRecording,
     transcript,
+    error,
     recordingDuration,
     transcriptionSource,
     setTranscriptionSource,
@@ -29,7 +30,14 @@ export function VoiceRecorder({
         transcriptionSource={transcriptionSource}
         onSourceChange={setTranscriptionSource}
       />
-      <TranscriptArea transcript={transcript} />
+      <div className="flex flex-col">
+        {error && (
+          <div className="bg-red-50 dark:bg-red-900/20 border-b border-red-100 dark:border-red-900/30 px-6 py-3">
+            <p className="text-red-600 dark:text-red-400 text-sm font-medium">{error}</p>
+          </div>
+        )}
+        <TranscriptArea transcript={transcript} />
+      </div>
     </div>
   );
 }

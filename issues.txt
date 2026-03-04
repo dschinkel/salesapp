@@ -30,3 +30,22 @@ It sometimes doesn't put RED, GREEN, and REFACTOR on their own lines when presen
 It at times tries to add more behavior than stated in PROJECT_SPEC.md, for example, it added download and clear buttons to voice recorder which should be seperate features we iterate on
 
 It's taking larger steps than I want in terms of doing both happy and sad paths at the same time
+
+It keeps wanting to add garbage fallback mechanisms when it can't find keys, values, etc.  Need to get it to stop that and just show the error.
+
+Add skills for each section of my guideline, it may not always be reading my guidelines completely
+
+
+]   status: 429,
+[1]   statusText: 'Too Many Requests',
+[1]   errorDetails: [
+[1]     { '@type': 'type.googleapis.com/google.rpc.Help', links: [Array] },
+[1]     {
+[1]       '@type': 'type.googleapis.com/google.rpc.QuotaFailure',
+[1]       violations: [Array]
+[1]     },
+[1]     {
+[1]       '@type': 'type.googleapis.com/google.rpc.RetryInfo',
+[1]       retryDelay: '36s'
+[1]     }
+[1]   ]

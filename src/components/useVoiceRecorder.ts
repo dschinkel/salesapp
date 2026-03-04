@@ -13,10 +13,12 @@ export function useVoiceRecorder({
 } = {}) {
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const [recordingDuration, setRecordingDuration] = useState(0);
   const [transcriptionSource, setTranscriptionSource] = useState<'gemini' | 'browser'>('gemini');
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recognitionRef = useRef<any>(null);
+  const latestTranscriptRef = useRef('');
   const audioChunksRef = useRef<BlobPart[]>([]);
   const permissionsCheckedRef = useRef(false);
   const shouldBeRecordingRef = useRef(false);
@@ -63,6 +65,7 @@ export function useVoiceRecorder({
       for (let i = 0; i < event.results.length; i++) {
         currentTranscript += event.results[i][0].transcript;
       }
+      latestTranscriptRef.current = currentTranscript;
       setTranscript(currentTranscript);
     };
 
@@ -118,7 +121,9 @@ export function useVoiceRecorder({
 
   const startRecording = async () => {
     setTranscript('');
+    setError(null);
     setRecordingDuration(0);
+    latestTranscriptRef.current = '';
     try {
       if (transcriptionSource === 'browser') {
         shouldBeRecordingRef.current = true;
@@ -176,8 +181,9 @@ export function useVoiceRecorder({
 
     setIsRecording(false);
 
-    if (onTranscriptionComplete && transcript) {
-      onTranscriptionComplete(transcript);
+    const completedTranscript = latestTranscriptRef.current || transcript;
+    if (onTranscriptionComplete && completedTranscript) {
+      onTranscriptionComplete(completedTranscript);
     }
   };
 
@@ -185,12 +191,14 @@ export function useVoiceRecorder({
     if (transcriptionSource === 'gemini' && transcriptionRepository) {
       try {
         const result = await transcriptionRepository.transcribe(audio);
+        latestTranscriptRef.current = result;
         setTranscript(result);
         if (onTranscriptionComplete) {
           onTranscriptionComplete(result);
         }
-      } catch (e) {
+      } catch (e: any) {
         console.error('Transcription failed', e);
+        setError(e.message || 'Transcription failed. Please try again.');
       }
     }
   };
@@ -198,6 +206,7 @@ export function useVoiceRecorder({
   return {
     isRecording,
     transcript,
+    error,
     recordingDuration,
     transcriptionSource,
     setTranscriptionSource,
