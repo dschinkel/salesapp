@@ -59,6 +59,7 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
   - G1.10.8 Feature sections in `tasks.md` MUST be separated by an extra line return (two empty lines between sections) to improve readability and whitespace.  
   - G1.10.9 After each Feature title or task line in `PROJECT_SPEC.md` and `tasks.md`, you MUST add two spaces at the end of the line to force a markdown line return.  
   - G1.10.10 Whenever appending to `refactor.log`, include a heading that explicitly states which task the refactor entry is related to.  
+  - G1.10.11 Whenever a deploy issue is fixed, append an entry to `deploy.log` under a heading that matches the related task title and include what was changed or done.  
 
 ## G2. Domain-Driven Naming
 - G1.11 Use domain language for files, functions, variables, tests, and modules. Do not include implementation details or technical words in variable names.  
