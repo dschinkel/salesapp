@@ -1,14 +1,14 @@
 yarn run v1.22.22
-$ /Users/zevia/code/ai/sales-recorder/node_modules/.
+$ /Users/zevia/code/ai/sales-closer/node_modules/.
 npm error A complete log of this run can be found in: /Users/zevia/.npm/_logs/2026-02-26T09_20_21_395Z-debug-0.log
 leGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
-    at handleResponseNotOk (file:///Users/zevia/code/ai/sales-recorder/node_modules/@google/generative-ai/dist/index.mjs:432:11)
+    at handleResponseNotOk (file:///Users/zevia/code/ai/sales-closer/node_modules/@google/generative-ai/dist/index.mjs:432:11)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async makeRequest (file:///Users/zevia/code/ai/sales-recorder/node_modules/@google/generative-ai/dist/index.mjs:401:9)
-    at async generateContent (file:///Users/zevia/code/ai/sales-recorder/node_modules/@google/generative-ai/dist/index.mjs:865:22)
-    at async Object.generateContent (/Users/zevia/code/ai/sales-recorder/src/service/data/GeminiClient.ts:26:22)
-    at async Object.execute (/Users/zevia/code/ai/sales-recorder/src/service/commands/TranscribeAudioCommand.ts:27:26)
-    at async <anonymous> (/Users/zevia/code/ai/sales-recorder/src/service/controllers/TranscriptionController.ts:24:27) {
+    at async makeRequest (file:///Users/zevia/code/ai/sales-closer/node_modules/@google/generative-ai/dist/index.mjs:401:9)
+    at async generateContent (file:///Users/zevia/code/ai/sales-closer/node_modules/@google/generative-ai/dist/index.mjs:865:22)
+    at async Object.generateContent (/Users/zevia/code/ai/sales-closer/src/service/data/GeminiClient.ts:26:22)
+    at async Object.execute (/Users/zevia/code/ai/sales-closer/src/service/commands/TranscribeAudioCommand.ts:27:26)
+    at async <anonymous> (/Users/zevia/code/ai/sales-closer/src/service/controllers/TranscriptionController.ts:24:27) {
   status: 429,
   statusText: 'Too Many Requests',
   errorDetails: undefined
