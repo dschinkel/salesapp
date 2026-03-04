@@ -377,3 +377,14 @@ The Fix:
 - [x] Align alias config so lint/type-check/build resolve current module paths consistently
 - [x] Run lint auto-fix and lint verification
 - [x] Verify with build and tests
+
+
+## Add new rule to GUIDELINES.md: Run lint auto-fix and lint verification after every RED GREEN REFACTOR step in TDD
+
+### Enforce linting checks during each TDD cycle step
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Add rule requiring lint auto-fix and lint verification after RED, GREEN, and REFACTOR when TDD is chosen
+- [x] Keep existing task-level linting rule and add TDD-step-level enforcement

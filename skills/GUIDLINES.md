@@ -151,6 +151,7 @@ The Fix:
 - T1.15 You MUST NOT use `@jest-environment` comments to set the test environment in individual test files. Instead, ensure the global `jest.config.js` is configured with `projects` to automatically apply the correct environment (e.g., `jsdom` for `src/client` and `node` for `src/service`) based on the file path.  
 - T1.16 Integration test timeouts MUST NOT exceed 30 seconds in the codebase. The overall test timeout global threshold MUST be 30 seconds. If this needs to be increased, you MUST ask the user for permission first.  
 - T1.17 Repeated code in tests, such as `render(<App />);`, MUST be DRY'd up by moving it to a `beforeEach` block at the appropriate scope.  
+- T1.18 When TDD is chosen, after each RED, GREEN, and REFACTOR step you MUST run lint auto-fix (`eslint --fix`) and then lint verification (`eslint` without `--fix`) before proceeding.  
 
 ---
 
