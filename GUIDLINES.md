@@ -48,6 +48,7 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
 ## G1. Project Management Guidelines  
 
 - G1.10 When asked to add a new feature, you must always add it at the higher level in `PROJECT_SPEC.md` first, then break that out into smaller tasks second in `tasks.md` using the `PROJECT_SPEC` feature number.  
+  - G1.10.0 Whenever a new rule is added to `GUIDLINES.md`, the corresponding `tasks.md` task title MUST be prefixed with: `Add new rule to GUIDELINES.md: `.  
   - G1.10.1 Ensure that new behaviors (adding new functionality, UI elements, or logic) are treated as **Features** (FR.x) and not as "Fixes". A "Fix" (PR.x) is strictly for correcting existing behavior that is broken or not meeting the original spec. If a "Fix" actually introduces new behavior, it must be promoted to a Feature in `PROJECT_SPEC.md` and `tasks.md`.  
   - G1.10.2 Every task created in `tasks.md` (whether by the user or the agent) MUST have as its first acceptance criterion: `- Re-read GUIDELINES.MD AND PROJECT_SPEC.MD`.  
   - G1.10.3 You must include the same feature header as seen in `PROJECT_SPEC.md` for a specific feature and its subtasks in `tasks.md`.  
@@ -57,6 +58,7 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
   - G1.10.7 You MUST NEVER overwrite or delete existing features or tasks in `PROJECT_SPEC.md` or `tasks.md` when adding new ones. Always append or insert new items while preserving the existing history and numbering.  
   - G1.10.8 Feature sections in `tasks.md` MUST be separated by an extra line return (two empty lines between sections) to improve readability and whitespace.  
   - G1.10.9 After each Feature title or task line in `PROJECT_SPEC.md` and `tasks.md`, you MUST add two spaces at the end of the line to force a markdown line return.  
+  - G1.10.10 Whenever appending to `refactor.log`, include a heading that explicitly states which task the refactor entry is related to.  
 
 ## G2. Domain-Driven Naming
 - G1.11 Use domain language for files, functions, variables, tests, and modules. Do not include implementation details or technical words in variable names.  
