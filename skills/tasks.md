@@ -388,3 +388,14 @@ The Fix:
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
 - [x] Add rule requiring lint auto-fix and lint verification after RED, GREEN, and REFACTOR when TDD is chosen
 - [x] Keep existing task-level linting rule and add TDD-step-level enforcement
+
+
+## Add new rule to GUIDELINES.md: Remove dead code after every task
+
+### Enforce dead code cleanup before commit and push
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Add rule requiring dead code cleanup after every completed task
+- [x] Define dead code scope to include unused imports, variables, functions/types, and unreachable code

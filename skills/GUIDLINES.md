@@ -80,6 +80,7 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
   - G1.12.3 In `src/components`, group each component with its related hooks/tests in a component-named folder, and use granular domain subfolders for distinct concerns (for example: `Questionnaire/CSVParser`, `Questionnaire/Questions`).  
   - G1.12.4 In `src/client` and `src/service`, group related implementation and test files under shared domain folders (for example: `Transcription`, `TranscriptAnalysis`) while preserving architecture layers.  
   - G1.12.5 After every completed task, run lint with auto-fix first (`eslint --fix`), then run lint verification (`eslint` without `--fix`) and resolve remaining errors before commit/push.  
+  - G1.12.6 After every completed task, remove dead code before commit/push (including unused imports, unused variables, unused functions/types, and unreachable code).  
 - P0.11 When iterating on a feature, do not mark it as [FAILED] or create new "fix" tasks if it doesn't meet acceptance criteria immediately. Instead, keep the current task [IN PROGRESS] and iterate until it is completed.  
   - P0.11.1 When starting a task, you MUST move the task from [NOT STARTED] to [IN PROGRESS] in `tasks.md`.  
 - P0.12 NEVER call `submit` if there are uncommitted or unpushed changes related to the task. Every task completion must end with a push to the remote repository. Commit messages must focus on domain features and intent. Do not include technical words like "verified", "Step X", or "Frontend/Backend".  
