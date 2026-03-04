@@ -1,36 +1,8 @@
 import { renderHook, act } from '@testing-library/react';
 import { useVoiceRecorder } from './useVoiceRecorder';
 
-class FakeMediaRecorder {
-  ondataavailable: ((event: any) => void) | null = null;
-  onstop: (() => void) | null = null;
-  stream = {
-    getTracks: () => [{ stop: () => {} }],
-  };
-  start() {}
-  stop() {
-    if (this.onstop) this.onstop();
-  }
-}
-
-class FakeSpeechRecognition {
-  continuous = false;
-  interimResults = false;
-  lang = '';
-  onstart: (() => void) | null = null;
-  onresult: ((event: any) => void) | null = null;
-  onerror: ((event: any) => void) | null = null;
-  onend: (() => void) | null = null;
-  start() {
-    if (this.onstart) this.onstart();
-  }
-  stop() {
-    if (this.onend) this.onend();
-  }
-}
-
 beforeAll(() => {
-  (global as any).MediaRecorder = FakeMediaRecorder;
+  (global as any).MediaRecorder = MediaRecorder as any;
   (global as any).navigator.mediaDevices = {
     getUserMedia: async () => ({
       getTracks: () => [{ stop: () => {} }],
@@ -132,13 +104,10 @@ describe('Voice Recorder', () => {
       result.current.setTranscriptionSource('browser');
     });
 
-    let recognitionInstance: FakeSpeechRecognition | null = null;
-    (window as any).SpeechRecognition = class extends FakeSpeechRecognition {
-      constructor() {
-        super();
-        recognitionInstance = this;
-      }
-    };
+    let recognitionInstance: any = null;
+    (window as any).SpeechRecognition = createSpeechRecognitionFactory((instance) => {
+      recognitionInstance = instance;
+    });
 
     await act(async () => {
       await result.current.startRecording();
@@ -163,11 +132,9 @@ describe('Voice Recorder', () => {
     });
 
     let started = false;
-    (window as any).SpeechRecognition = class extends FakeSpeechRecognition {
-      start() {
-        started = true;
-      }
-    };
+    (window as any).SpeechRecognition = createSpeechRecognitionFactory(undefined, () => {
+      started = true;
+    });
 
     await act(async () => {
       await result.current.startRecording();
@@ -205,16 +172,15 @@ describe('Voice Recorder', () => {
     });
 
     let startCount = 0;
-    let recognitionInstance: FakeSpeechRecognition | null = null;
-    (window as any).SpeechRecognition = class extends FakeSpeechRecognition {
-      constructor() {
-        super();
-        recognitionInstance = this;
-      }
-      start() {
+    let recognitionInstance: any = null;
+    (window as any).SpeechRecognition = createSpeechRecognitionFactory(
+      (instance) => {
+        recognitionInstance = instance;
+      },
+      () => {
         startCount++;
-      }
-    };
+      },
+    );
 
     await act(async () => {
       await result.current.startRecording();
@@ -244,13 +210,10 @@ describe('Voice Recorder', () => {
       result.current.setTranscriptionSource('browser');
     });
 
-    let recognitionInstance: FakeSpeechRecognition | null = null;
-    (window as any).SpeechRecognition = class extends FakeSpeechRecognition {
-      constructor() {
-        super();
-        recognitionInstance = this;
-      }
-    };
+    let recognitionInstance: any = null;
+    (window as any).SpeechRecognition = createSpeechRecognitionFactory((instance) => {
+      recognitionInstance = instance;
+    });
 
     await act(async () => {
       await result.current.startRecording();
@@ -291,18 +254,17 @@ describe('Voice Recorder', () => {
       result.current.setTranscriptionSource('browser');
     });
 
-    let recognitionInstance: FakeSpeechRecognition | null = null;
+    let recognitionInstance: any = null;
     let startCount = 0;
-    (window as any).SpeechRecognition = class extends FakeSpeechRecognition {
-      constructor() {
-        super();
-        recognitionInstance = this;
-      }
-      start() {
+    (window as any).SpeechRecognition = createSpeechRecognitionFactory(
+      (instance) => {
+        recognitionInstance = instance;
+      },
+      (instance) => {
         startCount++;
-        super.start();
-      }
-    };
+        if (instance.onstart) instance.onstart();
+      },
+    );
 
     await act(async () => {
       await result.current.startRecording();
@@ -389,13 +351,10 @@ describe('Voice Recorder', () => {
       result.current.setTranscriptionSource('browser');
     });
 
-    let recognitionInstance: FakeSpeechRecognition | null = null;
-    (window as any).SpeechRecognition = class extends FakeSpeechRecognition {
-      constructor() {
-        super();
-        recognitionInstance = this;
-      }
-    };
+    let recognitionInstance: any = null;
+    (window as any).SpeechRecognition = createSpeechRecognitionFactory((instance) => {
+      recognitionInstance = instance;
+    });
 
     await act(async () => {
       await result.current.startRecording();
@@ -427,13 +386,10 @@ describe('Voice Recorder', () => {
       result.current.setTranscriptionSource('browser');
     });
 
-    let recognitionInstance: FakeSpeechRecognition | null = null;
-    (window as any).SpeechRecognition = class extends FakeSpeechRecognition {
-      constructor() {
-        super();
-        recognitionInstance = this;
-      }
-    };
+    let recognitionInstance: any = null;
+    (window as any).SpeechRecognition = createSpeechRecognitionFactory((instance) => {
+      recognitionInstance = instance;
+    });
 
     await act(async () => {
       await result.current.startRecording();
@@ -464,3 +420,49 @@ describe('Voice Recorder', () => {
     jest.useRealTimers();
   });
 });
+
+function createSpeechRecognitionFactory(
+  onCreate?: (instance: any) => void,
+  onStart?: (instance: any) => void,
+) {
+  const SpeechRecognitionFactory = function (this: any) {
+    SpeechRecognition.call(this);
+    if (onStart) {
+      this.start = () => onStart(this);
+    }
+    if (onCreate) onCreate(this);
+  } as any;
+  SpeechRecognitionFactory.prototype = SpeechRecognition.prototype;
+  return SpeechRecognitionFactory;
+}
+
+function SpeechRecognition(this: any) {
+  this.continuous = false;
+  this.interimResults = false;
+  this.lang = '';
+  this.onstart = null;
+  this.onresult = null;
+  this.onerror = null;
+  this.onend = null;
+}
+
+SpeechRecognition.prototype.start = function () {
+  if (this.onstart) this.onstart();
+};
+
+SpeechRecognition.prototype.stop = function () {
+  if (this.onend) this.onend();
+};
+
+function MediaRecorder(this: any) {
+  this.ondataavailable = null;
+  this.onstop = null;
+  this.stream = {
+    getTracks: () => [{ stop: () => {} }],
+  };
+}
+
+MediaRecorder.prototype.start = function () {};
+MediaRecorder.prototype.stop = function () {
+  if (this.onstop) this.onstop();
+};

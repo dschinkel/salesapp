@@ -290,3 +290,27 @@ The Fix:
 - [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
 - [x] Refactor transcript analysis repository test naming from capture prefixes to simple domain names
 - [x] Add guideline rule to avoid capture-tracking prefixes when plain domain names are sufficient
+
+
+## PR.3.10.10 Refactor
+
+### Convert class-based test doubles to function-based TypeScript constructs
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Refactor `useVoiceRecorder.test.ts` to replace class-based recorder and speech recognition doubles
+- [x] Keep behavior identical for callback wiring, restart behavior, and lifecycle hooks
+- [x] Verify with targeted hook tests and lint
+
+
+## Add new rule to GUIDELINES.md: Test helper functions must be below the last describe
+
+### Refactor helper function placement in tests
+
+The Fix:
+
+- [x] Re-read GUIDELINES.MD AND PROJECT_SPEC.MD
+- [x] Add helper-placement rule to GUIDELINES
+- [x] Move test helper functions in `useVoiceRecorder.test.ts` to below the last describe block
+- [x] Verify with targeted tests and lint

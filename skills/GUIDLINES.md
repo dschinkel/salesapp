@@ -58,7 +58,12 @@ Do NOT output ACK when answering questions or doing non-task discussion (i.e., w
   - G1.10.7 You MUST NEVER overwrite or delete existing features or tasks in `PROJECT_SPEC.md` or `tasks.md` when adding new ones. Always append or insert new items while preserving the existing history and numbering.  
   - G1.10.8 Feature sections in `tasks.md` MUST be separated by an extra line return (two empty lines between sections) to improve readability and whitespace.  
   - G1.10.9 After each Feature title or task line in `PROJECT_SPEC.md` and `tasks.md`, you MUST add two spaces at the end of the line to force a markdown line return.  
-  - G1.10.10 Whenever appending to `log/refactor.log`, include a heading that explicitly states which task the refactor entry is related to.  
+  - G1.10.10 Whenever appending to `log/refactors.log`, each section MUST follow this template exactly:  
+    - `## Task: <task title>`  
+    - an underline line using dashes (for example: `------------`) directly below the task line  
+    - `<YYYY-MM-DD> - Refactor Increment <N>`  
+    - bullet list of changes and validation  
+    - one empty line between sections  
   - G1.10.11 Whenever a deploy issue is fixed, append an entry to `log/deploy.log` under a heading that matches the related task title and include what was changed or done.  
 
 ## G2. Domain-Driven Naming
@@ -171,6 +176,7 @@ The Fix:
 - N1.10 Test names must be delivery mechanism and framework agnostic. Do not use words like "add" to represent POST, "fetch" to represent GET, or any other technical action verbs.  
   - Good: `adds a font`, `creates environment shots`  
   - Bad: `posts a new font`, `fetches a font`, `adds a font by fetching from adobe`, `calls the api to add a font`, `includes themed environment shots in generation request`.  
+- N1.11 Test helper functions must be defined at the bottom of the test file, below the last `describe` block.  
 - N1.12 Avoid creating "useless" tests that merely verify mocked data (i.e., testing the mock). Tests MUST verify business logic, data transformations, or specific orchestrations. A test that simply asserts that a function returns exactly what its mock was told to return, without any intervening logic, is forbidden.  
 
 ---

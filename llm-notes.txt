@@ -1,0 +1,7 @@
+Codex vs Gemini
+    - Faster than Gemini
+    - Summaries are easier to read
+    - Seems smarter, gives very precise plan like gemini but just in a different format
+    - I do not see it showing me the TDD plan though, find out why
+    - There is no brave mode for this like Gemini
+
